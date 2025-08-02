@@ -1,16 +1,21 @@
+import HeroUiProvider from "@/context/heroUi-provider";
+import QueryProvider from "@/context/query-provider";
+import ReduxProvider from "@/context/redux-provider";
+import { ThemeProvider } from "@/context/theme-provider";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Inter, Vazirmatn } from "next/font/google";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const vazirFont = Vazirmatn({
+variable: "--font-Vazir",
+subsets: ["arabic"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const interFont = Inter({
+variable: "--font-Inter",
+subsets: ["latin"],
 });
+
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -25,9 +30,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${vazirFont.variable} ${interFont.variable}  antialiased`}
       >
-        {children}
+        <ReduxProvider>
+          <QueryProvider>
+            <ThemeProvider>
+              <HeroUiProvider>{children}</HeroUiProvider>
+            </ThemeProvider>
+          </QueryProvider>
+        </ReduxProvider>
       </body>
     </html>
   );
