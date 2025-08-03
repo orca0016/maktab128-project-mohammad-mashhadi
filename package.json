@@ -32,6 +32,7 @@
     "@heroui/theme": "^2.4.20",
     "@heroui/toast": "^2.0.14",
     "@heroui/user": "^2.2.20",
+    "@hookform/resolvers": "^5.2.1",
     "@reduxjs/toolkit": "^2.8.2",
     "@tanstack/react-query": "^5.84.1",
     "axios": "^1.11.0",
