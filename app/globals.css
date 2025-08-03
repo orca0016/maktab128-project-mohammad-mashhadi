@@ -13,6 +13,10 @@
   --color-foreground: var(--foreground);
   --color-gray-dark: #141A21;
   --color-gray-light:#FFFFFF;
+  --color-gray-secondary-text-dark:#919EAB;
+  --color-gray-secondary-text-light:#637381;
+  --color-title-text-light:#1c252e;
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -28,5 +32,5 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: vazir, inter, sans-serif;
 }
