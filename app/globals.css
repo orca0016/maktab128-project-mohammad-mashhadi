@@ -16,6 +16,7 @@
   --color-gray-secondary-text-dark:#919EAB;
   --color-gray-secondary-text-light:#637381;
   --color-title-text-light:#1c252e;
+  --color-custom-purple:#7635dc;
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -30,7 +31,5 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
   font-family: vazir, inter, sans-serif;
 }
