@@ -1,9 +1,9 @@
 "use client";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/navbar";
-import { Button } from "@heroui/react";
 import Link from "next/link";
 import { useRef } from "react";
 import LogoIcon from "./logo-icon";
+import DrawerSettingHeader from "./drawer-setting-header";
 
 const HeaderStructure = ({ children }: { children: React.ReactNode }) => {
   const navRef = useRef<HTMLDivElement>(null);
@@ -43,9 +43,7 @@ const HeaderStructure = ({ children }: { children: React.ReactNode }) => {
           <Link href="#">Login</Link>
         </NavbarItem>
         <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
-            Sign Up
-          </Button>
+         <DrawerSettingHeader/>
         </NavbarItem>
       </NavbarContent>
     </Navbar>
