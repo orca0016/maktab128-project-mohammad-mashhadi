@@ -1,5 +1,4 @@
 "use client";
-import { queryClient } from "@/context/query-provider";
 import { axiosInstance } from "@/lib/axios-instance";
 import {
   loginFormSchema,
