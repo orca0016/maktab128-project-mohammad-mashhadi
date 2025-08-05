@@ -1,26 +1,42 @@
 "use client";
+import { queryClient } from "@/context/query-provider";
+import { axiosInstance } from "@/lib/axios-instance";
 import {
   loginFormSchema,
   loginFormSchemaType,
 } from "@/validations/login-schema";
 import { Button, Chip, Input } from "@heroui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
+
 const LoginForm = () => {
   const [isVisible, setIsVisible] = useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
-
+  const router = useRouter();
   const { control, handleSubmit } = useForm({
     resolver: zodResolver(loginFormSchema),
   });
-  const onSubmit: SubmitHandler<loginFormSchemaType> = (data) => {
-    console.log(data);
-  };
 
+  const loginUser = useMutation({
+    mutationFn: (data: loginFormSchemaType) =>
+      axiosInstance().post("/api/login", data),
+    onSuccess: () => {
+      router.push("/");
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  const onSubmit: SubmitHandler<loginFormSchemaType> = (data) => {
+    loginUser.mutate(data);
+  };
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -41,6 +57,7 @@ const LoginForm = () => {
           />
         )}
       />
+      
       <Controller
         name="password"
         control={control}
@@ -74,18 +91,19 @@ const LoginForm = () => {
       />
 
       <Button
-        variant="solid"
         size="lg"
         type="submit"
+        variant="solid"
         className="bg-title-text-light dark:bg-white w-full text-white dark:text-title-text-light  text-lg font-semibold"
       >
         ورود به حساب
       </Button>
+
       <div className="flex items-center">
         <div className="border-t-1  border-dashed dark:border-[#637381] border-gray-secondary-text-light flex-grow-1 " />
         <Chip
-          color="default"
           variant="light"
+          color="default"
           className="font-semibold text-lg text-[#637381]"
         >
           یا
@@ -93,10 +111,18 @@ const LoginForm = () => {
         <div className="border-t-1  border-dashed dark:border-[#637381] border-gray-secondary-text-light flex-grow-1" />
       </div>
       <div className=" flex justify-center items-center gap-6">
-        <Button isIconOnly variant="light" className="rounded-full">
+        <Button
+          isIconOnly
+          variant="light"
+          className="rounded-full cursor-not-allowed"
+        >
           <FcGoogle size={"1.5rem"} />
         </Button>
-        <Button isIconOnly variant="light" className="rounded-full">
+        <Button
+          isIconOnly
+          variant="light"
+          className="rounded-full cursor-not-allowed"
+        >
           <FaGithub size={"1.5rem"} />
         </Button>
       </div>

@@ -3,19 +3,18 @@ import QueryProvider from "@/context/query-provider";
 // import ReduxProvider from "@/context/redux-provider";
 import { ThemeProvider } from "@/context/theme-provider";
 import type { Metadata } from "next";
-import "./globals.css";
 import { Inter, Vazirmatn } from "next/font/google";
+import "./globals.css";
 
 const vazirFont = Vazirmatn({
-variable: "--font-Vazir",
-subsets: ["arabic"],
+  variable: "--font-Vazir",
+  subsets: ["arabic"],
 });
 
 const interFont = Inter({
-variable: "--font-Inter",
-subsets: ["latin"],
+  variable: "--font-Inter",
+  subsets: ["latin"],
 });
-
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -33,11 +32,11 @@ export default function RootLayout({
         className={`${vazirFont.variable} ${interFont.variable} dark  antialiased`}
       >
         {/* <ReduxProvider> */}
-          <QueryProvider>
+        <QueryProvider>
             <ThemeProvider>
               <HeroUiProvider>{children}</HeroUiProvider>
             </ThemeProvider>
-          </QueryProvider>
+        </QueryProvider>
         {/* </ReduxProvider> */}
       </body>
     </html>
