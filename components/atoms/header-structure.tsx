@@ -2,10 +2,16 @@
 
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/navbar";
 import { useRef } from "react";
-import LogoIcon from "./logo-icon";
 import DrawerSettingHeader from "./drawer-setting-header";
+import LogoIcon from "./logo-icon";
 
-const HeaderStructure = ({ children , userAction }: { children: React.ReactNode , userAction: React.ReactNode }) => {
+const HeaderStructure = ({
+  children,
+  userAction,
+}: {
+  children: React.ReactNode;
+  userAction: React.ReactNode;
+}) => {
   const navRef = useRef<HTMLDivElement>(null);
   const handleScrollHeader = (position: number) => {
     if (!navRef.current) return;
@@ -24,7 +30,7 @@ const HeaderStructure = ({ children , userAction }: { children: React.ReactNode 
       navRef.current.classList.add("bg-white/40");
     }
   };
-  
+
   return (
     <Navbar
       ref={navRef}
@@ -40,11 +46,9 @@ const HeaderStructure = ({ children , userAction }: { children: React.ReactNode 
       </NavbarBrand>
       {children}
       <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-        {userAction}
-        </NavbarItem>
+        <NavbarItem className="hidden sm:flex">{userAction}</NavbarItem>
         <NavbarItem>
-         <DrawerSettingHeader/>
+          <DrawerSettingHeader />
         </NavbarItem>
       </NavbarContent>
     </Navbar>

@@ -1,5 +1,7 @@
+import { User } from "@heroui/react";
 import { cookies } from "next/headers";
 import Link from "next/link";
+import UserInformation from "./user-information";
 
 const AuthorizeUserAction = async () => {
   const cookieStore = await cookies();
@@ -22,15 +24,21 @@ const AuthorizeUserAction = async () => {
     );
   }
 
-  const user: IResponseUserData | undefined = await fetch(
+  const user: IResponseUserData = await fetch(
     `http://localhost:3000/api/user/${userDetail.id}`
   ).then((res) => res.json());
 
   console.log(user);
 
-  return <div>
-    {user?.data.user.username}
-  </div>;
+  return (
+    <div>
+      <UserInformation
+        LastName={user.data.user.lastname}
+        firsName={user.data.user.firstname}
+        username={user.data.user.username}
+      />
+    </div>
+  );
 };
 
 export default AuthorizeUserAction;
