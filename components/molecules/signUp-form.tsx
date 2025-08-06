@@ -59,6 +59,7 @@ const SignUpForm = () => {
               isInvalid={!!fieldState.error}
               errorMessage={fieldState.error?.message}
               classNames={{ inputWrapper: "border-1" }}
+              disabled={signUpUser.isPending || signUpUser.isSuccess}
               {...field}
             />
           )}
@@ -75,6 +76,7 @@ const SignUpForm = () => {
               isInvalid={!!fieldState.error}
               errorMessage={fieldState.error?.message}
               classNames={{ inputWrapper: "border-1" }}
+              disabled={signUpUser.isPending || signUpUser.isSuccess}
               {...field}
             />
           )}
@@ -92,6 +94,7 @@ const SignUpForm = () => {
             isInvalid={!!fieldState.error}
             errorMessage={fieldState.error?.message}
             classNames={{ inputWrapper: "border-1" }}
+            disabled={signUpUser.isPending || signUpUser.isSuccess}
             {...field}
           />
         )}
@@ -107,8 +110,9 @@ const SignUpForm = () => {
             variant="bordered"
             isInvalid={!!fieldState.error}
             type={isVisible ? "text" : "password"}
-            errorMessage={fieldState.error?.message}
             classNames={{ inputWrapper: "border-1" }}
+            errorMessage={fieldState.error?.message}
+            disabled={signUpUser.isPending || signUpUser.isSuccess}
             endContent={
               <Button
                 isIconOnly
@@ -140,6 +144,7 @@ const SignUpForm = () => {
             isInvalid={!!fieldState.error}
             errorMessage={fieldState.error?.message}
             classNames={{ inputWrapper: "border-1" }}
+            disabled={signUpUser.isPending || signUpUser.isSuccess}
             {...field}
           />
         )}
@@ -157,6 +162,7 @@ const SignUpForm = () => {
             isInvalid={!!fieldState.error}
             classNames={{ inputWrapper: "border-1" }}
             errorMessage={fieldState.error?.message}
+            disabled={signUpUser.isPending || signUpUser.isSuccess}
           />
         )}
       />
@@ -165,6 +171,8 @@ const SignUpForm = () => {
         size="lg"
         type="submit"
         variant="solid"
+        isLoading={signUpUser.isPending}
+        disabled={signUpUser.isPending || signUpUser.isSuccess}
         className="bg-title-text-light dark:bg-white w-full text-white dark:text-title-text-light  text-lg font-semibold"
       >
         ورود به حساب

@@ -38,6 +38,7 @@ const LoginForm = () => {
   };
   return (
     <form
+    autoComplete="off"
       onSubmit={handleSubmit(onSubmit)}
       className="text-title-text-light dark:text-white space-y-6"
     >
@@ -50,13 +51,14 @@ const LoginForm = () => {
             label="نام کاربری"
             variant={"bordered"}
             isInvalid={!!fieldState.error}
+            disabled={loginUser.isPending || loginUser.isSuccess}
             errorMessage={fieldState.error?.message}
             classNames={{ inputWrapper: "border-1" }}
             {...field}
           />
         )}
       />
-      
+
       <Controller
         name="password"
         control={control}
@@ -66,6 +68,7 @@ const LoginForm = () => {
             label="رمز ورود"
             variant="bordered"
             isInvalid={!!fieldState.error}
+            disabled={loginUser.isPending || loginUser.isSuccess}
             type={isVisible ? "text" : "password"}
             errorMessage={fieldState.error?.message}
             classNames={{ inputWrapper: "border-1" }}
@@ -91,6 +94,8 @@ const LoginForm = () => {
 
       <Button
         size="lg"
+        isLoading={loginUser.isPending}
+        disabled={loginUser.isPending || loginUser.isSuccess}
         type="submit"
         variant="solid"
         className="bg-title-text-light dark:bg-white w-full text-white dark:text-title-text-light  text-lg font-semibold"
