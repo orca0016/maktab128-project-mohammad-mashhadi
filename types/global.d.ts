@@ -21,3 +21,8 @@ interface IResponseUserData {
     };
   };
 }
+
+ interface IAuthorizedUser {
+  id: string;
+  role?: string;
+}

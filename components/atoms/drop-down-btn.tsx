@@ -5,7 +5,6 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-  NavbarItem,
 } from "@heroui/react";
 import { IoIosArrowDown } from "react-icons/io";
 
@@ -13,7 +12,7 @@ const DropDownButton = () => {
   return (
     <>
       <Dropdown classNames={{
-            content: " dark:bg-gray-dark/40 bg-white  dark:text-white text-gray-dark bg-shadow-drawer",
+            content: " dark:bg-gray-dark/70 bg-white  dark:text-white text-gray-dark bg-shadow-drawer backdrop-md",
           }}>
           <DropdownTrigger>
             <Button

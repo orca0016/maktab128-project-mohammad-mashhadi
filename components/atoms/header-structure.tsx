@@ -1,11 +1,11 @@
 "use client";
+
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/navbar";
-import Link from "next/link";
 import { useRef } from "react";
 import LogoIcon from "./logo-icon";
 import DrawerSettingHeader from "./drawer-setting-header";
 
-const HeaderStructure = ({ children }: { children: React.ReactNode }) => {
+const HeaderStructure = ({ children , userAction }: { children: React.ReactNode , userAction: React.ReactNode }) => {
   const navRef = useRef<HTMLDivElement>(null);
   const handleScrollHeader = (position: number) => {
     if (!navRef.current) return;
@@ -24,6 +24,7 @@ const HeaderStructure = ({ children }: { children: React.ReactNode }) => {
       navRef.current.classList.add("bg-white/40");
     }
   };
+  
   return (
     <Navbar
       ref={navRef}
@@ -40,7 +41,7 @@ const HeaderStructure = ({ children }: { children: React.ReactNode }) => {
       {children}
       <NavbarContent justify="end">
         <NavbarItem className="hidden lg:flex">
-          <Link href="#">Login</Link>
+        {userAction}
         </NavbarItem>
         <NavbarItem>
          <DrawerSettingHeader/>
