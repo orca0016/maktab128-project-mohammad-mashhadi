@@ -31,7 +31,7 @@ const DrawerSettingHeader = () => {
       size="xs"
       backdrop="transparent"
         classNames={{
-          closeButton: "left-1 mr-auto w-fit",
+          closeButton: "left-1 ml-3 mr-auto w-fit",
           base: "rounded-none  dark:bg-gray-dark/50  bg-white/50 bg-shadow-drawer  shadow-2xl",
         }}
         isOpen={isOpen}
