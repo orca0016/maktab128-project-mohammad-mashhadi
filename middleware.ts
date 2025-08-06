@@ -1,18 +1,11 @@
-import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
-import { forbidden } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
-
-interface IAuthorizedUser {
-  id: string;
-  role?: string;
-}
 
 const protectedRoutes = ["/dashboard"];
 // const publicRoutes = ["/login", "/signup", "/"];
-// export const config = {
-//   matcher: ["/about/:path*", "/dashboard/:path*"],
-// };
+export const config = {
+  matcher: ["/((?!api|_next|static|favicon.ico).*)", "/dashboard/:path*"],
+};
 export async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
   const isProtectedRoute = protectedRoutes.includes(path);
