@@ -18,7 +18,7 @@ const LoginForm = () => {
   const [isVisible, setIsVisible] = useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
   const router = useRouter();
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(loginFormSchema),
   });
 
@@ -30,6 +30,13 @@ const LoginForm = () => {
     },
     onError: (error) => {
       console.log(error);
+      if (error.message.includes("401")) {
+        alert("کاربر یافت نشد .");
+      }
+      reset({
+        password: "",
+        username: "",
+      });
     },
   });
 
@@ -38,7 +45,7 @@ const LoginForm = () => {
   };
   return (
     <form
-    autoComplete="off"
+      autoComplete="off"
       onSubmit={handleSubmit(onSubmit)}
       className="text-title-text-light dark:text-white space-y-6"
     >

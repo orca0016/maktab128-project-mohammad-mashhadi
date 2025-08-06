@@ -22,7 +22,7 @@ const SignUpForm = () => {
 
   const router = useRouter();
 
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(signUpFormSchema),
   });
 
@@ -34,6 +34,17 @@ const SignUpForm = () => {
     },
     onError: (error) => {
       console.log(error);
+      if (error.message.includes("401")) {
+        alert("کاربر وجود دارد  .");
+      }
+      reset({
+        address: "",
+        firstname: "",
+        lastname: "",
+        password: "",
+        phoneNumber: "",
+        username: "",
+      });
     },
   });
 
@@ -157,7 +168,7 @@ const SignUpForm = () => {
           <Textarea
             {...field}
             type="text"
-            label="شماره تلفن"
+            label="آدرس "
             variant={"bordered"}
             isInvalid={!!fieldState.error}
             classNames={{ inputWrapper: "border-1" }}
