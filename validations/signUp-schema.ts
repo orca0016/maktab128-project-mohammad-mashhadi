@@ -1,7 +1,7 @@
 import * as z from "zod";
 
 const strongPasswordSchema = z
-  .string()
+  .string({ error: "رمز عبور را وارد کنید." })
   .min(8, "حداقل طول رمز ورود باید ۸ کاراکتر باشد .")
   .regex(/[A-Z]/, "رمز ورود باید یک حرف بزرگ انگلیسی داشته باشد ")
   .regex(/[a-z]/, "رمز ورود باید حداقل یک حرف کوچک انگلیسی داشته باشد .")
@@ -25,7 +25,7 @@ export const signUpFormSchema = z.object({
     .min(5, { error: "حداقل طول  نام خانوادگی ۵ کاراکتر است ." })
     .max(20, { error: "حداکثر طول نام خانوادگی ۲۰ کاراکتر است." }),
   phoneNumber: z
-    .string({error:'شماره تلقن الزامی است '})
+    .string({ error: "شماره تلقن الزامی است " })
     .regex(/^09\d{9}$/, "شماره تلفن باید با 09 شروع شده و 11 رقم باشد"),
   address: z
     .string({ error: "ادرس الزامی است ." })

@@ -1,7 +1,6 @@
 import AuthorizeUserAction from "@/components/atoms/authorize-user-action";
 import DropDownButton from "@/components/atoms/drop-down-btn";
-import Header from "@/components/atoms/header";
-import HeaderStructure from "@/components/atoms/header-structure";
+import HeaderStructure from "@/components/molecules/header-structure";
 import { NavbarContent, NavbarItem } from "@heroui/navbar";
 import Link from "next/link";
 

@@ -1,4 +1,4 @@
-import { User } from "@heroui/react";
+import { Button } from "@heroui/react";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import UserInformation from "./user-information";
@@ -17,9 +17,10 @@ const AuthorizeUserAction = async () => {
 
   if (!userDetail.id) {
     return (
-      <div>
-        <Link href="/login">Login</Link>
-        <Link href="/sign-up">Sign up</Link>
+      <div className="flex gap-x-2 ">
+        <Link href="/sign-up">ثبت نام</Link>
+        <span>/</span>
+        <Link href="/login">وارد شوید</Link>
       </div>
     );
   }

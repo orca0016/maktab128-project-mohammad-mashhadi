@@ -3,14 +3,15 @@
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/navbar";
 import { useRef } from "react";
 import DrawerSettingHeader from "../molecules/drawer-setting-header";
-import LogoIcon from "./logo-icon";
+import LogoIcon from "../atoms/logo-icon";
+import Link from "next/link";
 
 const HeaderStructure = ({
   children,
   userAction,
 }: {
-  children: React.ReactNode;
-  userAction: React.ReactNode;
+  children?: React.ReactNode;
+  userAction?: React.ReactNode;
 }) => {
   const navRef = useRef<HTMLDivElement>(null);
   const handleScrollHeader = (position: number) => {
@@ -40,9 +41,9 @@ const HeaderStructure = ({
       className=" bg-gray-dark/0 fixed transition-all backdrop-saturate-100 backdrop-blur-none"
     >
       <NavbarBrand>
-        <div className="h-full w-10 ">
+        <Link href={'/'} className="h-full w-10 ">
           <LogoIcon />
-        </div>
+        </Link>
       </NavbarBrand>
       {children}
       <NavbarContent justify="end">
