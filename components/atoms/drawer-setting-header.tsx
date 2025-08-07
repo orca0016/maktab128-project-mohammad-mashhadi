@@ -7,6 +7,7 @@ import {
   useDisclosure,
 } from "@heroui/react";
 import { IoSettingsOutline } from "react-icons/io5";
+import ThemeChanger from "./theme-changer";
 
 const DrawerSettingHeader = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -28,8 +29,8 @@ const DrawerSettingHeader = () => {
         />
       </Button>
       <Drawer
-      size="xs"
-      backdrop="transparent"
+        size="xs"
+        backdrop="transparent"
         classNames={{
           closeButton: "left-1 ml-3 mr-auto w-fit",
           base: "rounded-none  dark:bg-gray-dark/50  bg-white/50 bg-shadow-drawer  shadow-2xl",
@@ -45,10 +46,9 @@ const DrawerSettingHeader = () => {
               <DrawerHeader className="flex flex-col gap-1">
                 تنظیمات
               </DrawerHeader>
-              <DrawerBody>
-                به زودی...
+              <DrawerBody className="grid grid-cols-2 gap-2 grid-rows-5">
+                <ThemeChanger />
               </DrawerBody>
-            
             </>
           )}
         </DrawerContent>

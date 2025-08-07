@@ -29,13 +29,13 @@ export default function RootLayout({
   return (
     <html lang="en" dir="rtl">
       <body
-        className={`${vazirFont.variable} ${interFont.variable} dark  antialiased`}
+        className={`${vazirFont.variable} ${interFont.variable}   antialiased`}
       >
         {/* <ReduxProvider> */}
         <QueryProvider>
-            <ThemeProvider>
-              <HeroUiProvider>{children}</HeroUiProvider>
-            </ThemeProvider>
+          <ThemeProvider>
+            <HeroUiProvider>{children}</HeroUiProvider>
+          </ThemeProvider>
         </QueryProvider>
         {/* </ReduxProvider> */}
       </body>
