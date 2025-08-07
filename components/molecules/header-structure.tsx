@@ -2,7 +2,7 @@
 
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/navbar";
 import { useRef } from "react";
-import DrawerSettingHeader from "./drawer-setting-header";
+import DrawerSettingHeader from "../molecules/drawer-setting-header";
 import LogoIcon from "./logo-icon";
 
 const HeaderStructure = ({

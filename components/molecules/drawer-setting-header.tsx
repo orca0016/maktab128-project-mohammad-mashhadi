@@ -7,7 +7,7 @@ import {
   useDisclosure,
 } from "@heroui/react";
 import { IoSettingsOutline } from "react-icons/io5";
-import ThemeChanger from "./theme-changer";
+import ThemeChanger from "../atoms/theme-changer";
 
 const DrawerSettingHeader = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
