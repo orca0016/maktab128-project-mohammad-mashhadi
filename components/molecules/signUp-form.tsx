@@ -6,7 +6,7 @@ import {
   signUpFormSchema,
   signUpFormSchemaType,
 } from "@/validations/signUp-schema";
-import { Button, Chip, Input, Textarea } from "@heroui/react";
+import { addToast, Button, Chip, Input, Textarea } from "@heroui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -22,7 +22,7 @@ const SignUpForm = () => {
 
   const router = useRouter();
 
-  const { control, handleSubmit, reset } = useForm({
+  const { control, handleSubmit } = useForm({
     resolver: zodResolver(signUpFormSchema),
   });
 
@@ -31,20 +31,22 @@ const SignUpForm = () => {
       axiosInstance().post("/api/signUp", data),
     onSuccess: () => {
       router.push("/");
+      addToast({
+      title: "اکانت ساخته شد  .",
+      description: `تبریک اکانت شما با موفقیت ساخته شد .`,
+      color: "success",
+    });
     },
     onError: (error) => {
       console.log(error);
       if (error.message.includes("401")) {
-        alert("کاربر وجود دارد  .");
-      }
-      reset({
-        address: "",
-        firstname: "",
-        lastname: "",
-        password: "",
-        phoneNumber: "",
-        username: "",
+        addToast({
+        title: "خطا در ساخت اکانت .",
+        description: `کاربری با این اطلاعات در سامانه وجود دارد .`,
+        color: "danger",
       });
+      }
+
     },
   });
 

@@ -4,7 +4,7 @@ import {
   loginFormSchema,
   loginFormSchemaType,
 } from "@/validations/login-schema";
-import { Button, Chip, Input } from "@heroui/react";
+import { addToast, Button, Chip, Input } from "@heroui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -18,7 +18,7 @@ const LoginForm = () => {
   const [isVisible, setIsVisible] = useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
   const router = useRouter();
-  const { control, handleSubmit, reset } = useForm({
+  const { control, handleSubmit } = useForm({
     resolver: zodResolver(loginFormSchema),
   });
 
@@ -27,16 +27,21 @@ const LoginForm = () => {
       axiosInstance().post("/api/login", data),
     onSuccess: () => {
       router.push("/");
+      addToast({
+        title: "درود .",
+        description: `شما  با موفقیت وارد شدید .`,
+        color: "success",
+      });
     },
     onError: (error) => {
       console.log(error);
       if (error.message.includes("401")) {
-        alert("کاربر یافت نشد .");
+        addToast({
+          title: "دوباره امتحان کنید.",
+          description: "کاربر مود نظر یافت نشد .",
+          color: "danger",
+        });
       }
-      reset({
-        password: "",
-        username: "",
-      });
     },
   });
 
