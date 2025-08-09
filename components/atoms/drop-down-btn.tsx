@@ -12,7 +12,7 @@ const DropDownButton = () => {
   return (
     <>
       <Dropdown classNames={{
-            content: " dark:bg-gray-dark/70 bg-white  dark:text-white text-gray-dark bg-shadow-drawer backdrop-md",
+            content: " dark:bg-gray-dark bg-white  dark:text-white text-gray-dark bg-shadow-drawer ",
           }}>
           <DropdownTrigger>
             <Button
