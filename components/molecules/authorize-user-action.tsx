@@ -1,8 +1,5 @@
-import { Button } from "@heroui/react";
 import { cookies } from "next/headers";
-import Link from "next/link";
-import UserInformation from "./user-information";
-
+import UserAccessMenu from "../atoms/user-access-menu";
 const AuthorizeUserAction = async () => {
   const cookieStore = await cookies();
   const userDetail: { id?: string; role?: string } = await fetch(
@@ -16,28 +13,16 @@ const AuthorizeUserAction = async () => {
   console.log(userDetail);
 
   if (!userDetail.id) {
-    return (
-      <div className="flex gap-x-2 ">
-        <Link href="/sign-up">ثبت نام</Link>
-        <span>/</span>
-        <Link href="/login">وارد شوید</Link>
-      </div>
-    );
+    return <UserAccessMenu />;
   }
 
   const user: IResponseUserData = await fetch(
     `http://localhost:3000/api/user/${userDetail.id}`
   ).then((res) => res.json());
 
-  console.log(user);
-
   return (
     <div>
-      <UserInformation
-        LastName={user.data.user.lastname}
-        firsName={user.data.user.firstname}
-        username={user.data.user.username}
-      />
+      <UserAccessMenu loginData={user} />
     </div>
   );
 };
