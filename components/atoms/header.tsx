@@ -1,5 +1,6 @@
-import AuthorizeUserAction from "./authorize-user-action";
-import HeaderStructure from "./header-structure";
+import AuthorizeUserAction from "../molecules/authorize-user-action";
+import HeaderStructure from "../molecules/header-structure";
+
 
 const Header = () => {
   return (
