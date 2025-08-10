@@ -1,7 +1,8 @@
+import { ShopIcon } from "@/components/atoms/icons"
 
 const DashboardPage = () => {
   return (
-    <div>DashboardPage</div>
+    <div className="h-[120vh] text-custom-purple">صفحه اصلی <ShopIcon/></div>
   )
 }
 
