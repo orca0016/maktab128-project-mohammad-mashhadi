@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroui/accordion": "^2.2.21",
     "@heroui/button": "^2.2.24",
     "@heroui/card": "^2.2.23",
     "@heroui/checkbox": "^2.3.24",
