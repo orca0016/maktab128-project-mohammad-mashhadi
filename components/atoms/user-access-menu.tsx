@@ -14,12 +14,15 @@ import { TbLogout2 } from "react-icons/tb";
 import { axiosInstance } from "@/lib/axios-instance";
 import { useMutation } from "@tanstack/react-query";
 import { LuUserPlus } from "react-icons/lu";
-import { TbLogin2 } from "react-icons/tb";
-import { TbLayoutDashboard } from "react-icons/tb";
+import { TbLayoutDashboard, TbLogin2 } from "react-icons/tb";
 
 const UserAccessMenu = ({ loginData }: { loginData?: IResponseUserData }) => {
   const logOut = useMutation({
-    mutationFn: () => axiosInstance().get("/api/auth/logout"),
+    mutationFn: () =>
+      fetch("http://localhost:8000/api/auth/logout", {
+        method: "GET",
+        credentials: "include",
+      }).then(res=>res.json()),
     onSuccess: () => {
       alert("shoma kharej shodid");
     },
@@ -57,17 +60,16 @@ const UserAccessMenu = ({ loginData }: { loginData?: IResponseUserData }) => {
                 </div>
                 <Divider />
               </DropdownItem>
-              {loginData.data.user.role==='ADMIN'&&(
-              <DropdownItem
-                key="dashboard"
-                endContent={<TbLayoutDashboard />}
-                as={Link}
-                href="/dashboard"
-                variant="flat"
-              >
-                داشبورد مدیریت
-              </DropdownItem>
-
+              {loginData.data.user.role === "ADMIN" && (
+                <DropdownItem
+                  key="dashboard"
+                  endContent={<TbLayoutDashboard />}
+                  as={Link}
+                  href="/dashboard"
+                  variant="flat"
+                >
+                  داشبورد مدیریت
+                </DropdownItem>
               )}
               <DropdownItem
                 key="sign-up"

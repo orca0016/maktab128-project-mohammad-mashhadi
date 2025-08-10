@@ -61,7 +61,6 @@
   animation: circle-in 500ms;
 }
 
-
 @keyframes circle-in {
   from {
     clip-path: circle(0% at 10% 20%);
@@ -85,4 +84,54 @@
 }
 body {
   font-family: vazir, inter, sans-serif;
+}
+
+/* costume scroll bar */
+.custom-scrollbar{
+  direction: ltr;
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
+  transition: opacity 0.3s;
+  
+  opacity: 0;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar,
+.show-scrollbar::-webkit-scrollbar {
+  opacity: 1;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #ffffff00;
+  border-radius: 4px;
+  transition: 1s;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-thumb,
+.show-scrollbar::-webkit-scrollbar-thumb {
+  transition: 0.5s;
+  background: #6b728094;
+}
+
+.line-ui-list-dashboard::before {
+  content: " ";
+  right: 0;
+  top: 0;
+  position: absolute;
+  width: 2px;
+  border-radius: 6px;
+}
+
+.line-ui-list-item-dashboard::after {
+  content: "";
+  right: 0px;
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  mask: url("/images/icons/cervsvg.svg");
+  mask-size: cover;
+  box-sizing: border-box;
+  transform: translate(calc(12px * 1), calc(12px * -0.3)) scaleX(-1);
 }
