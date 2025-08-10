@@ -1,5 +1,4 @@
 "use client";
-import { axiosInstance } from "@/lib/axios-instance";
 import {
   loginFormSchema,
   loginFormSchemaType,
@@ -24,7 +23,15 @@ const LoginForm = () => {
 
   const loginUser = useMutation({
     mutationFn: (data: loginFormSchemaType) =>
-      axiosInstance().post("/api/login", data),
+      fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: data.username,
+          password: data.password,
+        }),
+        credentials: "include",
+      }),
     onSuccess: () => {
       router.push("/");
       addToast({

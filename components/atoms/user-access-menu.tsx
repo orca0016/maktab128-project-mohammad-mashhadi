@@ -1,5 +1,6 @@
 "use client";
 import {
+  addToast,
   Button,
   Divider,
   Dropdown,
@@ -13,21 +14,24 @@ import { TbLogout2 } from "react-icons/tb";
 
 import { axiosInstance } from "@/lib/axios-instance";
 import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { LuUserPlus } from "react-icons/lu";
 import { TbLayoutDashboard, TbLogin2 } from "react-icons/tb";
 
 const UserAccessMenu = ({ loginData }: { loginData?: IResponseUserData }) => {
+  const router = useRouter();
   const logOut = useMutation({
-    mutationFn: () =>
-      fetch("http://localhost:8000/api/auth/logout", {
-        method: "GET",
-        credentials: "include",
-      }).then(res=>res.json()),
+    mutationFn: () => fetch("/api/logout"),
     onSuccess: () => {
-      alert("shoma kharej shodid");
+      router.refresh();
     },
     onError: (e) => {
       console.log(e);
+      addToast({
+        title: "مشکلی پیش امد ",
+        description: `لطفا بعدا دوباره امتحان کنید. .`,
+        color: "danger",
+      });
     },
   });
   return (
