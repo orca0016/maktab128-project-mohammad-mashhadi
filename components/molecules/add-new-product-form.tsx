@@ -23,7 +23,7 @@ const AddNewProductForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Card className="text-title-text-light dark:text-white">
+      <Card className="text-title-text-light dark:bg-[#1C252E] dark:text-white">
         <CardHeader className="flex gap-3">
           <h1 className="text-xl">جزییات محصول را وارد کنید</h1>
         </CardHeader>
