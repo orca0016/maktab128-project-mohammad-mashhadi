@@ -10,13 +10,13 @@ const ShopLayout = ({ children }: { children: React.ReactNode }) => {
       <HeaderStructure userAction={<AuthorizeUserAction />}>
         <NavbarContent justify="center"></NavbarContent>
       </HeaderStructure>
-      <div className="grid grid-cols-12 h-full">
-        <div className="col-span-3 relative h-full ">
+      <div className="grid grid-cols-12">
+        <div className="col-span-3 relative">
           <ScrollableBox>
             <SidebarDashboard />
           </ScrollableBox>
         </div>
-        <div className=" col-span-9 relative h-screen">
+        <div className=" col-span-9 relative">
           <ScrollableBox>
             <div className="py-20 px-7">{children}</div>
           </ScrollableBox>

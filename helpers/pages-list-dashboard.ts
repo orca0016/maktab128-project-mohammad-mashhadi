@@ -2,47 +2,47 @@ import { OrderIcon, ShopIcon } from "@/components/atoms/icons";
 
 export const PAGE_LIST_DASHBOARD = [
   {
-    id:1,
+    id: 1,
     category: "محصولات",
     icon: ShopIcon,
     subCategory: [
       {
         title: "لیست محصولات ",
-        href: "/products",
+        href: "/dashboard/products",
       },
       {
         title: "اضافه کردن محصول جدید  ",
-        href: "/products/new",
+        href: "/dashboard/products/new",
       },
     ],
   },
   {
-    id:2,
+    id: 2,
     category: "سفارشات",
     icon: OrderIcon,
     subCategory: [
       {
         title: "لیست سفارشات  ",
-        href: "/orders",
+        href: "/dashboard/orders",
       },
     ],
   },
   {
-    id:3,
+    id: 3,
     category: "کاربران",
     icon: OrderIcon,
     subCategory: [
       {
         title: "لیست کاربران ",
-        href: "/users",
+        href: "/dashboard/users",
       },
       {
         title: "اضافه کردن کاربر جدید  ",
-        href: "/users/new",
+        href: "dashboard/users/new",
       },
       {
         title: "اضافه کردن کاربر جدید  ",
-        href: "/users/new",
+        href: "dashboard/users/new",
       },
       {
         title: "اضافه کردن کاربر جدید  ",
