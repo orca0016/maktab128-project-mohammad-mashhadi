@@ -135,3 +135,14 @@ body {
   box-sizing: border-box;
   transform: translate(calc(12px * 1), calc(12px * -0.3)) scaleX(-1);
 }
+
+.tiptap h1 { font-size: 1.5rem; font-weight: 700; margin: .75rem 0; }
+.tiptap h2 { font-size: 1.25rem; font-weight: 700; margin: .6rem 0; }
+.tiptap h3 { font-size: 1.125rem; font-weight: 600; margin: .5rem 0; }
+
+.tiptap ul { list-style: disc; padding-inline-start: 1.25rem; margin: .5rem 0; }
+.tiptap ol { list-style: decimal; padding-inline-start: 1.25rem; margin: .5rem 0; }
+[dir="rtl"] .tiptap ul, [dir="rtl"] .tiptap ol {
+padding-inline-start: 0;
+padding-inline-end: 1.25rem;
+}
