@@ -1,4 +1,5 @@
 "use client";
+import { axiosInstanceBackEnd } from "@/lib/axios-instance";
 import {
   loginFormSchema,
   loginFormSchemaType,
@@ -22,23 +23,34 @@ const LoginForm = () => {
   });
 
   const loginUser = useMutation({
-    mutationFn: (data: loginFormSchemaType) =>
-      fetch("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: data.username,
-          password: data.password,
-        }),
-        credentials: "include",
-      }),
-    onSuccess: () => {
-      router.push("/");
+    mutationFn: async (data: loginFormSchemaType) =>
+      await axiosInstanceBackEnd()
+        .post(
+          "/api/auth/login",
+          {
+            username: data.username,
+            password: data.password,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+
+              credentials: "include",
+            },
+          }
+        )
+        .then((res) => res.data),
+    onSuccess: (res: IResponseUserData) => {
+      localStorage.setItem("access-token", res.token.accessToken);
+      localStorage.setItem("refresh-token", res.token.refreshToken);
+      localStorage.setItem("user-id", res.data.user._id);
+
       addToast({
         title: "درود .",
         description: `شما  با موفقیت وارد شدید .`,
         color: "success",
       });
+      router.push("/");
     },
     onError: (error) => {
       console.log(error);
@@ -70,9 +82,9 @@ const LoginForm = () => {
             label="نام کاربری"
             variant={"bordered"}
             isInvalid={!!fieldState.error}
-            disabled={loginUser.isPending || loginUser.isSuccess}
-            errorMessage={fieldState.error?.message}
             classNames={{ inputWrapper: "border-1" }}
+            errorMessage={fieldState.error?.message}
+            disabled={loginUser.isPending || loginUser.isSuccess}
             {...field}
           />
         )}
@@ -87,10 +99,10 @@ const LoginForm = () => {
             label="رمز ورود"
             variant="bordered"
             isInvalid={!!fieldState.error}
-            disabled={loginUser.isPending || loginUser.isSuccess}
             type={isVisible ? "text" : "password"}
-            errorMessage={fieldState.error?.message}
             classNames={{ inputWrapper: "border-1" }}
+            errorMessage={fieldState.error?.message}
+            disabled={loginUser.isPending || loginUser.isSuccess}
             endContent={
               <Button
                 isIconOnly
@@ -113,10 +125,10 @@ const LoginForm = () => {
 
       <Button
         size="lg"
-        isLoading={loginUser.isPending}
-        disabled={loginUser.isPending || loginUser.isSuccess}
         type="submit"
         variant="solid"
+        isLoading={loginUser.isPending}
+        disabled={loginUser.isPending || loginUser.isSuccess}
         className="bg-title-text-light dark:bg-white w-full text-white dark:text-title-text-light  text-lg font-semibold"
       >
         ورود به حساب
