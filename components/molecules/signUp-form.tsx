@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-import { axiosInstance } from "@/lib/axios-instance";
+import { axiosInstanceBackEnd } from "@/lib/axios-instance";
 import {
   signUpFormSchema,
   signUpFormSchemaType,
@@ -28,25 +28,38 @@ const SignUpForm = () => {
 
   const signUpUser = useMutation({
     mutationFn: (data: signUpFormSchemaType) =>
-      axiosInstance().post("/api/signUp", data),
-    onSuccess: () => {
-      router.push("/");
+      axiosInstanceBackEnd()
+        .post("/api/auth/signUp", data)
+        .then((res) => res.data),
+
+    onSuccess: (res: IResponseUserData) => {
+      localStorage.setItem("access-token", res.token.accessToken);
+      localStorage.setItem("refresh-token", res.token.refreshToken);
+      localStorage.setItem("user-id", res.data.user._id);
+
       addToast({
-      title: "اکانت ساخته شد  .",
-      description: `تبریک اکانت شما با موفقیت ساخته شد .`,
-      color: "success",
-    });
+        title: "اکانت ساخته شد  .",
+        description: `تبریک اکانت شما با موفقیت ساخته شد .`,
+        color: "success",
+      });
+      router.push("/");
     },
     onError: (error) => {
       console.log(error);
-      if (error.message.includes("401")) {
+      if (error.message.includes("409")) {
         addToast({
-        title: "خطا در ساخت اکانت .",
-        description: `کاربری با این اطلاعات در سامانه وجود دارد .`,
-        color: "danger",
-      });
-      }
+          title: "خطا در ساخت اکانت .",
+          description: `کاربری با این اطلاعات در سامانه وجود دارد .`,
+          color: "danger",
+        });
+      }else{
+        addToast({
+          title: "خطا در ساخت اکانت .",
+          description: `مشکلی خیر منتظره رخ داد. (${error.message}) .`,
+          color: "danger",
+        });
 
+      }
     },
   });
 

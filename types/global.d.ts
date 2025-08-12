@@ -4,24 +4,22 @@ interface IResponseUserData {
     accessToken: string;
     refreshToken: string;
   };
-  data: {
-    user: {
-      _id: string;
-      firstname: string;
-      lastname: string;
-      username: string;
-      password: string;
-      phoneNumber: string;
-      address: string;
-      role: string;
-      createdAt: string;
-      updatedAt: string;
-      __v: number;
-      refreshToken: string;
-    };
-  };
+  data: { user: IUserData };
 }
-
+interface IUserData {
+  _id: string;
+  firstname: string;
+  lastname: string;
+  username: string;
+  password: string;
+  phoneNumber: string;
+  address: string;
+  role: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  refreshToken: string;
+}
 interface IResponseCategoryData {
   status: string;
   page: number;

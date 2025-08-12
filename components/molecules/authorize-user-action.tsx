@@ -1,42 +1,31 @@
-import { cookies } from "next/headers";
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
 import UserAccessMenu from "../atoms/user-access-menu";
+import { axiosInstanceBackEnd } from "@/lib/axios-instance";
 
-// export const dynamic = "force-dynamic";
+const AuthorizeUserAction = () => {
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("access-token") : null;
+  const userId =
+    typeof window !== "undefined" ? localStorage.getItem("user-id") : null;
 
-const AuthorizeUserAction = async () => {
-  const cookieStore = cookies();
-  const token = (await cookieStore).get("access-token")?.value;
-
-  if (!token) {
-    return <UserAccessMenu />;
-  }
-
-  const meRes = await fetch("http://localhost:8000/api/users/me", {
-    headers: { Authorization: `Bearer ${token}` },
-    cache: "no-store",
+  const userQuery = useQuery<IResponseUserData>({
+    queryKey: ["user", userId, token],
+    enabled: !!token && !!userId,
+    queryFn: async () => {
+      return axiosInstanceBackEnd().get(`api/users/${userId}`).then(res=>res.data)
+    },
   });
 
-  if (!meRes.ok) {
+  if (!token || !userId) {
     return <UserAccessMenu />;
   }
 
-  const me: { id?: string; role?: string } = await meRes.json();
-  if (!me?.id) {
-    return <UserAccessMenu />;
+  if (userQuery.isSuccess) {
+    return <UserAccessMenu user={userQuery.data?.data.user} />;
   }
 
-  const userRes = await fetch(`http://localhost:8000/api/users/${me.id}`, {
-    headers: { Authorization: `Bearer ${token}` },
-    cache: "no-store",
-  });
-
-  if (!userRes.ok) {
-    return <UserAccessMenu />;
-  }
-
-  const user: IResponseUserData = await userRes.json();
-
-  return <UserAccessMenu loginData={user} />;
+  return <UserAccessMenu />;
 };
-
 export default AuthorizeUserAction;

@@ -18,15 +18,15 @@ import {
   Input,
 } from "@heroui/react";
 
-import { useMemo } from "react";
-import TextEditor from "../atoms/rich-text-editor";
-import { useMutation } from "@tanstack/react-query";
-import DropzoneInput from "../atoms/dropzone-input";
 import { queryClient } from "@/context/query-provider";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { productFormDataBuilder } from "@/lib/form-data-builder";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useCategories, useSubcategories } from "@/hooks/add-products-hooks";
+import { productFormDataBuilder } from "@/lib/form-data-builder";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { useMemo } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import DropzoneInput from "../atoms/dropzone-input";
+import TextEditor from "../atoms/rich-text-editor";
 
 const AddNewProductForm = () => {
   const { control, handleSubmit, setValue, watch, reset } =
@@ -44,20 +44,27 @@ const AddNewProductForm = () => {
     mutationFn: async (data: FormData) =>
       await axiosInstanceBackEnd().post("/api/products/", data, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("access-token")}`,
           credentials: true,
         },
       }),
     onSuccess: () => {
+      reset({
+        price: "",
+        name: "",
+        brand: "",
+        images: [],
+        quantity: "",
+        category: "",
+        description: "",
+        thumbnail: null,
+        subcategory: "",
+      });
       queryClient.invalidateQueries({ queryKey: ["products"] });
       addToast({
         title: "موفق بود.",
         description: "محصول موردنظر با موفقیت اضافه شد .",
         color: "success",
-        variant: "solid",
       });
-
-      reset();
     },
     onError: (e) => {
       console.log(e);
@@ -85,7 +92,7 @@ const AddNewProductForm = () => {
   );
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
       <Card className="text-title-text-light dark:bg-[#1C252E] dark:text-white">
         <CardHeader className="flex gap-3">
           <h1 className="text-2xl font-semibold py-5">

@@ -87,14 +87,14 @@ body {
 }
 
 /* costume scroll bar */
-.custom-scrollbar{
+.custom-scrollbar {
   direction: ltr;
 }
 .custom-scrollbar::-webkit-scrollbar {
   width: 8px;
   background: transparent;
   transition: opacity 0.3s;
-  
+
   opacity: 0;
 }
 
@@ -136,13 +136,54 @@ body {
   transform: translate(calc(12px * 1), calc(12px * -0.3)) scaleX(-1);
 }
 
-.tiptap h1 { font-size: 1.5rem; font-weight: 700; margin: .75rem 0; }
-.tiptap h2 { font-size: 1.25rem; font-weight: 700; margin: .6rem 0; }
-.tiptap h3 { font-size: 1.125rem; font-weight: 600; margin: .5rem 0; }
+.tiptap h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0.75rem 0;
+}
+.tiptap h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0.6rem 0;
+}
+.tiptap h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0.5rem 0;
+}
 
-.tiptap ul { list-style: disc; padding-inline-start: 1.25rem; margin: .5rem 0; }
-.tiptap ol { list-style: decimal; padding-inline-start: 1.25rem; margin: .5rem 0; }
-[dir="rtl"] .tiptap ul, [dir="rtl"] .tiptap ol {
-padding-inline-start: 0;
-padding-inline-end: 1.25rem;
+.tiptap ul {
+  list-style: disc;
+  padding-inline-start: 1.25rem;
+  margin: 0.5rem 0;
+}
+.tiptap ol {
+  list-style: decimal;
+  padding-inline-start: 1.25rem;
+  margin: 0.5rem 0;
+}
+[dir="rtl"] .tiptap ul,
+[dir="rtl"] .tiptap ol {
+  padding-inline-start: 0;
+  padding-inline-end: 1.25rem;
+}
+.ProseMirror h1 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+.ProseMirror h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.ProseMirror h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.ProseMirror ul {
+  list-style-type: disc;
+  padding-right: 1.5rem;
+}
+.ProseMirror ol {
+  list-style-type: decimal;
+  padding-right: 1.5rem;
 }
