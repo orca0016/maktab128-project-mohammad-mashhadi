@@ -22,7 +22,43 @@ interface IResponseUserData {
   };
 }
 
- interface IAuthorizedUser {
+interface IResponseCategoryData {
+  status: string;
+  page: number;
+  per_page: number;
+  total: number;
+  total_pages: number;
+  data: {
+    categories: ICategory[];
+  };
+}
+
+interface ICategory {
+  _id: string;
+  name: string;
+  icon: string;
+  createdAt: string;
+  updatedAt: string;
+  slugname: string;
+}
+
+interface IResponseSubCategory {
+  status: string;
+  data: {
+    subcategories: ISubCategory[];
+  };
+}
+
+interface ISubCategory {
+  category: string;
+  name: string;
+  _id: string;
+  createdAt: string;
+  updatedAt: string;
+  slugname: string;
+  __v: number;
+}
+interface IAuthorizedUser {
   id: string;
   role?: string;
 }
