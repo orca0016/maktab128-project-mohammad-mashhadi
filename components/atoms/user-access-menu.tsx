@@ -12,17 +12,32 @@ import Link from "next/link";
 import { LuCircleUser } from "react-icons/lu";
 import { TbLogout2 } from "react-icons/tb";
 
-import { axiosInstance } from "@/lib/axios-instance";
+import { queryClient } from "@/context/query-provider";
+import { axiosInstance, axiosInstanceBackEnd } from "@/lib/axios-instance";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { LuUserPlus } from "react-icons/lu";
 import { TbLayoutDashboard, TbLogin2 } from "react-icons/tb";
 
-const UserAccessMenu = ({ loginData }: { loginData?: IResponseUserData }) => {
+const UserAccessMenu = ({ user }: { user?: IUserData }) => {
   const router = useRouter();
   const logOut = useMutation({
-    mutationFn: () => fetch("/api/logout"),
+    mutationFn: () =>
+      axiosInstanceBackEnd().get("/api/auth/logout", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access-token")}`,
+        },
+      }),
     onSuccess: () => {
+      localStorage.removeItem("access-token");
+      localStorage.removeItem("refresh-token");
+      localStorage.removeItem("user-id");
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+      addToast({
+        title:'موفق بود .',
+        description:'با موفقیت از حساب خود خارج شدید .',
+        color:'warning'
+      })
       router.refresh();
     },
     onError: (e) => {
@@ -51,20 +66,18 @@ const UserAccessMenu = ({ loginData }: { loginData?: IResponseUserData }) => {
           </Button>
         </DropdownTrigger>
         <DropdownMenu aria-label="Dropdown menu for user auth" variant="faded">
-          {loginData ? (
+          {!!user ? (
             <>
               <DropdownItem key="username">
-                <h1 className="text-md ">
-                  نام کاربری:{loginData.data.user.username}
-                </h1>
+                <h1 className="text-md ">نام کاربری:{user.username}</h1>
                 <div className="flex gap-1 pb-2">
                   نام و نام خانوادگی:
-                  <p className="text-xs">{loginData.data.user.firstname}</p>
-                  <p className="text-xs">{loginData.data.user.lastname}</p>
+                  <p className="text-xs">{user.firstname}</p>
+                  <p className="text-xs">{user.lastname}</p>
                 </div>
                 <Divider />
               </DropdownItem>
-              {loginData.data.user.role === "ADMIN" && (
+              {user.role === "ADMIN" && (
                 <DropdownItem
                   key="dashboard"
                   endContent={<TbLayoutDashboard />}

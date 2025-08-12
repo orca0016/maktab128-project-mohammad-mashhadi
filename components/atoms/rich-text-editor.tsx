@@ -21,8 +21,9 @@ import { FaBold } from "react-icons/fa6";
 import { FiItalic } from "react-icons/fi";
 import { GoStrikethrough } from "react-icons/go";
 import { IoList } from "react-icons/io5";
+import { LuHeading1, LuHeading2, LuHeading3 } from "react-icons/lu";
 import { MdFormatUnderlined } from "react-icons/md";
-import { LuHeading1 ,LuHeading2 , LuHeading3 } from "react-icons/lu";
+import { useEffect } from "react";
 
 const TextEditor = ({
   value,
@@ -38,7 +39,10 @@ const TextEditor = ({
   const editor = useEditor({
     immediatelyRender: false,
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        bulletList: false,
+        orderedList: false,
+      }),
       TextAlign.configure({
         types: ["heading", "paragraph"],
       }),
@@ -59,6 +63,11 @@ const TextEditor = ({
       },
     },
   });
+  useEffect(() => {
+  if (editor && value !== editor.getHTML()) {
+    editor.commands.setContent(value || "");
+  }
+}, [value, editor]);
   return (
     <>
       <h1 className="text-title-text-light dark:text-white text-right my-3">
@@ -100,7 +109,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
               : ""
           }
         >
-          <LuHeading1 size={'1.2rem'}/>
+          <LuHeading1 size={"1.2rem"} />
         </Button>
 
         <Button
@@ -115,7 +124,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
               : ""
           }
         >
-          <LuHeading2 size={'1.2rem'}/>
+          <LuHeading2 size={"1.2rem"} />
         </Button>
         <Button
           isIconOnly
@@ -129,7 +138,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
               : ""
           }
         >
-          <LuHeading3 size={'1.2rem'}/>
+          <LuHeading3 size={"1.2rem"} />
         </Button>
         <Button
           isIconOnly
@@ -139,7 +148,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
             editor.isActive("underline") ? "dark:bg-gray-600 bg-gray-200" : ""
           }
         >
-          <MdFormatUnderlined size={'1.2rem'} />
+          <MdFormatUnderlined size={"1.2rem"} />
         </Button>
         <Button
           isIconOnly
@@ -149,7 +158,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
             editor.isActive("paragraph") ? "dark:bg-gray-600 bg-gray-200" : ""
           }
         >
-          <BsParagraph  size={'1.2rem'} />
+          <BsParagraph size={"1.2rem"} />
         </Button>
         <Button
           isIconOnly
@@ -159,7 +168,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
             editor.isActive("bold") ? "dark:bg-gray-600 bg-gray-200" : ""
           }
         >
-          <FaBold size={'1.2rem'} />
+          <FaBold size={"1.2rem"} />
         </Button>
         <Button
           isIconOnly
@@ -169,7 +178,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
             editor.isActive("italic") ? "dark:bg-gray-600 bg-gray-200" : ""
           }
         >
-          <FiItalic size={'1.2rem'} />
+          <FiItalic size={"1.2rem"} />
         </Button>
         <Button
           isIconOnly
@@ -179,7 +188,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
             editor.isActive("strike") ? "dark:bg-gray-600 bg-gray-200" : ""
           }
         >
-          <GoStrikethrough  size={'1.2rem'} />
+          <GoStrikethrough size={"1.2rem"} />
         </Button>
         <Button
           isIconOnly
@@ -189,7 +198,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
             editor.isActive("highlight") ? "dark:bg-gray-600 bg-gray-200" : ""
           }
         >
-          <AiOutlineHighlight size={'1.2rem'} />
+          <AiOutlineHighlight size={"1.2rem"} />
         </Button>
 
         <Button
@@ -202,7 +211,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
               : ""
           }
         >
-          <BsJustifyLeft size={'1.2rem'} />
+          <BsJustifyLeft size={"1.2rem"} />
         </Button>
         <Button
           isIconOnly
@@ -214,7 +223,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
               : ""
           }
         >
-          <BiAlignJustify size={'1.2rem'} />
+          <BiAlignJustify size={"1.2rem"} />
         </Button>
         <Button
           isIconOnly
@@ -226,7 +235,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
               : ""
           }
         >
-          <BsJustifyRight size={'1.2rem'} />
+          <BsJustifyRight size={"1.2rem"} />
         </Button>
         <Button
           isIconOnly
@@ -238,7 +247,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
               : ""
           }
         >
-          <BsJustify size={'1.2rem'} />
+          <BsJustify size={"1.2rem"} />
         </Button>
         <Button
           isIconOnly
@@ -248,7 +257,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
             editor.isActive("bulletList") ? "dark:bg-gray-600 bg-gray-200" : ""
           }
         >
-          <IoList size={'1.2rem'} />
+          <IoList size={"1.2rem"} />
         </Button>
         <Button
           isIconOnly
@@ -258,7 +267,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
             editor.isActive("orderedList") ? "dark:bg-gray-600 bg-gray-200" : ""
           }
         >
-          <HiNumberedList size={'1.2rem'} />
+          <HiNumberedList size={"1.2rem"} />
         </Button>
       </div>
     </div>
