@@ -13,7 +13,7 @@ const SidebarDashboard = () => {
     }
   };
   return (
-    <div className=" w-full  pt-20  border-l dark:border-[#1C252E] border-[#F2F3F5] px-4">
+    <div className=" w-full min-h-full  pt-20  border-l dark:border-[#1C252E] border-[#F2F3F5] px-4">
       <h1 className="text-xl my-3 text-[#C1C7CD] font-bold px-5">مدیریت</h1>
       <Accordion
         selectionMode="multiple"

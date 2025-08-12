@@ -1,16 +1,18 @@
 "use client";
 
+import { AddNewProductSchemaType } from "@/validations/add-new-product-schema";
 import Image from "next/image";
+import { useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { UseFormSetValue } from "react-hook-form";
 import { LiaTimesSolid } from "react-icons/lia";
 
 type DropzoneProps = {
   value?: File[];
+  title: string;
+  messageError?: string;
   onChange: (files: File[]) => void;
-  setValue: UseFormSetValue<{
-    images: File[];
-  }>;
+  setValue: UseFormSetValue<AddNewProductSchemaType>;
   multiple?: boolean;
 };
 const CardPreview = ({
@@ -18,9 +20,7 @@ const CardPreview = ({
   files,
   src,
 }: {
-  setFiles: UseFormSetValue<{
-    images: File[];
-  }>;
+  setFiles: UseFormSetValue<AddNewProductSchemaType>;
   files: File[];
   src: File;
 }) => {
@@ -51,6 +51,8 @@ const CardPreview = ({
 const DropzoneInput = ({
   value = [],
   onChange,
+  title,
+  messageError,
   setValue,
   multiple = false,
 }: DropzoneProps) => {
@@ -59,14 +61,25 @@ const DropzoneInput = ({
     multiple,
   });
 
+  useEffect(()=>{
+    if (!value) return 
+    setValue('thumbnail' , value[0])
+  },[value])
   return (
     <>
+      <h1 className="text-title-text-light dark:text-white text-right my-3">
+        {title}
+      </h1>
       <div
         {...getRootProps()}
         className={`border-1 border-dashed rounded-xl p-11 text-center cursor-pointer transition ${
           isDragActive
             ? "border-blue-500 bg-blue-50/40 text-black"
-            : "border-[#E2E5E9] dark:border-[#3B444F] dark:bg-[#252E37] bg-[#F6F7F8]"
+            : `${
+                messageError
+                  ? "border-red-500"
+                  : "border-[#E2E5E9] dark:border-[#3B444F]"
+              } dark:bg-[#252E37] bg-[#F6F7F8]`
         }`}
       >
         <input {...getInputProps()} />
@@ -78,10 +91,14 @@ const DropzoneInput = ({
             width={100}
             height={100}
           />
-          <p className="text-gray-500">فایل خود را اینجا بکشید یا <span className="text-custom-purple font-bold">کلیک کنید</span></p>
+          <p className="text-gray-500">
+            فایل خود را اینجا بکشید یا{" "}
+            <span className="text-custom-purple font-bold">کلیک کنید</span>
+          </p>
         </div>
       </div>
-      <div className="py-4 flex gap-3 overflow-x-auto">
+      <p className="text-red-500 text-right text-[12px]">{messageError}</p>
+      <div className={`${value.length===0?'hidden':'block'} py-4 flex gap-3 overflow-x-auto`}>
         {value.map((item, index) => (
           <CardPreview
             key={index}

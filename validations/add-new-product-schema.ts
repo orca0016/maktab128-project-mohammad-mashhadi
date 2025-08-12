@@ -1,70 +1,86 @@
-import * as z from "zod";
-const validFormats = ["image/png", "image/jpg", "image/jpeg"];
-const validSize = 2000000;
+import { z } from "zod";
+
+const validFormats = new Set(["image/png", "image/jpg", "image/jpeg"]);
+const validSize = 2 * 1024 * 1024; // 2MB
+
+const stripHtml = (html: string) =>
+  (html || "")
+    .replace(/<[^>]*>/g, "")
+    .replace(/&nbsp;/g, "")
+    .trim();
 
 export const addNewProductSchema = z.object({
-  category: z.string({ error: "لطفا یک دسته بندی برای محصول انتخاب کنید." }),
-  subcategory: z.string({
-    error: "لطفا یک زیر مجموعه برای محصول انتخاب کنید.",
-  }),
+  category: z
+    .string({ error: "لطفا یک دسته‌بندی برای محصول انتخاب کنید." })
+    .min(1, { message: "لطفا یک دسته‌بندی برای محصول انتخاب کنید." }),
+
+  subcategory: z
+    .string({ error: "لطفا یک زیرمجموعه برای محصول انتخاب کنید." })
+    .min(1, { message: "لطفا یک زیرمجموعه برای محصول انتخاب کنید." }),
+
   name: z
-    .string({ error: "لطفا اسم محصول را وارد کنید " })
+    .string({ error: "لطفا اسم محصول را وارد کنید." })
     .trim()
-    .min(4, { error: "اسم محصول باید بیشتر از ۴ کاراکتر باشد " })
-    .max(30, { error: "اسم محصول نمیتواند بیشتر از ۳۰ کاراکتر باشد ." }),
+    .min(4, { message: "اسم محصول باید بیشتر از ۴ کاراکتر باشد." })
+    .max(30, { message: "اسم محصول نمی‌تواند بیشتر از ۳۰ کاراکتر باشد." }),
+
+  // اگر RTE استفاده می‌کنی:
+  description: z
+    .string({ error: "توضیحات محصول را وارد کنید." })
+    .superRefine((val, ctx) => {
+      if (!stripHtml(val)) {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, message: "توضیحات محصول را وارد کنید." });
+      }
+    }),
+
+  price: z
+    .string({ error: "قیمت را وارد کنید." })
+    .regex(/^\d+$/, { message: "لطفا یک مقدار عددی معتبر وارد کنید." }),
   quantity: z
-    .string({ error: "قیمت محصول را وارد کنید " })
-    .regex(/^\d+$/, "لطفا یک قیمت درست وارد کنید "),
+    .string({ error: "تعداد را وارد کنید." })
+    .regex(/^\d+$/, { message: "لطفا یک مقدار عددی معتبر وارد کنید." }),
+
   brand: z
-    .string({ error: "برند محصول را وارد کنید ." })
+    .string({ error: "برند محصول را وارد کنید." })
     .trim()
-    .min(2, { error: "اسم برند باید بیشتر از ۲ کاراکتر باشد " })
-    .max(10, { error: "اسم برند نمیتواند بیشتر از 1۰ کاراکتر باشد ." }),
+    .min(2, { message: "اسم برند باید بیشتر از ۲ کاراکتر باشد." })
+    .max(10, { message: "اسم برند نمی‌تواند بیشتر از ۱۰ کاراکتر باشد." }),
+
   thumbnail: z
-    .custom<File>()
-    .refine(
-      (f) => {
-        return Boolean(f);
-      },
-      { message: "تامنیل مورد نیاز است " }
-    )
-    .refine(
-      (f) => {
-        return validFormats.includes(f.type);
-      },
-      { message: "فرمت فایل مورد قبول نمی باشد (png,jpg,jpeg)" }
-    )
-    .refine(
-      (f) => {
-        return f.size <= validSize;
-      },
-      { message: "عکس باید کم تر از ۲ مگابایت حجم داشته باشد" }
-    ),
+    .any()
+    .superRefine((val, ctx) => {
+      if (!(val instanceof File)) {
+        ctx.addIssue({ code: "custom", message: "تصویر بندانگشتی (thumbnail) الزامی است." });
+        return;
+      }
+      if (!validFormats.has(val.type)) {
+        ctx.addIssue({ code: "custom", message: "فرمت فایل مورد قبول نمی‌باشد (png, jpg, jpeg)." });
+      }
+      if (val.size > validSize) {
+        ctx.addIssue({ code: "custom", message: "حجم تصویر باید کمتر از ۲ مگابایت باشد." });
+      }
+    }),
 
   images: z
-    .custom<File[]>()
-    .refine(
-      (f) => {
-        return Boolean(f);
-      },
-      { message: "تامنیل مورد نیاز است " }
-    )
-    .refine(
-      (f) => {
-        const allFilesValid = f.map((item) => validFormats.includes(item.type));
-        if (allFilesValid.includes(false)) return false;
-
-        return true;
-      },
-      { message: "فرمت فایل مورد قبول نمی باشد (png,jpg,jpeg)" }
-    )
-    .refine(
-      (f) => {
-        const allFilesValid = f.map((item) => validSize >= item.size);
-        if (allFilesValid.includes(false)) return false;
-        return true;
-      },
-      { message: "عکس ها باید کم تر از ۲ مگابایت حجم داشته باشند" }
-    ),
+    .any()
+    .transform((val) => {
+      if (!val) return [] as File[];
+      if (Array.isArray(val)) return val as File[];
+      if (val instanceof FileList) return Array.from(val) as File[];
+      return [] as File[];
+    })
+    .superRefine((files: File[], ctx) => {
+      if (!files.length) {
+        ctx.addIssue({ code: "custom", message: "آپلود حداقل یک تصویر الزامی است." });
+        return;
+      }
+      if (!files.every((f) => validFormats.has(f.type))) {
+        ctx.addIssue({ code: "custom", message: "فرمت یکی از تصاویر مجاز نیست (png, jpg, jpeg)." });
+      }
+      if (!files.every((f) => f.size <= validSize)) {
+        ctx.addIssue({ code: "custom", message: "حجم هر تصویر باید کمتر از ۲ مگابایت باشد." });
+      }
+    }),
 });
-export type addNewProductSchemaType = z.infer<typeof addNewProductSchema>;
+
+export type AddNewProductSchemaType = z.infer<typeof addNewProductSchema>;
