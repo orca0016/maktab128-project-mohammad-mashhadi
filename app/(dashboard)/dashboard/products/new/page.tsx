@@ -2,7 +2,7 @@
 import AddNewProductForm from "@/components/molecules/add-new-product-form";
 import { BreadcrumbItem, Breadcrumbs } from "@heroui/breadcrumbs";
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
 
 const AddNewProductPage = () => {
   return (
@@ -18,7 +18,9 @@ const AddNewProductPage = () => {
         <BreadcrumbItem>اضافه کردن</BreadcrumbItem>
       </Breadcrumbs>
       <div className="max-w-[720px] mx-auto my-11">
+        <Suspense fallback={<p>Loading feed...</p>}>
         <AddNewProductForm />
+            </Suspense>
       </div>
     </div>
   );
