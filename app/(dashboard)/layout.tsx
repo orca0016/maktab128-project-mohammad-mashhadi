@@ -35,7 +35,7 @@ const ShopLayout = ({ children }: { children: React.ReactNode }) => {
         </div>
         <div className=" col-span-9 relative">
           <ScrollableBox>
-            <div className="py-20 px-7">{children}</div>
+              <div className="py-20 px-7">{children}</div>
           </ScrollableBox>
         </div>
       </div>
