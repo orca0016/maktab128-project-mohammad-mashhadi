@@ -23,15 +23,42 @@ import { useCategories, useSubcategories } from "@/hooks/add-products-hooks";
 import { productFormDataBuilder } from "@/lib/form-data-builder";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import DropzoneInput from "../atoms/dropzone-input";
 import TextEditor from "../atoms/rich-text-editor";
 
-const AddNewProductForm = () => {
+const AddNewProductForm = ({
+  isEditing = false,
+  editProductData,
+  onEditClose,
+}: {
+  isEditing?: boolean;
+  editProductData?: ISingleProduct;
+  onEditClose?: () => void;
+}) => {
+  useEffect(() => {
+    if (!isEditing || !editProductData) return;
+    reset(
+      {
+        name: editProductData.name ?? "",
+        brand: editProductData.brand ?? "",
+        price: String(editProductData.price ?? ""),
+        quantity: String(editProductData.quantity ?? ""),
+        category: editProductData.category?._id ?? "",
+        subcategory: editProductData.subcategory?._id ?? "",
+        description: editProductData.description ?? "",
+        images:  editProductData.images,
+        thumbnail:  editProductData.thumbnail,
+      },
+      { keepDirtyValues: false }
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEditing, editProductData]);
+
   const { control, handleSubmit, setValue, watch, reset } =
     useForm<AddNewProductSchemaType>({
-      resolver: zodResolver(addNewProductSchema),
+      resolver: zodResolver(addNewProductSchema(isEditing)),
     });
 
   const categoryId = watch("category");
@@ -59,7 +86,7 @@ const AddNewProductForm = () => {
         thumbnail: null,
         subcategory: "",
       });
-      queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: ["product-list"] });
       addToast({
         title: "موفق بود.",
         description: "محصول موردنظر با موفقیت اضافه شد .",
@@ -77,7 +104,39 @@ const AddNewProductForm = () => {
     },
   });
 
+  const editProduct = useMutation({
+    mutationFn: async (data: FormData) =>
+      await axiosInstanceBackEnd().patch(
+        `/api/products/${editProductData?._id}`,
+        data,
+        {
+          headers: {
+            credentials: true,
+          },
+        }
+      ),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["product-list"] });
+      addToast({
+        title: "موفق بود.",
+        description: "محصول موردنظر با موفقیت ویرایش شد .",
+        color: "success",
+      });
+      onEditClose?.();
+    },
+    onError: (e) => {
+      console.log(e);
+      addToast({
+        title: "خطا در ویرایش محصول",
+        description: e?.message ?? "خطای نامشخص",
+        color: "danger",
+        variant: "flat",
+      });
+    },
+  });
+
   const onSubmit: SubmitHandler<AddNewProductSchemaType> = (data) => {
+    if (isEditing) return editProduct.mutate(productFormDataBuilder(data));
     createProduct.mutate(productFormDataBuilder(data));
   };
 
@@ -285,11 +344,11 @@ const AddNewProductForm = () => {
             type="submit"
             size="lg"
             variant="solid"
-            isDisabled={createProduct.isPending}
-            isLoading={createProduct.isPending}
+            isDisabled={createProduct.isPending || editProduct.isPending}
+            isLoading={createProduct.isPending || editProduct.isPending}
             className="bg-title-text-light text-white dark:bg-white dark:text-title-text-light font-semibold"
           >
-            ساخت محصول
+            {isEditing ? "ویراییش محصول" : "ساخت محصول"}
           </Button>
         </CardFooter>
       </Card>
