@@ -8,7 +8,6 @@ import {
 
 import {
   Card,
-  Input,
   Pagination,
   Spinner,
   Table,
@@ -26,8 +25,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { FaRegEye } from "react-icons/fa";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { TbEdit } from "react-icons/tb";
-import DeleteProductModal from "./delete-product-modal";
-import EditProductModal from "./edit-product-modal";
+import DeleteProductModal from "../atoms/delete-product-modal";
+import EditProductModal from "../atoms/edit-product-modal";
 
 const ProductsListTable = () => {
   const searchParams = useSearchParams();
@@ -48,7 +47,7 @@ const ProductsListTable = () => {
     const params = new URLSearchParams(searchParams.toString());
     if (p === 1) params.delete("page");
     else params.set("page", String(p));
-    router.replace(`${pathname}?${params.toString()}` , {scroll:false});
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
   const {
@@ -218,30 +217,14 @@ const ProductsListTable = () => {
         }}
       >
         <TableHeader>
-          <TableColumn key="thumbnail" allowsSorting>
-            تصویر
-          </TableColumn>
-          <TableColumn key="name" allowsSorting>
-            اسم
-          </TableColumn>
-          <TableColumn key="price" allowsSorting>
-            قیمت
-          </TableColumn>
-          <TableColumn key="quantity" allowsSorting>
-            تعداد موجودی
-          </TableColumn>
-          <TableColumn key="brand" allowsSorting>
-            برند
-          </TableColumn>
-          <TableColumn key="category" allowsSorting>
-            دسته بندی
-          </TableColumn>
-          <TableColumn key="subcategory" allowsSorting>
-            زیر مجموعه
-          </TableColumn>
-          <TableColumn key="actions" allowsSorting>
-            اکشن ها
-          </TableColumn>
+          <TableColumn key="thumbnail">تصویر</TableColumn>
+          <TableColumn key="name">اسم</TableColumn>
+          <TableColumn key="price">قیمت</TableColumn>
+          <TableColumn key="quantity">تعداد موجودی</TableColumn>
+          <TableColumn key="brand">برند</TableColumn>
+          <TableColumn key="category">دسته بندی</TableColumn>
+          <TableColumn key="subcategory">زیر مجموعه</TableColumn>
+          <TableColumn key="actions">اکشن ها</TableColumn>
         </TableHeader>
         <TableBody
           isLoading={isProductListPending || !isCatsReady || !isSubsReady}

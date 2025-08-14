@@ -14,6 +14,10 @@ export const PAGE_LIST_DASHBOARD = [
         title: "اضافه کردن محصول جدید  ",
         href: "/dashboard/products/new",
       },
+      {
+        title: "مدیریت موجودیت ها   ",
+        href: "/dashboard/products/entities",
+      },
     ],
   },
   {
@@ -39,19 +43,7 @@ export const PAGE_LIST_DASHBOARD = [
       {
         title: "اضافه کردن کاربر جدید  ",
         href: "dashboard/users/new",
-      },
-      {
-        title: "اضافه کردن کاربر جدید  ",
-        href: "dashboard/users/new",
-      },
-      {
-        title: "اضافه کردن کاربر جدید  ",
-        href: "/users/new",
-      },
-      {
-        title: "اضافه کردن کاربر جدید  ",
-        href: "/users/new",
-      },
+      }
     ],
   },
 ];

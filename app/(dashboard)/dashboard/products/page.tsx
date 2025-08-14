@@ -1,8 +1,7 @@
 "use client";
-import ProductsListTable from "@/components/atoms/products-list-table";
+import ProductsListTable from "@/components/molecules/products-list-table";
 import { BreadcrumbItem, Breadcrumbs } from "@heroui/breadcrumbs";
 import Link from "next/link";
-import { Suspense } from "react";
 
 const ProductsListPage = () => {
   return (
@@ -15,9 +14,7 @@ const ProductsListPage = () => {
         <BreadcrumbItem>محصولات</BreadcrumbItem>
       </Breadcrumbs>
       <div className="max-w-[1200px] mx-auto my-11">
-        <Suspense fallback={<p>Loading feed...</p>}>
-          <ProductsListTable/>
-        </Suspense>
+        <ProductsListTable />
       </div>
     </div>
   );
