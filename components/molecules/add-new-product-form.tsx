@@ -37,6 +37,12 @@ const AddNewProductForm = ({
   editProductData?: ISingleProduct;
   onEditClose?: () => void;
 }) => {
+  
+  const { control, handleSubmit, setValue, watch, reset } =
+  useForm<AddNewProductSchemaType>({
+    resolver: zodResolver(addNewProductSchema(isEditing)),
+  });
+  
   useEffect(() => {
     if (!isEditing || !editProductData) return;
     reset(
@@ -55,12 +61,7 @@ const AddNewProductForm = ({
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEditing, editProductData]);
-
-  const { control, handleSubmit, setValue, watch, reset } =
-    useForm<AddNewProductSchemaType>({
-      resolver: zodResolver(addNewProductSchema(isEditing)),
-    });
-
+  
   const categoryId = watch("category");
 
   const categoryList = useCategories();
