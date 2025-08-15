@@ -32,7 +32,7 @@ const ProductsListTable = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const limit = 10;
+  const limit = 4;
   const [page, setPage] = useState<number>(
     () => Number(searchParams.get("page")) || 1
   );
@@ -43,10 +43,10 @@ const ProductsListTable = () => {
   }, [searchParams]);
 
   const handlePageChange = (p: number) => {
+    if (p === 0) return 
     setPage(p);
     const params = new URLSearchParams(searchParams.toString());
-    if (p === 1) params.delete("page");
-    else params.set("page", String(p));
+     params.set("page", String(p));
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 

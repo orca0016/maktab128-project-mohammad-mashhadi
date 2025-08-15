@@ -26,10 +26,13 @@ const CardPreview = ({
   backendBaseUrl: string;
 }) => {
   const handleDeletePreview = () => {
-    setFiles(
-      "images",
-      files.filter((item) => item !== src)
-    );
+    const newFiles = files.filter((item) => item !== src);
+    setFiles("images", newFiles);
+    if (newFiles.length > 0) {
+      setFiles("thumbnail", newFiles[0]);
+    } else {
+      setFiles("thumbnail", null); 
+    }
   };
 
   const imageSrc =
@@ -66,18 +69,14 @@ const DropzoneInput = ({
     onDrop: (acceptedFiles) => onChange(acceptedFiles),
     multiple,
   });
-
-  useEffect(() => {
-    if (!value) return;
-    setValue("thumbnail", value[0]);
-    if (!value || value.length === 0) return;
-
-    if (typeof value[0] === "string") {
-      setValue("thumbnail", value[0] as string);
-    } else if (value[0] instanceof File) {
-      setValue("thumbnail", value[0] as File);
-    }
-  }, [value, setValue]);
+  
+useEffect(() => {
+  if (!value || value.length === 0) {
+    setValue("thumbnail", null);
+    return;
+  }
+  setValue("thumbnail", value[0]);
+}, [value, setValue]);
 
   return (
     <>

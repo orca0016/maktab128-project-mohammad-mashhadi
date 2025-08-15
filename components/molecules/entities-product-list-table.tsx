@@ -162,13 +162,13 @@ const EntitiesProductListTable = ({
           }}
         >
           <TableHeader>
-            <TableColumn key="name" allowsSorting>
+            <TableColumn key="name">
               اسم
             </TableColumn>
-            <TableColumn key="price" allowsSorting>
+            <TableColumn key="price">
               قیمت
             </TableColumn>
-            <TableColumn key="quantity" allowsSorting>
+            <TableColumn key="quantity">
               تعداد موجودی
             </TableColumn>
           </TableHeader>

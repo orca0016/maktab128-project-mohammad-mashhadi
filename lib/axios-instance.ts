@@ -20,8 +20,13 @@ export const axiosInstanceBackEnd = () => {
     (res) => res,
     (error) => {
       if (error.response?.status === 401 || error.response?.status === 403) {
-        localStorage.removeItem("token");
-        window.location.href = "/login";
+        if (
+          !window.location.href.includes("login") &&
+          !window.location.href.includes("sign-up")
+        ) {
+          localStorage.removeItem("token");
+          window.location.href = "/login";
+        }
       }
       return Promise.reject(error);
     }
