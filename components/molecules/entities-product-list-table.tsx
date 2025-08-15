@@ -34,7 +34,7 @@ const EntitiesProductListTable = ({
 
   const pathname = usePathname();
   const router = useRouter();
-  const limit = 10;
+  const limit = 4;
 
   useEffect(() => {
     const p = Number(searchParams.get("page")) || 1;

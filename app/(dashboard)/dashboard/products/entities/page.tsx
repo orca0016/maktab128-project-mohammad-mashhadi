@@ -1,5 +1,6 @@
 "use client";
 import EntitiesProductListTable from "@/components/molecules/entities-product-list-table";
+import { queryClient } from "@/context/query-provider";
 import { axiosInstanceBackEnd } from "@/lib/axios-instance";
 import { BreadcrumbItem, Breadcrumbs } from "@heroui/breadcrumbs";
 import { Button } from "@heroui/button";
@@ -50,6 +51,7 @@ const ProductsEntityListPage = () => {
         description: "اطلاعات با موفقیت اپدیت شد .",
         color: "success",
       });
+       queryClient.invalidateQueries({ queryKey: ["product-list"] });
     } catch (error) {
       console.error("Error during parallel mutations:", error);
       addToast({
