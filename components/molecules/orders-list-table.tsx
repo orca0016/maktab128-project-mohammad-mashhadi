@@ -1,12 +1,10 @@
 import { queryClient } from "@/context/query-provider";
-import { convertDate } from "@/helpers/miladi-to-shamsi";
 import { useGetOrdersList, useGetUsersList } from "@/hooks/orders-list-hook";
 import { axiosInstanceBackEnd } from "@/lib/axios-instance";
 import {
   addToast,
   Button,
   Card,
-  Chip,
   Pagination,
   Popover,
   PopoverContent,
@@ -19,16 +17,16 @@ import {
   TableHeader,
   TableRow,
   useDisclosure,
-  User,
 } from "@heroui/react";
 import { useMutation } from "@tanstack/react-query";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { SlOptionsVertical } from "react-icons/sl";
+import { useEffect, useMemo, useState } from "react";
 import DetailOrderListModal from "../atoms/detail-list-order";
+import { useOrderCellTable } from "../atoms/orders-table-cells";
 
 const OrdersListTable = () => {
   const [currentOrder, setCurrentOrder] = useState<string | null>(null);
+  const [orderFilter, setOrderFilter] = useState<string | null>(null);
   const searchParams = useSearchParams();
 
   const [page, setPage] = useState<number>(
@@ -37,10 +35,12 @@ const OrdersListTable = () => {
 
   const pathname = usePathname();
   const router = useRouter();
-  const limit = 4;
+  const limit = 10;
 
   useEffect(() => {
     const p = Number(searchParams.get("page")) || 1;
+    const filter = searchParams.get("orderStatus");
+    setOrderFilter(filter);
     setPage(p);
   }, [searchParams]);
 
@@ -55,6 +55,7 @@ const OrdersListTable = () => {
   const { data: orderListData, isPending: isOrderListData } = useGetOrdersList({
     page,
     limit,
+    orderFilter,
   });
   const { data: userListData } = useGetUsersList({
     page: 1,
@@ -80,19 +81,32 @@ const OrdersListTable = () => {
     mutationFn: async ({
       orderId,
       orderStatus,
+      deliveryDate,
     }: {
       orderId: string;
+      deliveryDate: string;
       orderStatus: boolean;
     }) =>
       axiosInstanceBackEnd()
-        .patch(`/api/orders/${orderId}`, { deliveryStatus: orderStatus })
+        .patch(`/api/orders/${orderId}`, {
+          deliveryStatus: orderStatus,
+          deliveryDate: deliveryDate,
+        })
         .then((r) => r.data),
-    onSuccess: () => {
+    onSuccess: () => {      
       queryClient.invalidateQueries({ queryKey: ["order-list"] });
       addToast({
         title: "موفق بود",
         description: "وضعیت سفارش تغییر کرد",
         color: "success",
+      });
+      onCloseOrderDetail()
+    },
+    onError: (e) => {
+      addToast({
+        title: "مشکلی  پیش آمد",
+        description: e.message,
+        color: "danger",
       });
     },
   });
@@ -102,109 +116,27 @@ const OrdersListTable = () => {
     onClose: onCloseOrderDetail,
   } = useDisclosure();
 
-  const renderCell = useCallback(
-    (order: IOrder, columnKey: React.Key) => {
-      const cellValue = order[columnKey as keyof IOrder];
+  const renderCell = useOrderCellTable({
+    onOpenOrderDetail,
+    setCurrentOrder,
+    userListReCords,
+  });
 
-      switch (columnKey) {
-        case "user": {
-          console.log(userListReCords);
+  const handleFilterOrder = (deliveryStatus: boolean | null) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (deliveryStatus === null) params.delete("orderStatus");
+    else params.set("orderStatus", String(deliveryStatus));
+    if (deliveryStatus !== null) setOrderFilter(JSON.stringify(deliveryStatus));
+    else setOrderFilter(null);
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  };
 
-          return (
-            <User
-              avatarProps={{
-                src: "https://pub-c5e31b5cdafb419fb247a8ac2e78df7a.r2.dev/public/assets/images/mock/avatar/avatar-2.webp",
-              }}
-              description={`${
-                userListReCords[order.user]?.firstname ?? "-"
-              } _ ${userListReCords[order.user]?.lastname ?? "-"}`}
-              name={userListReCords[order.user]?.username ?? "-"}
-            />
-          );
-        }
-        case "status": {
-          return (
-            <div>
-              {order.deliveryStatus ? (
-                <Chip color="success" variant="shadow">
-                  تحویل شده
-                </Chip>
-              ) : (
-                <Chip color="warning" variant="shadow">
-                  درحال ارسال
-                </Chip>
-              )}
-            </div>
-          );
-        }
-        case "action":
-          return (
-            <Popover
-              showArrow
-              offset={20}
-              placement="right"
-              classNames={{
-                base: "dark:before:bg-title-text-light",
-                content: " bg-shadow-drawer ",
-              }}
-            >
-              <PopoverTrigger>
-                <Button isIconOnly className="rounded-full" variant="light">
-                  <SlOptionsVertical />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent>
-                <div className="px-1 py-2 flex flex-col gap-4 ">
-                  <Button
-                    variant="light"
-                    isLoading={changeStatusOrder.isPending}
-                    onPress={() =>
-                      changeStatusOrder.mutate({
-                        orderId: order._id,
-                        orderStatus: !order.deliveryStatus,
-                      })
-                    }
-                  >
-                    تغییر وضعیت سفارش
-                  </Button>
-                  <Button
-                    color="secondary"
-                    onPress={() => {
-                      onOpenOrderDetail();
-                      setCurrentOrder(order._id);
-                    }}
-                    variant="light"
-                  >
-                    نمایش جزییات
-                  </Button>
-                </div>
-              </PopoverContent>
-            </Popover>
-          );
-        case "deliveryDate": {
-          return <div>{convertDate(order.deliveryDate).jalaliDate}</div>;
-        }
-
-        default:
-          if (
-            typeof cellValue === "string" ||
-            typeof cellValue === "number" ||
-            typeof cellValue === "boolean" ||
-            cellValue === null ||
-            cellValue === undefined
-          ) {
-            return cellValue;
-          }
-          return <span>{JSON.stringify(cellValue)}</span>;
-      }
-    },
-    [userListReCords, changeStatusOrder , onOpenOrderDetail]
-  );
-
+  
   return (
     <div>
       <Card classNames={{ base: "dark:bg-[#1C252E]" }}>
         <DetailOrderListModal
+          changeStatusOrder={changeStatusOrder}
           currentOrder={currentOrder}
           isOpen={isOpenOrderDetail}
           onOpen={onOpenOrderDetail}
@@ -213,10 +145,11 @@ const OrdersListTable = () => {
         <Table
           key={JSON.stringify(userListReCords)}
           removeWrapper
-          aria-label="Example table with client side sorting"
+          aria-label="order details"
           bottomContent={
             <div className="flex w-full justify-center py-2">
               <Pagination
+                key={JSON.stringify(orderList)}
                 dir="ltr"
                 classNames={{
                   item: "bg-current/10 ",
@@ -241,10 +174,44 @@ const OrdersListTable = () => {
           }}
         >
           <TableHeader>
-            <TableColumn key="user">اسم</TableColumn>
+            <TableColumn key="user">اسم خریدار</TableColumn>
             <TableColumn key="totalPrice">مجموع خرید</TableColumn>
-            <TableColumn key="deliveryDate">تاریخ ارسال</TableColumn>
-            <TableColumn key="status">وضعیت سفارش</TableColumn>
+            <TableColumn key="deliveryDate">تاریخ دریافت</TableColumn>
+            <TableColumn key="status">
+              <Popover
+                placement="bottom"
+                classNames={{ content: "bg-shadow-drawer" }}
+              >
+                <PopoverTrigger>
+                  <Button variant="light">وضعیت سفارش</Button>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <div className="p-1 flex flex-col gap-2">
+                    <Button
+                      onPress={() => handleFilterOrder(null)}
+                      color="secondary"
+                      size="sm"
+                    >
+                      همه
+                    </Button>
+                    <Button
+                      onPress={() => handleFilterOrder(true)}
+                      color="secondary"
+                      size="sm"
+                    >
+                      تحویل شده{" "}
+                    </Button>
+                    <Button
+                      onPress={() => handleFilterOrder(false)}
+                      color="secondary"
+                      size="sm"
+                    >
+                      در انتظار
+                    </Button>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            </TableColumn>
             <TableColumn key="action">تنظیمات</TableColumn>
           </TableHeader>
           <TableBody

@@ -4,9 +4,11 @@ import {
   useGetListProduct,
   useGetSubCategories,
 } from "@/hooks/list-products-hooks";
-// http://localhost:8000/api/products?page=1&limit=4&fields=-rating,-createdAt,-updatedAt,-__v&sort=price&quantity[gte]=8
+import { FaFilter } from "react-icons/fa";
 
 import {
+  Autocomplete,
+  AutocompleteItem,
   Card,
   Pagination,
   Spinner,
@@ -16,37 +18,38 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-  Tooltip,
   useDisclosure,
 } from "@heroui/react";
-import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { FaRegEye } from "react-icons/fa";
-import { FaRegTrashCan } from "react-icons/fa6";
-import { TbEdit } from "react-icons/tb";
+import { useEffect, useMemo, useState } from "react";
+
 import DeleteProductModal from "../atoms/delete-product-modal";
 import EditProductModal from "../atoms/edit-product-modal";
+import { useGenerateProductsTableCells } from "../atoms/product-list-cell-table";
 
 const ProductsListTable = () => {
+  const [productFilter, setProductFilter] = useState<string | null>(null);
+
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const limit = 4;
+  const limit = 10;
   const [page, setPage] = useState<number>(
     () => Number(searchParams.get("page")) || 1
   );
 
   useEffect(() => {
     const p = Number(searchParams.get("page")) || 1;
+    const filter = searchParams.get("category");
+    setProductFilter(filter);
     setPage(p);
   }, [searchParams]);
 
   const handlePageChange = (p: number) => {
-    if (p === 0) return 
+    if (p === 0) return;
     setPage(p);
     const params = new URLSearchParams(searchParams.toString());
-     params.set("page", String(p));
+    params.set("page", String(p));
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
@@ -90,87 +93,31 @@ const ProductsListTable = () => {
     return objectHashmap;
   }, [subCategoryData]);
 
-  const renderCell = useCallback(
-    (product: IProduct, columnKey: React.Key) => {
-      const cellValue = product[columnKey as keyof IProduct];
-
-      switch (columnKey) {
-        case "brand":
-          return <div>{product.brand}</div>;
-        case "category": {
-          const catName = categoryReCords[product.category]?.name ?? "-";
-          return <p>{catName}</p>;
-        }
-        case "subcategory": {
-          const subName = subCategoryReCords[product.subcategory]?.name ?? "-";
-          return <p>{subName}</p>;
-        }
-
-        case "actions":
-          return (
-            <div className="relative flex items-center gap-2">
-              <Tooltip color="success" content="نمایش محصول">
-                <span className="text-lg text-success cursor-pointer active:opacity-50">
-                  <FaRegEye />
-                </span>
-              </Tooltip>
-              <Tooltip color="warning" content="ویرایش محصول">
-                <span
-                  onClick={() => {
-                    onOpenEdit();
-                    setCurrentDeleteProduct(product._id);
-                  }}
-                  className="text-lg text-warning cursor-pointer active:opacity-50"
-                >
-                  <TbEdit />
-                </span>
-              </Tooltip>
-              <Tooltip color="danger" content="حذف محصول">
-                <span
-                  onClick={() => {
-                    onOpenDelete();
-                    setCurrentDeleteProduct(product._id);
-                  }}
-                  className="text-lg text-danger cursor-pointer active:opacity-50"
-                >
-                  <FaRegTrashCan />
-                </span>
-              </Tooltip>
-            </div>
-          );
-
-        case "thumbnail":
-          return (
-            <Image
-              src={`http://localhost:8000/images/products/thumbnails/${product.thumbnail}`}
-              alt="thumbnail product"
-              width={100}
-              height={100}
-            />
-          );
-        default:
-          if (
-            typeof cellValue === "string" ||
-            typeof cellValue === "number" ||
-            typeof cellValue === "boolean" ||
-            cellValue === null ||
-            cellValue === undefined
-          ) {
-            return cellValue;
-          }
-          return <span>{JSON.stringify(cellValue)}</span>;
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [subCategoryReCords, categoryReCords]
-  );
+  const renderCell = useGenerateProductsTableCells({
+    categoryReCords,
+    onOpenDelete,
+    onOpenEdit,
+    setCurrentDeleteProduct,
+    subCategoryReCords,
+  });
 
   const { data: productListData, isPending: isProductListPending } =
-    useGetListProduct({ page, limit });
+    useGetListProduct({ page, limit, productFilter });
+  console.log(productListData);
 
   const productList = productListData?.data.products ?? [];
   const isCatsReady = !!Object.keys(categoryReCords).length;
   const isSubsReady = !!Object.keys(subCategoryReCords).length;
+
+  const handleFilterProduct = (value: string | null) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (value === null) params.delete("category");
+    else params.set("category", String(value));
+    if (value !== null)
+      setProductFilter(JSON.stringify(value));
+    else setProductFilter(null);
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  };
 
   return (
     <Card classNames={{ base: "dark:bg-[#1C252E]" }}>
@@ -186,13 +133,37 @@ const ProductsListTable = () => {
         onClose={onCloseEdit}
         onOpen={onOpenEdit}
       />
-
+      <div className="py-4 px-3">
+        <Autocomplete
+          size="lg"
+          defaultItems={Object.keys(categoryReCords).map((item) => ({
+            ...categoryReCords[item],
+            _id: item,
+          }))}
+          classNames={{
+            popoverContent: "bg-shadow-drawer dark:bg-title-text-light   ",
+            base: "py-2 max-w-xs text-title-text-light dark:text-white",
+            listbox: "dark:text-title-text-light",
+          }}
+          onSelectionChange={(e) => handleFilterProduct(e !== null ? String(e) : null)}
+          placeholder="جستجو بر اساس دسته بندی "
+          startContent={
+            <FaFilter className="text-xl dark:text-white text-title-text-light" />
+          }
+          variant="bordered"
+        >
+          {(item) => (
+            <AutocompleteItem key={item._id}>{item.name}</AutocompleteItem>
+          )}
+        </Autocomplete>
+      </div>
       <Table
         removeWrapper
         aria-label="Example table with client side sorting"
         bottomContent={
           <div className="flex w-full justify-center py-2">
             <Pagination
+              key={JSON.stringify(productList)}
               dir="ltr"
               classNames={{
                 item: "bg-current/10 ",

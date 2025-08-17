@@ -33,6 +33,7 @@ const EditProductModal = ({
     <div>
       <Modal
         backdrop="blur"
+        classNames={{base:"bg-shadow-drawer"}}
         size="lg"
         scrollBehavior="outside"
         isOpen={isOpen}
@@ -44,7 +45,7 @@ const EditProductModal = ({
               <ModalHeader className="flex flex-col gap-1"></ModalHeader>
               <ModalBody>
                 {isPending?(
-                    <Spinner className="py-10" label="درحال بارگذاری..."/>
+                    <Spinner className="py-10 text-title-text-light dark:text-white"  label="درحال بارگذاری..."/>
                 ):(
                     
                     <AddNewProductForm

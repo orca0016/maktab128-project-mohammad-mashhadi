@@ -1,4 +1,4 @@
-import { OrderIcon, ShopIcon } from "@/components/atoms/icons";
+import { OrderIcon, ShopIcon, UserIcon } from "@/components/atoms/icons";
 
 export const PAGE_LIST_DASHBOARD = [
   {
@@ -34,7 +34,7 @@ export const PAGE_LIST_DASHBOARD = [
   {
     id: 3,
     category: "کاربران",
-    icon: OrderIcon,
+    icon: UserIcon,
     subCategory: [
       {
         title: "لیست کاربران ",

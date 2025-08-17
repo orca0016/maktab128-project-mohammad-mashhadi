@@ -3,16 +3,25 @@ import { useQuery } from "@tanstack/react-query";
 
 export function useGetOrdersList({
   page,
+  orderFilter,
   limit,
 }: {
   page: number;
+  orderFilter: string | null;
   limit: number;
 }) {
   return useQuery<IResponseOrders>({
-    queryKey: ["order-list", page, limit],
+    queryKey: ["order-list", page, limit, orderFilter],
     queryFn: async () =>
       axiosInstanceBackEnd()
-        .get("/api/orders", { params: { page, limit } })
+        .get("/api/orders", {
+          params: {
+            page,
+            limit,
+            sort:
+              orderFilter === null || `${orderFilter==='true' ? "-" : ""}deliveryStatus`,
+          },
+        })
         .then((r) => r.data),
   });
 }

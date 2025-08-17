@@ -75,13 +75,11 @@
   animation-delay: 0;
 }
 .bg-shadow-drawer {
-  background-image: url("/images/shadow-green.svg"),
-    url("/images/shadow-orange.svg");
+  @apply bg-[url('/images/shadow-green.svg'),url('/images/shadow-orange.svg')]   bg-no-repeat bg-white dark:bg-[#1c252e];
   background-position: right top, left bottom;
   background-size: 50%, 50%;
-  background-repeat: no-repeat;
-  backdrop-filter: blur(20px);
 }
+
 body {
   font-family: vazir, inter, sans-serif;
 }
@@ -120,7 +118,7 @@ body {
   right: 0;
   top: 0;
   position: absolute;
-  width: 2px;
+  width: 3px;
   border-radius: 6px;
 }
 

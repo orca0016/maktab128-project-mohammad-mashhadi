@@ -21,7 +21,7 @@ const ShopLayout = ({ children }: { children: React.ReactNode }) => {
           }
         }
         getRollUser()
-      },[pathName])
+      },[pathName , router])
   return (
     <div className="dark:bg-gray-dark  bg-gray-light text-gray-dark dark:text-white h-screen">
       <HeaderStructure userAction={<AuthorizeUserAction />}>
