@@ -13,7 +13,6 @@ import { useMutation } from "@tanstack/react-query";
 
 const DeleteProductModal = ({
   isOpen,
-  onOpen,
   onClose,
   currentDelete,
 }: {
@@ -36,18 +35,22 @@ const DeleteProductModal = ({
       });
       onClose();
     },
-    onError:(e)=>{
+    onError: (e) => {
       addToast({
         title: "خطایی رخ داد .",
-        description:e.message ,
+        description: e.message,
         color: "danger",
       });
-
-    }
+    },
   });
   return (
     <div>
-      <Modal backdrop="blur" isOpen={isOpen} onClose={onClose}>
+      <Modal
+        classNames={{ base: "bg-shadow-drawer" }}
+        backdrop="blur"
+        isOpen={isOpen}
+        onClose={onClose}
+      >
         <ModalContent>
           {(onClose) => (
             <>

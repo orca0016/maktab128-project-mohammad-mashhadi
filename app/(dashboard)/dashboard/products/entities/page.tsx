@@ -1,5 +1,6 @@
 "use client";
 import EntitiesProductListTable from "@/components/molecules/entities-product-list-table";
+import { queryClient } from "@/context/query-provider";
 import { axiosInstanceBackEnd } from "@/lib/axios-instance";
 import { BreadcrumbItem, Breadcrumbs } from "@heroui/breadcrumbs";
 import { Button } from "@heroui/button";
@@ -9,7 +10,6 @@ import Link from "next/link";
 import { useState } from "react";
 
 const ProductsEntityListPage = () => {
-  
   const [selectedKeys, setSelectedKeys] = useState<
     Record<string, Partial<IProduct>>
   >({});
@@ -22,7 +22,14 @@ const ProductsEntityListPage = () => {
       ProductId: string;
       data: { price?: string; quantity?: string };
     }) => axiosInstanceBackEnd().patch(`/api/products/${ProductId}`, data),
-    mutationKey: ["products-list"],
+    mutationKey: ["products-list-entity"],
+    onError: () => {
+      addToast({
+        title: "مشکلی پیش امد.",
+        description: "مشکلی غیر منتظره پیش امد . ",
+        color: "danger",
+      });
+    },
   });
 
   const allChanges = Object.keys(selectedKeys).map((item) => ({
@@ -50,6 +57,7 @@ const ProductsEntityListPage = () => {
         description: "اطلاعات با موفقیت اپدیت شد .",
         color: "success",
       });
+      queryClient.invalidateQueries({ queryKey: ["product-list"] });
     } catch (error) {
       console.error("Error during parallel mutations:", error);
       addToast({
@@ -59,12 +67,13 @@ const ProductsEntityListPage = () => {
       });
     }
   };
-  
+
   return (
     <div className="">
       <div className="flex justify-between">
         <h1 className="text-2xl font-semibold mb-2">لیست موجودیت ها</h1>
         <Button
+          isDisabled={Object.keys(selectedKeys).length === 0}
           isLoading={sendEntity.isPending}
           onPress={submitChanges}
           color="secondary"
