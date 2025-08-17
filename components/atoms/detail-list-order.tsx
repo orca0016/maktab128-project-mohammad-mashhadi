@@ -8,31 +8,46 @@ import {
   ModalHeader,
   Spinner,
 } from "@heroui/react";
-import { useQuery } from "@tanstack/react-query";
+import { UseMutationResult, useQuery } from "@tanstack/react-query";
 import OrderDetail from "./order-detail";
 
 const DetailOrderListModal = ({
   isOpen,
   onClose,
   currentOrder,
+  changeStatusOrder,
 }: {
   currentOrder: string | null;
+  changeStatusOrder: UseMutationResult<
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    any,
+    Error,
+    {
+      orderId: string;
+      orderStatus: boolean;
+      deliveryDate: string;
+    },
+    unknown
+  >;
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
 }) => {
   const { data, isPending } = useQuery<IResponseSingleOrder>({
+    enabled: !!currentOrder,
+    queryKey: ["detail-order", currentOrder],
     queryFn: async () =>
       axiosInstanceBackEnd()
         .get(`/api/orders/${currentOrder}`)
         .then((res) => res.data),
-    queryKey: ["detail-orders", currentOrder],
   });
 
   return (
     <div>
       <Modal
-      classNames={{base:'dark:bg-title-text-light'}}
+        classNames={{
+          base: "bg-shadow-drawer ",
+        }}
         backdrop="blur"
         size="lg"
         scrollBehavior="outside"
@@ -57,6 +72,23 @@ const DetailOrderListModal = ({
               <ModalFooter>
                 <Button color="default" variant="light" onPress={onClose}>
                   بستن
+                </Button>
+                <Button
+                  variant="solid"
+                  color="success"
+                  isLoading={changeStatusOrder.isPending}
+                  onPress={() => {
+                    changeStatusOrder.mutate({
+                      orderId: data?.data.order._id ?? "",
+                      orderStatus: !data?.data.order.deliveryStatus,
+                      deliveryDate:
+                        data?.data.order.deliveryStatus === true
+                          ? new Date().toISOString()
+                          : data?.data.order.deliveryDate ?? "",
+                    });
+                  }}
+                >
+                  تغییر وضعیت سفارش
                 </Button>
               </ModalFooter>
             </>

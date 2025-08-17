@@ -4,15 +4,17 @@ import { useQuery } from "@tanstack/react-query";
 export function useGetListProduct({
   page,
   limit,
+  productFilter
 }: {
   page: number;
+  productFilter: string | null;
   limit: number;
 }) {
   return useQuery<IResponseProduct>({
-    queryKey: ["product-list", page, limit], 
+    queryKey: ["product-list", page, limit , productFilter],
     queryFn: async () =>
       axiosInstanceBackEnd()
-        .get("/api/products", { params: { page, limit } })
+        .get("/api/products", { params: { page, limit  , category:productFilter} })
         .then((r) => r.data),
   });
 }
