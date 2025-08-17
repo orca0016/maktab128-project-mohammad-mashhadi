@@ -33,7 +33,7 @@ const DrawerSettingHeader = () => {
         backdrop="transparent"
         classNames={{
           closeButton: "left-1 ml-3 mr-auto w-fit",
-          base: "rounded-none  dark:bg-gray-dark/80  bg-white/80 bg-shadow-drawer  shadow-2xl",
+          base: "rounded-none  bg-shadow-drawer  shadow-2xl",
         }}
         isOpen={isOpen}
         placement={"left"}
