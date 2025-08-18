@@ -15,7 +15,6 @@ const ShopLayout = ({ children }: { children: React.ReactNode }) => {
       useEffect(()=>{
         const getRollUser = async()=>{
           const data:{role?:string , id?:string} = await axiosInstanceBackEnd().get(`/api/users/me`).then(res=>res.data)
-          console.log(data);
           if (data.role!=="ADMIN") {
             router.push('/forbidden')
           }
