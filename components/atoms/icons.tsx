@@ -1,15 +1,106 @@
-export const ShopIcon = ()=>{
-    return <span className="w-6 h-6  inline-flex bg-[currentcolor] mask-[url(/images/icons/ecommerce.svg)] shrink-0"></span>
-}
-export const MenuIcon = ()=>{
-    return <span className="w-6 h-6  inline-flex bg-[currentcolor] mask-[url(/images/icons/menu-item.svg)] shrink-0"></span>
-}
-export const OrderIcon = ()=>{
-    return <span className="w-6 h-6  inline-flex bg-[currentcolor] mask-[url(/images/icons/order.svg)] shrink-0"></span>
-}
-export const ProductIcon = ()=>{
-    return <span className="w-6 h-6  inline-flex bg-[currentcolor] mask-[url(/images/icons/product.svg)] shrink-0"></span>
-}
-export const UserIcon = ()=>{
-    return <span className="w-6 h-6  inline-flex bg-[currentcolor] mask-[url(/images/icons/user.svg)] shrink-0"></span>
-}
+export const ShopIcon = () => {
+  return (
+    <span className="w-6 h-6  inline-flex bg-[currentcolor] mask-[url(/images/icons/ecommerce.svg)] shrink-0"></span>
+  );
+};
+export const MenuIcon = () => {
+  return (
+    <span className="w-6 h-6  inline-flex bg-[currentcolor] mask-[url(/images/icons/menu-item.svg)] shrink-0"></span>
+  );
+};
+export const OrderIcon = () => {
+  return (
+    <span className="w-6 h-6  inline-flex bg-[currentcolor] mask-[url(/images/icons/order.svg)] shrink-0"></span>
+  );
+};
+export const ProductIcon = () => {
+  return (
+    <span className="w-6 h-6  inline-flex bg-[currentcolor] mask-[url(/images/icons/product.svg)] shrink-0"></span>
+  );
+};
+export const UserIcon = () => {
+  return (
+    <span className="w-6 h-6  inline-flex bg-[currentcolor] mask-[url(/images/icons/user.svg)] shrink-0"></span>
+  );
+};
+export const LoveIcon = () => {
+  return (
+    <svg
+      className="w-7 h-7  text-2xl"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      aria-hidden="true"
+      role="img"
+      viewBox="0 0 24 24"
+    >
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        d="M5.624 4.424C3.965 5.182 2.75 6.986 2.75 9.137c0 2.197.9 3.891 2.188 5.343c1.063 1.196 2.349 2.188 3.603 3.154q.448.345.885.688c.526.415.995.778 1.448 1.043s.816.385 1.126.385s.674-.12 1.126-.385c.453-.265.922-.628 1.448-1.043q.437-.344.885-.687c1.254-.968 2.54-1.959 3.603-3.155c1.289-1.452 2.188-3.146 2.188-5.343c0-2.15-1.215-3.955-2.874-4.713c-1.612-.737-3.778-.542-5.836 1.597a.75.75 0 0 1-1.08 0C9.402 3.882 7.236 3.687 5.624 4.424M12 4.46C9.688 2.39 7.099 2.1 5 3.059C2.786 4.074 1.25 6.426 1.25 9.138c0 2.665 1.11 4.699 2.567 6.339c1.166 1.313 2.593 2.412 3.854 3.382q.43.33.826.642c.513.404 1.063.834 1.62 1.16s1.193.59 1.883.59s1.326-.265 1.883-.59c.558-.326 1.107-.756 1.62-1.16q.396-.312.826-.642c1.26-.97 2.688-2.07 3.854-3.382c1.457-1.64 2.567-3.674 2.567-6.339c0-2.712-1.535-5.064-3.75-6.077c-2.099-.96-4.688-.67-7 1.399"
+        clipRule="evenodd"
+      ></path>
+    </svg>
+  );
+};
+export const ListIcon = () => {
+  return (
+    <svg
+      className="w-8"
+      focusable="false"
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+    >
+      <path
+        d="M5 18H13M5 12H19M5 6H13"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></path>
+    </svg>
+  );
+};
+export const UserAuthIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      aria-hidden="true"
+      role="img"
+      className="text-title-text-light dark:text-white"
+      width="26px"
+      height="26px"
+      viewBox="0 0 24 24"
+    >
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        d="M12 1.25a4.75 4.75 0 1 0 0 9.5a4.75 4.75 0 0 0 0-9.5M8.75 6a3.25 3.25 0 1 1 6.5 0a3.25 3.25 0 0 1-6.5 0M12 12.25c-2.04 0-3.922.47-5.322 1.27C5.3 14.308 4.25 15.51 4.25 17s1.05 2.692 2.428 3.48c1.4.8 3.283 1.27 5.322 1.27s3.922-.47 5.322-1.27c1.378-.788 2.428-1.99 2.428-3.48s-1.05-2.692-2.428-3.48c-1.4-.8-3.283-1.27-5.322-1.27M5.75 17c0-.72.517-1.517 1.672-2.177c1.134-.648 2.751-1.073 4.578-1.073s3.444.425 4.578 1.073c1.155.66 1.672 1.458 1.672 2.177s-.517 1.517-1.672 2.177c-1.134.648-2.751 1.073-4.578 1.073s-3.444-.425-4.578-1.073C6.267 18.517 5.75 17.72 5.75 17"
+        clipRule="evenodd"
+      ></path>
+    </svg>
+  );
+};
+export const CartIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+      aria-hidden="true"
+      role="img"
+      className="w-7 h-7"
+      viewBox="0 0 24 24"
+    >
+      <path
+        fill="currentColor"
+        d="M8.75 13a.75.75 0 0 0-1.5 0v4a.75.75 0 0 0 1.5 0zm7.25-.75a.75.75 0 0 1 .75.75v4a.75.75 0 0 1-1.5 0v-4a.75.75 0 0 1 .75-.75m-3.25.75a.75.75 0 0 0-1.5 0v4a.75.75 0 0 0 1.5 0z"
+      ></path>
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        d="M17.274 3.473c-.476-.186-1.009-.217-1.692-.222A1.75 1.75 0 0 0 14 2.25h-4a1.75 1.75 0 0 0-1.582 1c-.684.006-1.216.037-1.692.223A3.25 3.25 0 0 0 5.3 4.563c-.367.493-.54 1.127-.776 1.998l-.628 2.303a3 3 0 0 0-1.01.828c-.622.797-.732 1.746-.621 2.834c.107 1.056.44 2.386.856 4.05l.026.107c.264 1.052.477 1.907.731 2.574c.265.696.602 1.266 1.156 1.699c.555.433 1.19.62 1.929.71c.708.084 1.59.084 2.675.084h4.724c1.085 0 1.966 0 2.675-.085c.74-.088 1.374-.276 1.928-.71c.555-.432.891-1.002 1.156-1.698c.255-.667.468-1.522.731-2.575l.027-.105c.416-1.665.748-2.995.856-4.05c.11-1.09 0-2.038-.622-2.835a3 3 0 0 0-1.009-.828l-.628-2.303c-.237-.871-.41-1.505-.776-1.999a3.25 3.25 0 0 0-1.426-1.089M7.272 4.87c.22-.086.486-.111 1.147-.118c.282.59.884.998 1.58.998h4c.698 0 1.3-.408 1.582-.998c.661.007.927.032 1.147.118c.306.12.572.323.768.587c.176.237.279.568.57 1.635l.354 1.297c-1.038-.139-2.378-.139-4.043-.139H9.622c-1.664 0-3.004 0-4.042.139l.354-1.297c.29-1.067.394-1.398.57-1.635a1.75 1.75 0 0 1 .768-.587M10 3.75a.25.25 0 0 0 0 .5h4a.25.25 0 1 0 0-.5zm-5.931 6.865c.279-.357.72-.597 1.63-.729c.931-.134 2.193-.136 3.986-.136h4.63c1.793 0 3.054.002 3.985.136c.911.132 1.352.372 1.631.73c.279.357.405.842.311 1.758c-.095.936-.399 2.16-.834 3.9c-.277 1.108-.47 1.876-.688 2.45c-.212.554-.419.847-.678 1.05c-.259.202-.594.331-1.183.402c-.61.073-1.4.074-2.544.074h-4.63c-1.144 0-1.935-.001-2.544-.074c-.59-.07-.924-.2-1.183-.402c-.26-.203-.467-.496-.678-1.05c-.218-.574-.411-1.342-.689-2.45c-.434-1.74-.739-2.964-.834-3.9c-.093-.916.033-1.402.312-1.759"
+        clipRule="evenodd"
+      ></path>
+    </svg>
+  );
+};

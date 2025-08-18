@@ -9,46 +9,28 @@ import {
   DropdownTrigger,
 } from "@heroui/react";
 import Link from "next/link";
-import { LuCircleUser } from "react-icons/lu";
 import { TbLogout2 } from "react-icons/tb";
-
 import { queryClient } from "@/context/query-provider";
-import { axiosInstance, axiosInstanceBackEnd } from "@/lib/axios-instance";
-import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { LuUserPlus } from "react-icons/lu";
 import { TbLayoutDashboard, TbLogin2 } from "react-icons/tb";
+import { UserAuthIcon } from "./icons";
 
 const UserAccessMenu = ({ user }: { user?: IUserData }) => {
   const router = useRouter();
-  const logOut = useMutation({
-    mutationFn: () =>
-      axiosInstanceBackEnd().get("/api/auth/logout", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access-token")}`,
-        },
-      }),
-    onSuccess: () => {
-      localStorage.removeItem("access-token");
-      localStorage.removeItem("refresh-token");
-      localStorage.removeItem("user-id");
-      queryClient.invalidateQueries({ queryKey: ["user"] });
-      addToast({
-        title:'موفق بود .',
-        description:'با موفقیت از حساب خود خارج شدید .',
-        color:'warning'
-      })
-      router.refresh();
-    },
-    onError: (e) => {
-      console.log(e);
-      addToast({
-        title: "مشکلی پیش امد ",
-        description: `لطفا بعدا دوباره امتحان کنید. .`,
-        color: "danger",
-      });
-    },
-  });
+  const logOut = () => {
+    localStorage.removeItem("access-token");
+    localStorage.removeItem("refresh-token");
+    localStorage.removeItem("user-id");
+    queryClient.invalidateQueries({ queryKey: ["user"] });
+
+    addToast({
+      title: "موفق بود .",
+      description: "با موفقیت از حساب خود خارج شدید .",
+      color: "success",
+    });
+    router.refresh();
+  };
   return (
     <div>
       <Dropdown
@@ -59,10 +41,7 @@ const UserAccessMenu = ({ user }: { user?: IUserData }) => {
       >
         <DropdownTrigger>
           <Button variant="light" className="rounded-full" isIconOnly>
-            <LuCircleUser
-              className="text-title-text-light dark:text-white"
-              size={"1.8rem"}
-            />
+            <UserAuthIcon/>
           </Button>
         </DropdownTrigger>
         <DropdownMenu aria-label="Dropdown menu for user auth" variant="faded">
@@ -91,7 +70,7 @@ const UserAccessMenu = ({ user }: { user?: IUserData }) => {
               <DropdownItem
                 key="sign-up"
                 endContent={<TbLogout2 />}
-                onPress={() => logOut.mutate()}
+                onPress={logOut}
                 variant="flat"
                 color="danger"
               >

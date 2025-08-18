@@ -46,7 +46,7 @@ const DrawerSettingHeader = () => {
               <DrawerHeader className="flex flex-col gap-1">
                 تنظیمات
               </DrawerHeader>
-              <DrawerBody className="grid grid-cols-2 gap-2 grid-rows-5">
+              <DrawerBody className="grid grid-cols-1 gap-2 grid-rows-5 pl-10">
                 <ThemeChanger />
               </DrawerBody>
             </>

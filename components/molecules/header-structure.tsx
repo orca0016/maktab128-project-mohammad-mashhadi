@@ -1,10 +1,11 @@
 "use client";
 
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/navbar";
-import { useRef } from "react";
-import DrawerSettingHeader from "../molecules/drawer-setting-header";
-import LogoIcon from "../atoms/logo-icon";
 import Link from "next/link";
+import { useRef } from "react";
+import LogoIcon from "../atoms/logo-icon";
+import MenuDrawer from "../atoms/menu-drawer";
+import DrawerSettingHeader from "../molecules/drawer-setting-header";
 
 const HeaderStructure = ({
   children,
@@ -21,14 +22,14 @@ const HeaderStructure = ({
       navRef.current.classList.add("backdrop-blur-none");
       navRef.current.classList.add("bg-gray-dark/0");
       navRef.current.classList.remove("dark:bg-gray-dark/40");
-      navRef.current.classList.remove("bg-white/40");
+      navRef.current.classList.remove("bg-slate-50/60");
       navRef.current.classList.remove("backdrop-blur-xl");
     } else {
       navRef.current.classList.add("backdrop-blur-xl");
       navRef.current.classList.remove("backdrop-blur-none");
       navRef.current.classList.remove("bg-gray-dark/0");
       navRef.current.classList.add("dark:bg-gray-dark/40");
-      navRef.current.classList.add("bg-white/40");
+      navRef.current.classList.add("bg-slate-50/60");
     }
   };
 
@@ -38,20 +39,23 @@ const HeaderStructure = ({
       position="sticky"
       maxWidth="full"
       onScrollPositionChange={handleScrollHeader}
-      className=" bg-gray-dark/0 fixed transition-all backdrop-saturate-100 backdrop-blur-none"
+      classNames={{ wrapper: "px-0" }}
+      className=" bg-gray-dark/0 fixed transition-all backdrop-saturate-100  backdrop-blur-none px-6 md:px-22 "
     >
-      <NavbarBrand>
-        <Link href={'/'} className="h-full w-10 ">
-          <LogoIcon />
-        </Link>
-      </NavbarBrand>
-      {children}
-      <NavbarContent justify="end">
-        <NavbarItem className="hidden sm:flex">{userAction}</NavbarItem>
-        <NavbarItem>
-          <DrawerSettingHeader />
-        </NavbarItem>
-      </NavbarContent>
+        <NavbarBrand className="space-x-4">
+          <MenuDrawer />
+          <Link href={"/"} className="h-full w-10 ">
+            <LogoIcon />
+          </Link>
+        </NavbarBrand>
+        {children}
+        <NavbarContent justify="end">
+          <NavbarItem>{userAction}</NavbarItem>
+          <NavbarItem>
+            <DrawerSettingHeader />
+          </NavbarItem>
+        </NavbarContent>
+      
     </Navbar>
   );
 };

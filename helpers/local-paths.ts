@@ -1,0 +1,1 @@
+export const SRC_BACK_END = 'http://localhost:8000'

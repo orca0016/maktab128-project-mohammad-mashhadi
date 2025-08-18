@@ -38,7 +38,7 @@ const ThemeChanger = () => {
           size={"2rem"}
         />
         <Switch
-          dir="ltr"
+          dir="rtl"
           size="sm"
           color="secondary"
           aria-label="theme"

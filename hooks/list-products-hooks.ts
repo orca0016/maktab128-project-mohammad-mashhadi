@@ -33,7 +33,7 @@ export const useGetSubCategories = ({
         .get("/api/subcategories", {
           params: {
             limit,
-            page,
+            page
           },
         })
         .then((res) => res.data),

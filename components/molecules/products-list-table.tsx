@@ -103,7 +103,6 @@ const ProductsListTable = () => {
 
   const { data: productListData, isPending: isProductListPending } =
     useGetListProduct({ page, limit, productFilter });
-  console.log(productListData);
 
   const productList = productListData?.data.products ?? [];
   const isCatsReady = !!Object.keys(categoryReCords).length;
@@ -113,8 +112,7 @@ const ProductsListTable = () => {
     const params = new URLSearchParams(searchParams.toString());
     if (value === null) params.delete("category");
     else params.set("category", String(value));
-    if (value !== null)
-      setProductFilter(JSON.stringify(value));
+    if (value !== null) setProductFilter(JSON.stringify(value));
     else setProductFilter(null);
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
@@ -135,6 +133,7 @@ const ProductsListTable = () => {
       />
       <div className="py-4 px-3">
         <Autocomplete
+        aria-label='filtering data'
           size="lg"
           defaultItems={Object.keys(categoryReCords).map((item) => ({
             ...categoryReCords[item],
@@ -145,7 +144,9 @@ const ProductsListTable = () => {
             base: "py-2 max-w-xs text-title-text-light dark:text-white",
             listbox: "dark:text-title-text-light",
           }}
-          onSelectionChange={(e) => handleFilterProduct(e !== null ? String(e) : null)}
+          onSelectionChange={(e) =>
+            handleFilterProduct(e !== null ? String(e) : null)
+          }
           placeholder="جستجو بر اساس دسته بندی "
           startContent={
             <FaFilter className="text-xl dark:text-white text-title-text-light" />
@@ -198,6 +199,9 @@ const ProductsListTable = () => {
           <TableColumn key="actions">اکشن ها</TableColumn>
         </TableHeader>
         <TableBody
+          emptyContent={
+            <h1 className="text-3xl text-center">هیج محصولی پیدا نشد .</h1>
+          }
           isLoading={isProductListPending || !isCatsReady || !isSubsReady}
           items={productList}
           loadingContent={<Spinner label="درحال بارگزاری..." />}

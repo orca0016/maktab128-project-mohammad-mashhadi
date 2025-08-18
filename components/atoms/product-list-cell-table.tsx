@@ -1,3 +1,4 @@
+import { SRC_BACK_END } from "@/helpers/local-paths";
 import { separateNumbers } from "@/lib/seperator-numbers";
 import { Tooltip } from "@heroui/react";
 import Image from "next/image";
@@ -80,7 +81,7 @@ export const useGenerateProductsTableCells = ({
         case "thumbnail":
           return (
             <Image
-              src={`http://localhost:8000/images/products/thumbnails/${product.thumbnail}`}
+              src={`${SRC_BACK_END}/images/products/thumbnails/${product.thumbnail}`}
               alt="thumbnail product"
               width={100}
               height={100}
