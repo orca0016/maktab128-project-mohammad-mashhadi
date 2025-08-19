@@ -102,7 +102,7 @@ const ProductsListTable = () => {
   });
 
   const { data: productListData, isPending: isProductListPending } =
-    useGetListProduct({ page, limit, productFilter });
+    useGetListProduct({ page, limit, category:productFilter });
 
   const productList = productListData?.data.products ?? [];
   const isCatsReady = !!Object.keys(categoryReCords).length;

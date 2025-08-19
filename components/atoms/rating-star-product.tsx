@@ -37,7 +37,7 @@ const RatingStars = ({ totalVotes, totalScore , showNumbers }: RatingProps) => {
           ))}
       </div>
 
-      <span className={`text-sm text-gray-600 ${!showNumbers&& 'hidden'}`}>
+      <span className={`text-xs text-gray-600 ${!showNumbers&& 'hidden'}`}>
         {average.toFixed(1)} از 5 ({totalVotes} رأی)
       </span>
     </div>

@@ -4,17 +4,44 @@ import { useQuery } from "@tanstack/react-query";
 export function useGetListProduct({
   page,
   limit,
-  productFilter
+  sort,
+  highestPrice,
+  lowestPrice,
+  subCategory,
+  category,
 }: {
   page: number;
-  productFilter: string | null;
+  category?: string | null;
+  subCategory?: string | null;
+  sort?: string | null;
+  lowestPrice?: string | null;
+  highestPrice?: string | null;
   limit: number;
 }) {
   return useQuery<IResponseProduct>({
-    queryKey: ["product-list", page, limit , productFilter],
+    queryKey: [
+      "product-list",
+      page,
+      limit,
+      category,
+      sort,
+      lowestPrice,
+      highestPrice,
+      subCategory,
+    ],
     queryFn: async () =>
       axiosInstanceBackEnd()
-        .get("/api/products", { params: { page, limit  , category:productFilter} })
+        .get("/api/products", {
+          params: {
+            page,
+            limit,
+            sort,
+            category,
+            subcategory:subCategory,
+            "price[gte]": highestPrice,
+            "price[lte]": lowestPrice,
+          },
+        })
         .then((r) => r.data),
   });
 }
@@ -33,7 +60,7 @@ export const useGetSubCategories = ({
         .get("/api/subcategories", {
           params: {
             limit,
-            page
+            page,
           },
         })
         .then((res) => res.data),
