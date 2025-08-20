@@ -13,27 +13,27 @@ const ProductsListGrid = () => {
   const limit = 12;
   const [queries, setQueries] = useState({
     page: Number(searchParams.get("page")) || 1,
-    category: searchParams.get("category"),
-    subCategory: searchParams.get("subcategory"),
     sort: searchParams.get("sort"),
     lowPrice: searchParams.get("lowPrice"),
+    category: searchParams.get("category"),
     highPrice: searchParams.get("highPrice"),
+    subCategory: searchParams.get("subcategory"),
   });
   useEffect(() => {
-    const p = Number(searchParams.get("page")) || 1;
-    const category = searchParams.get("category");
-    const subCategory = searchParams.get("subcategory");
     const sort = searchParams.get("sort");
     const lowPrice = searchParams.get("lowPrice");
+    const category = searchParams.get("category");
     const highPrice = searchParams.get("highPrice");
+    const p = Number(searchParams.get("page")) || 1;
+    const subCategory = searchParams.get("subcategory");
     setQueries((prev) => ({
       ...prev,
-      category,
-      subCategory,
       sort,
-      highPrice,
-      lowPrice,
       page: p,
+      lowPrice,
+      category,
+      highPrice,
+      subCategory,
     }));
   }, [searchParams]);
 

@@ -184,3 +184,26 @@ body {
   list-style-type: decimal;
   padding-right: 1.5rem;
 }
+
+.custom-styles  h1{
+  font-size: 2rem;
+  font-style:semibold;
+  margin:20px 0px;
+}
+.custom-styles  h2{
+  font-size: 1.4rem;
+  font-style:semibold;
+  margin:20px 0px;
+}
+.custom-styles  h3{
+  font-size: 1.2rem;
+  font-style:semibold;
+  margin:20px 0px;
+}
+.custom-styles  ul{
+list-style-type: disc !important;
+}
+.custom-styles  ol{
+  list-style-type: decimal;
+  
+}
