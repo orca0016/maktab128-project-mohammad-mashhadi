@@ -1,6 +1,6 @@
 import HeroUiProvider from "@/context/heroUi-provider";
 import QueryProvider from "@/context/query-provider";
-// import ReduxProvider from "@/context/redux-provider";
+import ReduxProvider from "@/context/redux-provider";
 import { ThemeProvider } from "@/context/theme-provider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -68,13 +68,13 @@ export default function RootLayout({
       <body
         className={`${bonFont.className} ${interFont.variable}   antialiased`}
       >
-        {/* <ReduxProvider> */}
+        <ReduxProvider>
         <QueryProvider>
           <ThemeProvider>
             <HeroUiProvider>{children}</HeroUiProvider>
           </ThemeProvider>
         </QueryProvider>
-        {/* </ReduxProvider> */}
+        </ReduxProvider>
       </body>
     </html>
   );

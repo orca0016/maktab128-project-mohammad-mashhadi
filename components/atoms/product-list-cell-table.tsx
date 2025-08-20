@@ -2,6 +2,7 @@ import { SRC_BACK_END } from "@/helpers/local-paths";
 import { separateNumbers } from "@/lib/seperator-numbers";
 import { Tooltip } from "@heroui/react";
 import Image from "next/image";
+import Link from "next/link";
 import { SetStateAction, useCallback } from "react";
 import { FaRegEye, FaRegTrashCan } from "react-icons/fa6";
 import { TbEdit } from "react-icons/tb";
@@ -49,9 +50,9 @@ export const useGenerateProductsTableCells = ({
           return (
             <div className="relative flex items-center gap-2">
               <Tooltip color="success" content="نمایش محصول">
-                <span className="text-lg text-success cursor-pointer active:opacity-50">
+                <Link href={`/products/${product._id}`} className="text-lg text-success cursor-pointer active:opacity-50">
                   <FaRegEye />
-                </span>
+                </Link>
               </Tooltip>
               <Tooltip color="warning" content="ویرایش محصول">
                 <span
