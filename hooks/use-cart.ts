@@ -13,6 +13,9 @@ export const useCart = () => {
 
   return {
     productCart,
+    getCartByProductId: (action: string) => {
+      return productCart.find((item) => item.product._id === action);
+    },
     addToCart: (product: ISingleProduct, quantity: number = 1) =>
       dispatch(addCartItem({ product, quantity })),
     removeFromCart: (productId: string) => dispatch(deleteCartItem(productId)),
