@@ -16,6 +16,7 @@ import {
 } from "@heroui/react";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa6";
@@ -146,14 +147,15 @@ const SingleProductPage = () => {
       <div className="pb-10">
         <Breadcrumbs
           size="lg"
+          color="secondary"
           separator=" . "
           classNames={{
             separator: "text-3xl px-6",
             base: "!text-black dark:text-white",
           }}
         >
-          <BreadcrumbItem>صفحه اصلی</BreadcrumbItem>
-          <BreadcrumbItem>{product.category.name}</BreadcrumbItem>
+          <BreadcrumbItem><Link  href='/'>صفحه اصلی</Link></BreadcrumbItem>
+          <BreadcrumbItem><Link href={`/products?category=${product.category.slugname}`}>{product.category.name}</Link></BreadcrumbItem>
           <BreadcrumbItem>{product.name}</BreadcrumbItem>
         </Breadcrumbs>
       </div>
