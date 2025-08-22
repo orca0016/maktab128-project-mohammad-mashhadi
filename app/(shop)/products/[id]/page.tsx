@@ -1,5 +1,6 @@
 "use client";
 
+import { CartIcon } from "@/components/atoms/icons";
 import RatingStars from "@/components/atoms/rating-star-product";
 import { SRC_BACK_END } from "@/helpers/local-paths";
 import { useCart } from "@/hooks/use-cart";
@@ -15,10 +16,10 @@ import {
 } from "@heroui/react";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa6";
-import { IoCartOutline } from "react-icons/io5";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -58,8 +59,8 @@ const ImagesSlider: React.FC<{ images: Array<string> }> = ({ images }) => {
             <Image
               src={`${SRC_BACK_END}/images/products/images/${item}`}
               alt="image product"
-              width={400}
-              height={400}
+              width={1000}
+              height={1000}
               className="w-full h-full"
             />
           </SwiperSlide>
@@ -75,16 +76,20 @@ const AddToCart: React.FC<{ product: ISingleProduct }> = ({ product }) => {
 
   return (
     <div className="flex items-start md:items-center flex-col md:flex-row gap-5">
-      <ButtonGroup isIconOnly color="secondary">
+      <ButtonGroup size="lg" isIconOnly color="default" variant="bordered" >
         <Button
+          className="border-1 border-[#E5E8EB] dark:border-[#2F373F] border-l-0 text-title-text-light dark:text-white"
           disabled={quantity === 1}
           onPress={() => setQuantity((prev) => prev - 1)}
         >
           <FaMinus />
         </Button>
-        <Button variant="bordered">{separateNumbers(quantity)}</Button>
+        <Button className="border-x-0 bg-[#E5E8EB] dark:bg-[#2F373F] text-title-text-light dark:text-white" variant="bordered" >
+          {separateNumbers(quantity)}
+        </Button>
         <Button
           isIconOnly
+          className="border-1 border-[#E5E8EB] dark:border-[#2F373F] border-r-0 text-title-text-light dark:text-white"
           disabled={quantity === product.quantity}
           onPress={() => setQuantity((prev) => prev + 1)}
         >
@@ -96,10 +101,12 @@ const AddToCart: React.FC<{ product: ISingleProduct }> = ({ product }) => {
         onPress={() => {
           addToCart(product, quantity);
         }}
-        color="success"
+        color="default"
         variant="shadow"
+        size='lg'
+        className="bg-title-text-light w-fit text-white font-semibold dark:bg-white dark:text-title-text-light"
       >
-        افزودن به سبد خرید <IoCartOutline size="1.5rem" />
+        افزودن به سبد خرید <CartIcon />
       </Button>
     </div>
   );
@@ -140,14 +147,15 @@ const SingleProductPage = () => {
       <div className="pb-10">
         <Breadcrumbs
           size="lg"
+          color="secondary"
           separator=" . "
           classNames={{
             separator: "text-3xl px-6",
             base: "!text-black dark:text-white",
           }}
         >
-          <BreadcrumbItem>صفحه اصلی</BreadcrumbItem>
-          <BreadcrumbItem>{product.category.name}</BreadcrumbItem>
+          <BreadcrumbItem><Link  href='/'>صفحه اصلی</Link></BreadcrumbItem>
+          <BreadcrumbItem><Link href={`/products?category=${product.category.slugname}`}>{product.category.name}</Link></BreadcrumbItem>
           <BreadcrumbItem>{product.name}</BreadcrumbItem>
         </Breadcrumbs>
       </div>
@@ -168,12 +176,10 @@ const SingleProductPage = () => {
           </div>
           <div className="space-y-6">
             <p className="text-2xl dark:text-white text-title-text-light">
-              <span className="text-2xl font-semibold ">قیمت  : </span>
-              {separateNumbers(product.price)} 
-              
-              <span className="text-sm px-3">
-                 تومان 
-                </span>
+              <span className="text-2xl font-semibold ">قیمت : </span>
+              {separateNumbers(product.price)}
+
+              <span className="text-sm px-3">تومان</span>
             </p>
             <p>
               <span className="text-lg font-semibold">موجودی انبار : </span>

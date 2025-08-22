@@ -8,8 +8,10 @@ import { useMemo } from "react";
 import { FiMenu } from "react-icons/fi";
 import { TiArrowBack } from "react-icons/ti";
 import { CartIcon, LoveIcon } from "./icons";
+import { useCart } from "@/hooks/use-cart";
 
 const MegaMenu = () => {
+  const {productCart} =useCart()
   const categoryData = useCategories({});
   const subCategoryData = useSubCategories({ limit: 1000 });
 
@@ -79,7 +81,7 @@ const MegaMenu = () => {
               placement="top-left"
               color="success"
               showOutline={false}
-              content="1"
+              content={productCart.length}
             >
               <Link href={"/cart"}>
                 <CartIcon />

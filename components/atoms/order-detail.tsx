@@ -1,5 +1,4 @@
 import { convertDate } from "@/helpers/miladi-to-shamsi";
-import { separateNumbers } from "@/lib/seperator-numbers";
 import {
   getKeyValue,
   Table,
@@ -53,7 +52,7 @@ const OrderDetail = ({ data }: { data: IResponseSingleOrder }) => {
           <TableBody items={order.products}>
             {(item) => {
               const { product, ...rest } = item;
-              const { name, price, ..._ } = product;
+              const { name, price } = product;
 
               return (
                 <TableRow key={item._id}>

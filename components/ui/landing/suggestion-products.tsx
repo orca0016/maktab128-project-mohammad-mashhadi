@@ -17,7 +17,7 @@ const CardProduct: React.FC<{ product: IProduct }> = ({ product }) => {
           height={100}
           className="w-full aspect-square dark:bg-[#28323D] bg-[#F4F6F8] rounded-lg px-2 mb-3"
         />
-        <Link href={`/products/${product.slugname}`} className="my-3 font-bold">{product.name}</Link>
+        <Link href={`/products/${product._id}`} className="my-3 font-bold">{product.name}</Link>
       </div>
       <div>
         <p className="my-1  text-custom-purple font-bold  ">
@@ -39,7 +39,7 @@ const SuggestionsProducts: React.FC<{
   const { data: ProductList } = useGetListProduct({
     limit: 6,
     page: 1,
-    productFilter: category,
+    category,
   });
 
   return (

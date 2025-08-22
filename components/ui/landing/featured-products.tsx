@@ -17,11 +17,11 @@ const CardProduct: React.FC<{ product: IProduct; isLargeProduct?: string }> = ({
     : "dark:border-[#28323D] border-[#F4F6F8] hover:bg-[#F4F6F8] hover:dark:bg-[#28323D] border";
   return (
     <div
-      className={`${defaultStyle} transition-background  rounded-xl p-4 flex flex-col justify-between ${
+      className={`${defaultStyle}  transition-background  rounded-xl p-4 flex flex-col justify-between ${
         !!isLargeProduct ? "items-center" : "items-start"
       } shadow`}
     >
-      <div>
+      <div className="w-full">
         <Image
           src={`${SRC_BACK_END}/images/products/thumbnails/${product.thumbnail}`}
           alt={product.name}
@@ -48,7 +48,7 @@ const CardProduct: React.FC<{ product: IProduct; isLargeProduct?: string }> = ({
           </h2>
         </Link>
       </div>
-      <div>
+      <div >
         <p
           className={`my-1  text-custom-purple font-bold  ${
             !!isLargeProduct && "text-2xl mb-10"
@@ -72,7 +72,7 @@ const FeaturedProduct: React.FC<{
   const { data: productList } = useGetListProduct({
     limit: 6,
     page: 1,
-    productFilter: category,
+    category,
   });
   const productCut = productList?.data.products.slice(2, 6);
   return (
