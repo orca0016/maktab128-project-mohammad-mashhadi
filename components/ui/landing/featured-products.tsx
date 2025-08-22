@@ -25,8 +25,8 @@ const CardProduct: React.FC<{ product: IProduct; isLargeProduct?: string }> = ({
         <Image
           src={`${SRC_BACK_END}/images/products/thumbnails/${product.thumbnail}`}
           alt={product.name}
-          width={100}
-          height={100}
+          width={400}
+          height={400}
           className={`${
             !isLargeProduct
               ? " dark:bg-[#28323D] bg-[#F4F6F8]"
@@ -38,7 +38,7 @@ const CardProduct: React.FC<{ product: IProduct; isLargeProduct?: string }> = ({
             {product.brand}
           </div>
         )}
-        <Link href={`/products/${product.slugname}`}>
+        <Link href={`/products/${product._id}`}>
           <h2
             className={`my-3 font-bold ${
               !!isLargeProduct && "text-title-text-light text-3xl text-center"

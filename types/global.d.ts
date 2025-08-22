@@ -194,3 +194,19 @@ interface IResponseSingleOrder {
     };
   };
 }
+
+interface IResponseSingleCategory {
+  status: string;
+  data: {
+    category:ISingleCategory 
+  };
+}
+interface ISingleCategory {
+      _id: string;
+      name: string;
+      icon: string;
+      createdAt: string;
+      updatedAt: string;
+      slugname: string;
+      __v: number;
+    };

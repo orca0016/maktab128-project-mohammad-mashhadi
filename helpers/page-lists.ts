@@ -7,4 +7,8 @@ export const PAGES_LIST = [
         name:'محصولات',
         href:'/products'
     },
+    {
+        name:'دسته بندی ها',
+        href:'/categories'
+    },
 ]

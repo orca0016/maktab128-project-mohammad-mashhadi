@@ -18,7 +18,7 @@ const SidebarCartPage = () => {
   const finalPrice =
     totalPrice + calculatePercentage(percentage, totalPrice) + shippingCost;
   return (
-    <div className="border-1 border-[#E5E8EB] dark:border-[#2F373F] px-5 py-6 rounded-xl text-title-text-light dark:text-white">
+    <div className={`${productCart.length===0 && 'blur-xs'} border-1 border-[#E5E8EB] dark:border-[#2F373F] px-5 py-6 rounded-xl text-title-text-light dark:text-white`}>
       <h1 className="text-lg font-semibold">جزییات سبد خرید</h1>
       <section className="space-y-5 py-5">
         <div className="flex justify-between">
@@ -39,7 +39,7 @@ const SidebarCartPage = () => {
         <span>قیمت نهایی:</span>
         <span>{separateNumbers(finalPrice)}</span>
       </section>
-      <Button className="py-5 bg-title-text-light text-white dark:bg-white dark:text-title-text-light w-full font-semibold">تسویه حساب</Button>
+      <Button disabled={productCart.length===0} className="py-5 bg-title-text-light text-white dark:bg-white dark:text-title-text-light w-full font-semibold">تسویه حساب</Button>
     </div>
   );
 };
