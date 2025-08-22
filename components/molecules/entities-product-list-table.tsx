@@ -42,7 +42,7 @@ const EntitiesProductListTable = ({
   };
 
   const { data: productListData, isPending: isProductListPending } =
-    useGetListProduct({ page, limit, productFilter: null });
+    useGetListProduct({ page, limit });
 
   const productList = productListData?.data.products ?? [];
 
