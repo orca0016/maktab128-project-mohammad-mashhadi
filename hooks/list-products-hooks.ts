@@ -37,7 +37,7 @@ export function useGetListProduct({
             limit,
             sort,
             category,
-            subcategory:subCategory,
+            subcategory: subCategory,
             "price[gte]": highestPrice,
             "price[lte]": lowestPrice,
           },
@@ -49,18 +49,21 @@ export function useGetListProduct({
 export const useGetSubCategories = ({
   page,
   limit,
+  category,
 }: {
   page: number;
   limit: number;
+  category?: string;
 }) =>
   useQuery<IResponseSubCategory>({
-    queryKey: ["subCategory-list"],
+    queryKey: ["subCategory-list", category],
     queryFn: async () =>
       axiosInstanceBackEnd()
         .get("/api/subcategories", {
           params: {
             limit,
             page,
+            category,
           },
         })
         .then((res) => res.data),
@@ -76,7 +79,25 @@ export const useGetCategories = ({
     queryKey: ["category-list"],
     queryFn: async () =>
       axiosInstanceBackEnd()
-        .get("/api/categories", {
+        .get(`/api/categories`, {
+          params: { limit, page },
+        })
+        .then((res) => res.data),
+  });
+export const useGetCategory = ({
+  page,
+  limit,
+  currentC,
+}: {
+  page: number;
+  limit: number;
+  currentC: string;
+}) =>
+  useQuery<IResponseSingleCategory>({
+    queryKey: ["category-single-list", currentC],
+    queryFn: async () =>
+      axiosInstanceBackEnd()
+        .get(`/api/categories${currentC ? `/${currentC}` : ""}`, {
           params: { limit, page },
         })
         .then((res) => res.data),
