@@ -76,7 +76,7 @@ const AddToCart: React.FC<{ product: ISingleProduct }> = ({ product }) => {
 
   return (
     <div className="flex items-start md:items-center flex-col md:flex-row gap-5">
-      <ButtonGroup size="lg" isIconOnly color="default" variant="bordered" >
+      <ButtonGroup size="lg" isIconOnly color="default" variant="bordered">
         <Button
           className="border-1 border-[#E5E8EB] dark:border-[#2F373F] border-l-0 text-title-text-light dark:text-white"
           disabled={quantity === 1}
@@ -84,7 +84,10 @@ const AddToCart: React.FC<{ product: ISingleProduct }> = ({ product }) => {
         >
           <FaMinus />
         </Button>
-        <Button className="border-x-0 bg-[#E5E8EB] dark:bg-[#2F373F] text-title-text-light dark:text-white" variant="bordered" >
+        <Button
+          className="border-x-0 bg-[#E5E8EB] dark:bg-[#2F373F] text-title-text-light dark:text-white"
+          variant="bordered"
+        >
           {separateNumbers(quantity)}
         </Button>
         <Button
@@ -103,7 +106,7 @@ const AddToCart: React.FC<{ product: ISingleProduct }> = ({ product }) => {
         }}
         color="default"
         variant="shadow"
-        size='lg'
+        size="lg"
         className="bg-title-text-light w-fit text-white font-semibold dark:bg-white dark:text-title-text-light"
       >
         افزودن به سبد خرید <CartIcon />
@@ -126,11 +129,7 @@ const SingleProductPage = () => {
   if (isPending)
     return (
       <div className="w-full h-[60vh] flex justify-center items-center">
-        <Spinner
-          variant="gradient"
-          color="secondary"
-          label="درحال بارگذاری..."
-        />
+        <Spinner color="secondary" label="درحال بارگذاری..." />
       </div>
     );
   if (!product) {
@@ -148,14 +147,18 @@ const SingleProductPage = () => {
         <Breadcrumbs
           size="lg"
           color="secondary"
-          separator=" . "
           classNames={{
-            separator: "text-3xl px-6",
             base: "!text-black dark:text-white",
           }}
         >
-          <BreadcrumbItem><Link  href='/'>صفحه اصلی</Link></BreadcrumbItem>
-          <BreadcrumbItem><Link href={`/products?category=${product.category.slugname}`}>{product.category.name}</Link></BreadcrumbItem>
+          <BreadcrumbItem>
+            <Link href="/">صفحه اصلی</Link>
+          </BreadcrumbItem>
+          <BreadcrumbItem>
+            <Link href={`/products?category=${product.category.slugname}`}>
+              {product.category.name}
+            </Link>
+          </BreadcrumbItem>
           <BreadcrumbItem>{product.name}</BreadcrumbItem>
         </Breadcrumbs>
       </div>
@@ -175,16 +178,25 @@ const SingleProductPage = () => {
             <h1 className="text-4xl ">{product.name}</h1>
           </div>
           <div className="space-y-6">
-            <p className="text-2xl dark:text-white text-title-text-light">
+            <div className="text-2xl dark:text-white text-title-text-light">
               <span className="text-2xl font-semibold ">قیمت : </span>
               {separateNumbers(product.price)}
-
               <span className="text-sm px-3">تومان</span>
-            </p>
-            <p>
+            </div>
+            <div>
               <span className="text-lg font-semibold">موجودی انبار : </span>
               {product.quantity} عدد
-            </p>
+            </div>
+            <div>
+              <span className="text-lg font-semibold">طبقه بندی: </span>
+              <span className="text-sm ">
+                {product.category.name}{" "}
+              </span>
+              <span>/</span>
+              <span className="text-sm ">
+                {product.subcategory.name}{" "}
+              </span>
+            </div>
             <RatingStars
               totalScore={product.rating.rate}
               totalVotes={product.rating.count}

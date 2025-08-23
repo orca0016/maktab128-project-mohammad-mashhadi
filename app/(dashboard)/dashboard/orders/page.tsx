@@ -7,7 +7,7 @@ const OrdersListPage = () => {
   return (
     <div>
       <h1 className="text-2xl font-semibold mb-2">لیست سفارش ها</h1>
-      <Breadcrumbs color="secondary" size="md" separator=".">
+      <Breadcrumbs color="secondary" size="md" >
         <BreadcrumbItem>
           <Link href="/dashboard">داشبورد</Link>
         </BreadcrumbItem>

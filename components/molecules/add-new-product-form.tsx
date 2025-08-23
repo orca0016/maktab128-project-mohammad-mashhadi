@@ -32,17 +32,18 @@ const AddNewProductForm = ({
   isEditing = false,
   editProductData,
   onEditClose,
+  isModalNewForm,
 }: {
   isEditing?: boolean;
   editProductData?: ISingleProduct;
   onEditClose?: () => void;
+  isModalNewForm?: () => void;
 }) => {
-  
   const { control, handleSubmit, setValue, watch, reset } =
-  useForm<AddNewProductSchemaType>({
-    resolver: zodResolver(addNewProductSchema(isEditing)),
-  });
-  
+    useForm<AddNewProductSchemaType>({
+      resolver: zodResolver(addNewProductSchema(isEditing)),
+    });
+
   useEffect(() => {
     if (!isEditing || !editProductData) return;
     reset(
@@ -54,14 +55,14 @@ const AddNewProductForm = ({
         category: editProductData.category?._id ?? "",
         subcategory: editProductData.subcategory?._id ?? "",
         description: editProductData.description ?? "",
-        images:  editProductData.images,
-        thumbnail:  editProductData.thumbnail,
+        images: editProductData.images ?? [""],
+        thumbnail: editProductData.thumbnail ?? "",
       },
       { keepDirtyValues: false }
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEditing, editProductData]);
-  
+
   const categoryId = watch("category");
 
   const categoryList = useCategories();
@@ -93,6 +94,7 @@ const AddNewProductForm = ({
         description: "محصول موردنظر با موفقیت اضافه شد .",
         color: "success",
       });
+      isModalNewForm?.();
     },
     onError: (e) => {
       console.log(e);
@@ -139,6 +141,7 @@ const AddNewProductForm = ({
   const onSubmit: SubmitHandler<AddNewProductSchemaType> = (data) => {
     if (isEditing) return editProduct.mutate(productFormDataBuilder(data));
     createProduct.mutate(productFormDataBuilder(data));
+    reset()
   };
 
   const categoriesData: ICategory[] = useMemo(

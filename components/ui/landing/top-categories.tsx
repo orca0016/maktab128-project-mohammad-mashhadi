@@ -31,9 +31,9 @@ const TopCategories = () => {
               <Image
                 src={`${SRC_BACK_END}/images/categories/icons/${item.icon}`}
                 alt={item.name}
-                width={index===0? 350 : 250}
+                width={index===0? 750 : 550}
                 className={`drop-shadow-2xl w-[200px] md:w-[350px]`}
-                height={index===0? 350 : 250}
+                height={index===0?750 : 550}
               />
             </div>
           </div>

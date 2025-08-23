@@ -29,7 +29,7 @@ const SubCategoriesPage = () => {
   if (isPending) {
     return (
       <div className="flex items-center justify-center h-[70vh]">
-        <Spinner label="درحال بارگذاری" color="secondary" variant="gradient" />
+        <Spinner label="درحال بارگذاری" color="secondary"  />
       </div>
     );
   }
@@ -41,12 +41,11 @@ const SubCategoriesPage = () => {
     );
   }
   return (
-    <div className="flex flex-col  gap-10 container mx-auto py-10 min-h-[80vh]">
+    <div className="flex flex-col  gap-10 container mx-auto py-10 min-h-[80vh] px-5">
       <Breadcrumbs
         size="lg"
         color="secondary"
         classNames={{
-          separator: "text-3xl px-6",
           base: "!text-black dark:text-white text-3xl",
         }}
       >
@@ -63,7 +62,8 @@ const SubCategoriesPage = () => {
         <div className="border-t-1  mb-20 border-dashed dark:border-[#637381] border-gray-secondary-text-light flex-grow-1" />
 
         {subCategoriesList?.data.subcategories.map((item) => (
-          <Link key={item._id} href={`/products?subcategory=${item._id}`}>
+          <Link key={item._id} href={`/products?subcategory=${item.slugname}`}>
+
             <span className="text-xl font-semibold hover:underline">
               {item.name}
             </span>

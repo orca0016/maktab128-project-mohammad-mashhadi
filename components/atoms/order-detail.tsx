@@ -11,6 +11,7 @@ import {
 
 const OrderDetail = ({ data }: { data: IResponseSingleOrder }) => {
   const order = data.data.order;
+
   return (
     <div>
       <section className="px-5 space-y-2">
@@ -52,16 +53,22 @@ const OrderDetail = ({ data }: { data: IResponseSingleOrder }) => {
           <TableBody items={order.products}>
             {(item) => {
               const { product, ...rest } = item;
+              if (!product) {
+                return (
+                  <TableRow key={item._id}>
+                    <TableCell colSpan={3} className="text-center text-red-500">
+                      محصول حذف شده یا در دسترس نیست
+                    </TableCell>
+                  </TableRow>
+                );
+              }
               const { name, price } = product;
 
               return (
                 <TableRow key={item._id}>
                   {(columnKey) => (
                     <TableCell>
-                      {getKeyValue(
-                        { name,price, ...rest },
-                        columnKey
-                      )}
+                      {getKeyValue({ name, price, ...rest }, columnKey)}
                     </TableCell>
                   )}
                 </TableRow>

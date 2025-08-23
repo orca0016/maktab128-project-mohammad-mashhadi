@@ -38,7 +38,7 @@ const EntitiesProductListTable = ({
     setPage(p);
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", String(p));
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    router.replace(`${pathname}?${params.toString()}`, { scroll: true });
   };
 
   const { data: productListData, isPending: isProductListPending } =

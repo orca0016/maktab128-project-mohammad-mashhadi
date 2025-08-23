@@ -114,7 +114,7 @@ const ProductsListTable = () => {
     else params.set("category", String(value));
     if (value !== null) setProductFilter(JSON.stringify(value));
     else setProductFilter(null);
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    router.replace(`${pathname}?${params.toString()}`, { scroll: true });
   };
 
   return (
