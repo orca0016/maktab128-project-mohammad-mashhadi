@@ -27,6 +27,7 @@ const CategoriesPage = () => {
   }
   return (
     <div className="flex flex-col gap-10 container mx-auto py-10 pb-20 min-h-[60vh] px-5">
+
       <Breadcrumbs
         size="lg"
         color="secondary"
@@ -46,12 +47,14 @@ const CategoriesPage = () => {
       {categoriesList?.data.categories.map((item) => (
         <Link key={item._id} href={`/categories/${item._id}`} className="flex w-fit flex-col items-center dark:border-[#637381] border-gray-secondary-text-light/30 border gap-4 px-4 py-2 rounded-lg shadow bg-white dark:bg-title-text-light">
             <Image src={`${SRC_BACK_END}/images/categories/icons/${item.icon}`} alt={item.name} width={200} height={200} />
+
           <span className="text-xl font-semibold hover:underline">
             {item.name}
           </span>
         </Link>
       ))}
       </div>
+
     </div>
   );
 };

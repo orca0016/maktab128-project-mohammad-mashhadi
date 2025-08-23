@@ -63,6 +63,7 @@ const SubCategoriesPage = () => {
 
         {subCategoriesList?.data.subcategories.map((item) => (
           <Link key={item._id} href={`/products?subcategory=${item.slugname}`}>
+
             <span className="text-xl font-semibold hover:underline">
               {item.name}
             </span>
