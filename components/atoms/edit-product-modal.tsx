@@ -26,16 +26,18 @@ const EditProductModal = ({
       axiosInstanceBackEnd()
         .get(`/api/products/${currentEdit}`)
         .then((res) => res.data),
-    queryKey: ["edit-product", currentEdit],
+    queryKey: ["edit-product-modal", currentEdit],
+    refetchOnMount: "always",
+    staleTime: 0,
   });
-
+  
   return (
     <div>
       <Modal
         backdrop="blur"
-        classNames={{base:"bg-shadow-drawer"}}
+        classNames={{ base: "bg-shadow-drawer" }}
         size="lg"
-        scrollBehavior="outside"
+        scrollBehavior="inside"
         isOpen={isOpen}
         onClose={onClose}
       >
@@ -44,15 +46,17 @@ const EditProductModal = ({
             <>
               <ModalHeader className="flex flex-col gap-1"></ModalHeader>
               <ModalBody>
-                {isPending?(
-                    <Spinner className="py-10 text-title-text-light dark:text-white"  label="درحال بارگذاری..."/>
-                ):(
-                    
-                    <AddNewProductForm
+                {isPending ? (
+                  <Spinner
+                    className="py-10 text-title-text-light dark:text-white"
+                    label="درحال بارگذاری..."
+                  />
+                ) : (
+                  <AddNewProductForm
                     onEditClose={onClose}
-                      editProductData={data?.data.product}
-                      isEditing
-                    />
+                    editProductData={data?.data.product}
+                    isEditing
+                  />
                 )}
               </ModalBody>
               <ModalFooter>

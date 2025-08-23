@@ -1,10 +1,8 @@
 import { convertDate } from "@/helpers/miladi-to-shamsi";
+import { separateNumbers } from "@/lib/seperator-numbers";
 import {
   Button,
   Chip,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
 } from "@heroui/react";
 import { User } from "@heroui/user";
 import { SetStateAction, useCallback } from "react";
@@ -71,6 +69,9 @@ export const useOrderCellTable = ({
           );
         case "deliveryDate": {
           return <div>{convertDate(order.deliveryDate).jalaliDate}</div>;
+        }
+        case "totalPrice": {
+          return <div>{separateNumbers(order.totalPrice)}</div>;
         }
 
         default:

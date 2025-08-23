@@ -8,6 +8,7 @@ import { addToast } from "@heroui/toast";
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { useState } from "react";
+import { MdOutlineDone } from "react-icons/md";
 
 const ProductsEntityListPage = () => {
   const [selectedKeys, setSelectedKeys] = useState<
@@ -76,12 +77,14 @@ const ProductsEntityListPage = () => {
           isDisabled={Object.keys(selectedKeys).length === 0}
           isLoading={sendEntity.isPending}
           onPress={submitChanges}
-          color="secondary"
+          color="default"
+          className="bg-title-text-light text-white dark:bg-white dark:text-title-text-light font-semibold"
         >
           ثبت اطلاعات
+          <MdOutlineDone size={'1.4rem'} />
         </Button>
       </div>
-      <Breadcrumbs color="secondary" size="md" separator=".">
+      <Breadcrumbs color="secondary" size="md" >
         <BreadcrumbItem>
           <Link href="/dashboard">داشبورد</Link>
         </BreadcrumbItem>

@@ -1,4 +1,5 @@
 "use client";
+import { DATA_SLIDER } from "@/helpers/slider-data";
 import { Button } from "@heroui/button";
 import Image from "next/image";
 import Link from "next/link";
@@ -36,7 +37,9 @@ const SliderLandingPage = () => {
           } as React.CSSProperties
         }
       >
+       {DATA_SLIDER.map((item ,index)=>(
         <SwiperSlide
+        key={index}
           className="w-full h-full px-6  md:px-20 py-18 flex items-center "
           data-swiper-parallax="-23%"
         >
@@ -46,16 +49,15 @@ const SliderLandingPage = () => {
                 className="text-3xl/15 line text-center md:text-right sm:text-3xl/18 md:text-4xl/18 lg:text-5/18 text-black dark:text-white font-semibold"
                 data-swiper-parallax="-100"
               >
-                بهترین محصول امسال
+                {item.title}
               </h1>
               <p
                 data-swiper-parallax="-200"
                 className="text-center md:text-right"
               >
-                این محصول با کیفیت خوب و قیت پایین یکی از بهترین محصولات امسال
-                شد شما میتونید این محصول رو با ارسال رایگان تهیه کنید
+                {item.description}
               </p>
-              <Link href="/products">
+              <Link href={item.redirect}>
                 <Button
                   data-swiper-parallax="-300"
                   size="lg"
@@ -70,7 +72,7 @@ const SliderLandingPage = () => {
             </div>
             <div className="order-1 md:order-2">
               <Image
-                src={"/images/test.webp"}
+                src={item.imageUrl}
                 alt="product"
                 width={500}
                 height={500}
@@ -79,92 +81,9 @@ const SliderLandingPage = () => {
             </div>
           </div>
         </SwiperSlide>
-        <SwiperSlide
-          className="w-full h-full px-6  md:px-20 py-18 flex items-center"
-          data-swiper-parallax="-23%"
-        >
-          <div className="w-full h-full   items-center  grid grid-cols-1 md:grid-cols-2">
-            <div className="space-y-8 pb-10 md:pb-0 flex flex-col items-center md:items-start order-2 md:order-1">
-              <h1
-                className="text-3xl/15 line text-center md:text-right sm:text-3xl/18 md:text-4xl/18 lg:text-5/18 font-semibold"
-                data-swiper-parallax="-100"
-              >
-                بهترین محصول امسال
-              </h1>
-              <p
-                data-swiper-parallax="-200"
-                className="text-center md:text-right"
-              >
-                این محصول با کیفیت خوب و قیت پایین یکی از بهترین محصولات امسال
-                شد شما میتونید این محصول رو با ارسال رایگان تهیه کنید
-              </p>
-              <Link href="/products">
-                <Button
-                  data-swiper-parallax="-300"
-                  size="lg"
-                  className="mx-auto md:mx-0"
-                  color="secondary"
-                  variant="shadow"
-                >
-                  همین الان بخرید
-                  <IoIosArrowBack />
-                </Button>
-              </Link>
-            </div>
-            <div className="order-1 md:order-2">
-              <Image
-                src={"/images/test.webp"}
-                alt="product"
-                width={500}
-                height={500}
-                className="w-[70%] m-auto"
-              />
-            </div>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide
-          className="w-full h-full px-6  md:px-20 py-18 flex items-center"
-          data-swiper-parallax="-23%"
-        >
-          <div className="w-full h-full   items-center  grid grid-cols-1 md:grid-cols-2">
-            <div className="space-y-8 pb-10 md:pb-0 flex flex-col items-center md:items-start order-2 md:order-1">
-              <h1
-                className="text-3xl/15 line text-center md:text-right sm:text-3xl/18 md:text-4xl/18 lg:text-5/18 font-semibold"
-                data-swiper-parallax="-100"
-              >
-                بهترین محصول امسال
-              </h1>
-              <p
-                data-swiper-parallax="-200"
-                className="text-center md:text-right"
-              >
-                این محصول با کیفیت خوب و قیت پایین یکی از بهترین محصولات امسال
-                شد شما میتونید این محصول رو با ارسال رایگان تهیه کنید
-              </p>
-              <Link href="/products">
-                <Button
-                  data-swiper-parallax="-300"
-                  size="lg"
-                  className="mx-auto md:mx-0"
-                  color="secondary"
-                  variant="shadow"
-                >
-                  همین الان بخرید
-                  <IoIosArrowBack />
-                </Button>
-              </Link>
-            </div>
-            <div className="order-1 md:order-2">
-              <Image
-                src={"/images/test.webp"}
-                alt="product"
-                width={500}
-                height={500}
-                className="w-[70%] m-auto"
-              />
-            </div>
-          </div>
-        </SwiperSlide>
+
+       ))} 
+
       </Swiper>
     </div>
   );

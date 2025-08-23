@@ -38,9 +38,11 @@ export const useEntitiesCellTable = ({
         }
         case "quantity": {
           return (
-           <NumericFormat
+            <NumericFormat
               value={selectedKeys[product._id]?.quantity}
-              defaultValue={selectedKeys[product._id]?.quantity || product.quantity}
+              defaultValue={
+                selectedKeys[product._id]?.quantity || product.quantity
+              }
               thousandSeparator=","
               onValueChange={(values) => {
                 onChangeValue({

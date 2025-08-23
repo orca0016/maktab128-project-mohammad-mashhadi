@@ -1,3 +1,4 @@
+import { queryClient } from "@/context/query-provider";
 import { axiosInstanceBackEnd } from "@/lib/axios-instance";
 import {
   Button,
@@ -74,10 +75,14 @@ const DetailOrderListModal = ({
                   بستن
                 </Button>
                 <Button
+                  className={data?.data.order.deliveryStatus ? "hidden" : ""}
                   variant="solid"
                   color="success"
                   isLoading={changeStatusOrder.isPending}
                   onPress={() => {
+                    queryClient.invalidateQueries({
+                      queryKey: ["detail-order"],
+                    });
                     changeStatusOrder.mutate({
                       orderId: data?.data.order._id ?? "",
                       orderStatus: !data?.data.order.deliveryStatus,

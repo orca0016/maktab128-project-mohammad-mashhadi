@@ -128,7 +128,7 @@ const OrdersListTable = () => {
     else params.set("orderStatus", String(deliveryStatus));
     if (deliveryStatus !== null) setOrderFilter(JSON.stringify(deliveryStatus));
     else setOrderFilter(null);
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    router.replace(`${pathname}?${params.toString()}`, { scroll: true });
   };
 
   

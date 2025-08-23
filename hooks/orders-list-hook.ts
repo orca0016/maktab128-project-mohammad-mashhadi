@@ -12,17 +12,19 @@ export function useGetOrdersList({
 }) {
   return useQuery<IResponseOrders>({
     queryKey: ["order-list", page, limit, orderFilter],
-    queryFn: async () =>
-      axiosInstanceBackEnd()
-        .get("/api/orders", {
-          params: {
-            page,
-            limit,
-            sort:
-              orderFilter === null || `${orderFilter==='true' ? "-" : ""}deliveryStatus`,
-          },
-        })
-        .then((r) => r.data),
+    queryFn: async () => {
+      const params: Record<string, string | number | boolean> = {
+        page,
+        limit,
+      };
+      if (orderFilter !== null) {
+        params.deliveryStatus = orderFilter 
+      }
+
+      return axiosInstanceBackEnd()
+        .get("/api/orders", { params })
+        .then((r) => r.data);
+    },
   });
 }
 

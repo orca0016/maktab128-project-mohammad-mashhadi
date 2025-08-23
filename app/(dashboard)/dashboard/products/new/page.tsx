@@ -8,7 +8,7 @@ const AddNewProductPage = () => {
   return (
     <div className="">
       <h1 className="text-2xl font-semibold mb-2">اضافه کردن محصول جدید</h1>
-      <Breadcrumbs color="secondary" size="md" separator=".">
+      <Breadcrumbs color="secondary" size="md" >
         <BreadcrumbItem>
           <Link href="/dashboard">داشبورد</Link>
         </BreadcrumbItem>

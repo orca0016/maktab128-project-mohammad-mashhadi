@@ -1,3 +1,4 @@
+import { queryClient } from "@/context/query-provider";
 import { SRC_BACK_END } from "@/helpers/local-paths";
 import { separateNumbers } from "@/lib/seperator-numbers";
 import { Tooltip } from "@heroui/react";
@@ -57,6 +58,7 @@ export const useGenerateProductsTableCells = ({
               <Tooltip color="warning" content="ویرایش محصول">
                 <span
                   onClick={() => {
+                    queryClient.invalidateQueries({ queryKey: ["edit-product-modal"] });
                     onOpenEdit();
                     setCurrentDeleteProduct(product._id);
                   }}
