@@ -198,15 +198,34 @@ interface IResponseSingleOrder {
 interface IResponseSingleCategory {
   status: string;
   data: {
-    category:ISingleCategory 
+    category: ISingleCategory;
   };
 }
 interface ISingleCategory {
-      _id: string;
-      name: string;
-      icon: string;
-      createdAt: string;
-      updatedAt: string;
-      slugname: string;
-      __v: number;
-    };
+  _id: string;
+  name: string;
+  icon: string;
+  createdAt: string;
+  updatedAt: string;
+  slugname: string;
+  __v: number;
+}
+
+interface IResponseSingleUser {
+  status: string;
+  data: {
+    user: ISingleUser;
+  };
+}
+interface ISingleUser {
+  _id: string;
+  firstname: string;
+  lastname: string;
+  username: string;
+  phoneNumber: string;
+  address: string;
+  role: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}

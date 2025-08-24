@@ -11,7 +11,7 @@ const AuthorizeUserAction = () => {
     typeof window !== "undefined" ? localStorage.getItem("user-id") : null;
 
   const userQuery = useQuery<IResponseUserData>({
-    queryKey: ["user", userId, token],
+    queryKey: ["user-information", userId, token],
     enabled: !!token && !!userId,
     queryFn: async () => {
       return axiosInstanceBackEnd().get(`api/users/${userId}`).then(res=>res.data)

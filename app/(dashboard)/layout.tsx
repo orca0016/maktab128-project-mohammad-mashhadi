@@ -26,6 +26,18 @@ const ShopLayout = ({ children }: { children: React.ReactNode }) => {
   );
 
   useEffect(() => {
+    const userId = localStorage.getItem("user-id");
+    const accessToken = localStorage.getItem("access-token");
+    if (!userId || !accessToken) {
+      router.push("/login");
+      addToast({
+        title: "ابدا وارد شوید .",
+        color: "danger",
+      });
+    }
+  }, [router]);
+
+  useEffect(() => {
     if (isPending) return;
     if (isError) {
       addToast({
