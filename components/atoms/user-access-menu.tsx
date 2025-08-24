@@ -1,20 +1,19 @@
 "use client";
+import { queryClient } from "@/context/query-provider";
 import {
   addToast,
   Button,
-  Divider,
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
 } from "@heroui/react";
 import Link from "next/link";
-import { TbLogout2 } from "react-icons/tb";
-import { queryClient } from "@/context/query-provider";
 import { useRouter } from "next/navigation";
 import { LuUserPlus } from "react-icons/lu";
-import { TbLayoutDashboard, TbLogin2 } from "react-icons/tb";
+import { TbLayoutDashboard, TbLogin2, TbLogout2 } from "react-icons/tb";
 import { UserAuthIcon } from "./icons";
+import { HiMiniInformationCircle } from "react-icons/hi2";
 
 const UserAccessMenu = ({ user }: { user?: IUserData }) => {
   const router = useRouter();
@@ -22,7 +21,7 @@ const UserAccessMenu = ({ user }: { user?: IUserData }) => {
     localStorage.removeItem("access-token");
     localStorage.removeItem("refresh-token");
     localStorage.removeItem("user-id");
-    queryClient.invalidateQueries({ queryKey: ["user"] });
+    queryClient.invalidateQueries({ queryKey: ["user-information"] });
 
     addToast({
       title: "موفق بود .",
@@ -41,25 +40,25 @@ const UserAccessMenu = ({ user }: { user?: IUserData }) => {
       >
         <DropdownTrigger>
           <Button variant="light" className="rounded-full" isIconOnly>
-            <UserAuthIcon/>
+            <UserAuthIcon />
           </Button>
         </DropdownTrigger>
         <DropdownMenu aria-label="Dropdown menu for user auth" variant="faded">
           {!!user ? (
             <>
-              <DropdownItem key="username">
-                <h1 className="text-md ">نام کاربری:{user.username}</h1>
-                <div className="flex gap-1 pb-2">
-                  نام و نام خانوادگی:
-                  <p className="text-xs">{user.firstname}</p>
-                  <p className="text-xs">{user.lastname}</p>
-                </div>
-                <Divider />
-              </DropdownItem>
+                <DropdownItem
+                  key="personal-account"
+                  startContent={<HiMiniInformationCircle  />}
+                  as={Link}
+                  href="/account"
+                  variant="flat"
+                >
+                  پروفایل کاربری
+                </DropdownItem>
               {user.role === "ADMIN" && (
                 <DropdownItem
                   key="dashboard"
-                  endContent={<TbLayoutDashboard />}
+                  startContent={<TbLayoutDashboard />}
                   as={Link}
                   href="/dashboard"
                   variant="flat"
@@ -69,7 +68,7 @@ const UserAccessMenu = ({ user }: { user?: IUserData }) => {
               )}
               <DropdownItem
                 key="sign-up"
-                endContent={<TbLogout2 />}
+                startContent={<TbLogout2 />}
                 onPress={logOut}
                 variant="flat"
                 color="danger"

@@ -1,8 +1,10 @@
-import { ShopIcon } from "@/components/atoms/icons"
+import Image from "next/image"
 
 const DashboardPage = () => {
   return (
-    <div className="h-[120vh] text-custom-purple">صفحه اصلی <ShopIcon/></div>
+    <div className="h-[70vh] px-30">
+      <Image src='/assets/dashboard.svg' alt="dashboard cover" width={1000} height={1000} />
+    </div>
   )
 }
 
