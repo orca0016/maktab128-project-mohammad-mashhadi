@@ -161,6 +161,7 @@ interface IOrder {
   deliveryStatus: false;
   createdAt: string;
   updatedAt: string;
+  payed:boolean
 }
 
 interface IResponseUserList {
@@ -191,6 +192,7 @@ interface IResponseSingleOrder {
       createdAt: string;
       updatedAt: string;
       __v: number;
+      payed:boolean
     };
   };
 }

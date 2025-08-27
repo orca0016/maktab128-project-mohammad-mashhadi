@@ -16,6 +16,7 @@ export function useGetOrdersList({
       const params: Record<string, string | number | boolean> = {
         page,
         limit,
+        payed:true
       };
       if (orderFilter !== null) {
         params.deliveryStatus = orderFilter 
