@@ -1,12 +1,13 @@
 import { useCart } from "@/hooks/use-cart";
 import { separateNumbers } from "@/lib/seperator-numbers";
 import { Button } from "@heroui/button";
+import Link from "next/link";
 import { useMemo } from "react";
 
-function calculatePercentage(percentage: number, number: number): number {
+export function calculatePercentage(percentage: number, number: number): number {
   return (percentage / 100) * number;
 }
-const SidebarCartPage = () => {
+const SidebarCartPage:React.FC<{isCheckout?:boolean}> = ({isCheckout}) => {
   const { productCart } = useCart();
   const totalPrice = useMemo(() => {
     const price = productCart.map((item) => item.product.price * item.quantity);
@@ -39,7 +40,12 @@ const SidebarCartPage = () => {
         <span>قیمت نهایی:</span>
         <span>{separateNumbers(finalPrice)}</span>
       </section>
-      <Button disabled={productCart.length===0} className="py-5 bg-title-text-light text-white dark:bg-white dark:text-title-text-light w-full font-semibold">تسویه حساب</Button>
+      <Link href='/checkout' className={isCheckout?'hidden':''}>
+      <Button disabled={productCart.length===0} className={` py-5 bg-title-text-light text-white dark:bg-white dark:text-title-text-light w-full font-semibold`}>
+        
+        تسویه حساب
+        </Button>
+      </Link>
     </div>
   );
 };

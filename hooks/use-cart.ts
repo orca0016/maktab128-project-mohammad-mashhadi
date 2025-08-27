@@ -1,5 +1,6 @@
 import {
   addCartItem,
+  clearCart,
   deleteCartItem,
   updateCartItem,
 } from "@/redux-slices/cart-slice";
@@ -21,5 +22,7 @@ export const useCart = () => {
     removeFromCart: (productId: string) => dispatch(deleteCartItem(productId)),
     updateCart: (product: ISingleProduct, quantity: number) =>
       dispatch(updateCartItem({ productId: product._id, quantity })),
+    clearCart: () =>
+      dispatch(clearCart()),
   };
 };

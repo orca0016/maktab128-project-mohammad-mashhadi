@@ -72,7 +72,7 @@ export const cartSlice = createSlice({
       addToast({
         title: "موفق.",
         description: "سبد خرید شما پاک شد .",
-        color: "danger",
+        color: "success",
       });
     },
   },

@@ -87,7 +87,7 @@ const DetailOrderListModal = ({
                       orderId: data?.data.order._id ?? "",
                       orderStatus: !data?.data.order.deliveryStatus,
                       deliveryDate:
-                        data?.data.order.deliveryStatus === true
+                        data?.data.order.deliveryStatus === false
                           ? new Date().toISOString()
                           : data?.data.order.deliveryDate ?? "",
                     });
