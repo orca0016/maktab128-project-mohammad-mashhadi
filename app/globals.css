@@ -1,16 +1,38 @@
 @import "tailwindcss";
+@plugin '../lib/hero.ts';
+@source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+@custom-variant dark (&:is(.dark *));
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --bg-dark: #141a21;
+
+  @media (prefers-color-scheme: light) {
+    --theme: light;
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    --theme: dark;
+    color-scheme: dark;
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-gray-dark: #141a21;
+  --color-gray-light: #ffffff;
+  --color-gray-secondary-text-dark: #919eab;
+  --color-gray-secondary-text-light: #637381;
+  --color-title-text-light: #1c252e;
+
+  --color-custom-purple: #7635dc;
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
+@custom-variant dark (&:where(.dark, .dark *));
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -18,9 +40,170 @@
     --foreground: #ededed;
   }
 }
+@keyframes settingIconSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
+/* animation theme change */
+::view-transition-old(root) {
+  animation-delay: 500ms;
+}
+
+::view-transition-new(root) {
+  animation: circle-in 500ms;
+}
+
+@keyframes circle-in {
+  from {
+    clip-path: circle(0% at 10% 20%);
+  }
+  to {
+    clip-path: circle(110% at 50% 100%);
+  }
+}
+
+.animate-spin-setting {
+  animation: settingIconSpin 10s infinite;
+  animation-delay: 0;
+}
+.bg-shadow-drawer {
+  @apply bg-[url('/images/shadow-green.svg'),url('/images/shadow-orange.svg')]   bg-no-repeat bg-white dark:bg-[#1c252e];
+  background-position: right top, left bottom;
+  background-size: 50%, 50%;
+}
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: vazir, inter, sans-serif;
+}
+
+/* costume scroll bar */
+.custom-scrollbar {
+  direction: ltr;
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
+  transition: opacity 0.3s;
+
+  opacity: 0;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar,
+.show-scrollbar::-webkit-scrollbar {
+  opacity: 1;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #ffffff00;
+  border-radius: 4px;
+  transition: 1s;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-thumb,
+.show-scrollbar::-webkit-scrollbar-thumb {
+  transition: 0.5s;
+  background: #6b728094;
+}
+
+.line-ui-list-dashboard::before {
+  content: " ";
+  right: 0;
+  top: 0;
+  position: absolute;
+  width: 3px;
+  border-radius: 6px;
+}
+
+.line-ui-list-item-dashboard::after {
+  content: "";
+  right: 0px;
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  mask: url("/images/icons/cervsvg.svg");
+  mask-size: cover;
+  box-sizing: border-box;
+  transform: translate(calc(12px * 1), calc(12px * -0.3)) scaleX(-1);
+}
+
+.tiptap h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0.75rem 0;
+}
+.tiptap h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0.6rem 0;
+}
+.tiptap h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0.5rem 0;
+}
+
+.tiptap ul {
+  list-style: disc;
+  padding-inline-start: 1.25rem;
+  margin: 0.5rem 0;
+}
+.tiptap ol {
+  list-style: decimal;
+  padding-inline-start: 1.25rem;
+  margin: 0.5rem 0;
+}
+[dir="rtl"] .tiptap ul,
+[dir="rtl"] .tiptap ol {
+  padding-inline-start: 0;
+  padding-inline-end: 1.25rem;
+}
+.ProseMirror h1 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+.ProseMirror h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.ProseMirror h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.ProseMirror ul {
+  list-style-type: disc;
+  padding-right: 1.5rem;
+}
+.ProseMirror ol {
+  list-style-type: decimal;
+  padding-right: 1.5rem;
+}
+
+.custom-styles  h1{
+  font-size: 2rem;
+  font-style:semibold;
+  margin:20px 0px;
+}
+.custom-styles  h2{
+  font-size: 1.4rem;
+  font-style:semibold;
+  margin:20px 0px;
+}
+.custom-styles  h3{
+  font-size: 1.2rem;
+  font-style:semibold;
+  margin:20px 0px;
+}
+.custom-styles  ul{
+list-style-type: disc !important;
+}
+.custom-styles  ol{
+  list-style-type: decimal;
+  
 }
