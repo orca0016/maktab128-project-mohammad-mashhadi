@@ -28,6 +28,7 @@ const CheckoutPage = () => {
   useEffect(() => {
     if (productCart.userId==='') return
     if (productCart.products.length === 0) {
+
       router.push("/");
       addToast({
         title: "ابتدا چند محصول را در سبد خرید قرار دهید",

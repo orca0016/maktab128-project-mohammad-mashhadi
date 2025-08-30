@@ -5,6 +5,7 @@ import { RootState, useAppSelector } from "@/store/store";
 import { addToast } from "@heroui/toast";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
+
 interface IUseCart {
   productCart: {
     userId: string;
@@ -142,5 +143,6 @@ export const useCart = (): IUseCart => {
     clearCart: () => {
       clearProducts.mutate();
     },
+
   };
 };

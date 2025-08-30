@@ -3,6 +3,7 @@ import { MESSAGES_PAYMENT } from "@/helpers/payment-message";
 import { useCart } from "@/hooks/use-cart";
 import { Button } from "@heroui/button";
 import { useQuery } from "@tanstack/react-query";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -31,11 +32,11 @@ export default function VerifyPage() {
   });
 
   const status = verifyPayment?.result.result ?? 0;
-
   const clearedRef = useRef(false);
 
   useEffect(() => {
     if (!clearedRef.current && (status === 100 || status === 201)) {
+
       clearCart();
       clearedRef.current = true;
     }

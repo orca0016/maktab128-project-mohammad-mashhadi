@@ -13,6 +13,7 @@ export function calculatePercentage(
 const SidebarCartPage: React.FC<{ isCheckout?: boolean }> = ({
   isCheckout,
 }) => {
+
   const { productCart } = useCart();
   const productList = useMemo(
     () => (productCart?.products ? productCart.products : []),
@@ -61,6 +62,7 @@ const SidebarCartPage: React.FC<{ isCheckout?: boolean }> = ({
           className={` py-5 bg-title-text-light text-white dark:bg-white dark:text-title-text-light w-full font-semibold`}
         >
           تسویه حساب
+
         </Button>
       </Link>
     </div>
