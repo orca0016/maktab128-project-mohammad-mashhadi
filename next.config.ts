@@ -1,21 +1,13 @@
 import type { NextConfig } from "next";
+import { SRC_BACK_END } from "./helpers/local-paths";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
-    remotePatterns: [new URL("http://localhost:8000/images/**")],
+    remotePatterns: [new URL(`${SRC_BACK_END}/images/**`)],
   },
   experimental: {
     authInterrupts: true,
   },
-  // async rewrites() {
-  //   return [
-  //     {
-  //       source: "/api/:path*",
-  //       destination: "http://localhost:8000/api/:path*",
-  //     },
-  //   ];
-  // },
 };
 
 export default nextConfig;

@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const axiosInstance = () => {
   return axios.create({
-    baseURL: "http://localhost:3000",
+    baseURL: "https://maktab128-project-mohammad-mashhadi.vercel.app/",
   });
 };
 export const axiosInstanceBackEnd = () => {

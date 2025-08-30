@@ -1,5 +1,6 @@
 "use client";
 
+import { SRC_BACK_END } from "@/helpers/local-paths";
 import { AddNewProductSchemaType } from "@/validations/add-new-product-schema";
 import Image from "next/image";
 import { useEffect } from "react";
@@ -37,7 +38,7 @@ const CardPreview = ({
 
   const imageSrc =
     typeof src === "string"
-      ? `http://localhost:8000/images/products/images/${src}`
+      ? `${SRC_BACK_END}/images/products/images/${src}`
       : URL.createObjectURL(src);
 
   return (
