@@ -26,7 +26,8 @@ const CheckoutPage = () => {
     },
   });
   useEffect(() => {
-    if (productCart.length === 0) {
+    if (productCart.userId==='') return
+    if (productCart.products.length === 0) {
       router.push("/");
       addToast({
         title: "ابتدا چند محصول را در سبد خرید قرار دهید",
@@ -82,7 +83,7 @@ const CheckoutPage = () => {
       <div className="container mx-auto min-h-[50vh] py-10 px-6 md:px-0">
         <h1 className="text-3xl font-semibold text-center md:text-right w-full">
            تسویه و سفارش
-          ({separateNumbers(productCart.length)})
+          ({separateNumbers(productCart.products.length)})
           محصول
         </h1>
         <div className="grid grid-cols-4 gap-3 w-full  pt-10 h-full">

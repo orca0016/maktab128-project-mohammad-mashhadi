@@ -1,9 +1,8 @@
 "use client";
 import { MESSAGES_PAYMENT } from "@/helpers/payment-message";
 import { useCart } from "@/hooks/use-cart";
-import { axiosInstanceBackEnd } from "@/lib/axios-instance";
 import { Button } from "@heroui/button";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -32,12 +31,11 @@ export default function VerifyPage() {
   });
 
   const status = verifyPayment?.result.result ?? 0;
-  console.log(status, verifyPayment);
 
   const clearedRef = useRef(false);
 
   useEffect(() => {
-    if (!clearedRef.current && (status === 101 || status === 201)) {
+    if (!clearedRef.current && (status === 100 || status === 201)) {
       clearCart();
       clearedRef.current = true;
     }

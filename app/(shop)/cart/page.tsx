@@ -10,13 +10,15 @@ const CartPage = () => {
   return (
     <div className="container mx-auto min-h-[50vh] py-10 px-6 md:px-0">
       <h1 className="text-3xl font-semibold text-center md:text-right w-full">
-       ({separateNumbers(productCart.length)}) سبد خرید
+        ({separateNumbers(productCart?.products ? productCart.products.length : 0)}) سبد خرید
       </h1>
       <div className="grid grid-cols-4 gap-3 w-full  pt-10 h-full">
         <div className="col-span-4 md:col-span-3">
-            <CartProductList/>            
+          <CartProductList />
         </div>
-        <div className="col-span-4 md:col-span-1 "><SidebarCartPage/></div>
+        <div className="col-span-4 md:col-span-1 ">
+          <SidebarCartPage />
+        </div>
       </div>
     </div>
   );

@@ -27,8 +27,8 @@ const FormCheckout: React.FC<{ userData: ISingleUser }> = ({ userData }) => {
       phoneNumber: userData.phoneNumber,
     },
   });
-  const totalPrice = productCart.reduce(
-    (prev, item) => (prev += item.product.price * item.quantity),
+  const totalPrice = productCart.products.reduce(
+    (prev, item) => (prev += item.data.price * item.quantity),
     0
   );
 
@@ -65,9 +65,9 @@ const FormCheckout: React.FC<{ userData: ISingleUser }> = ({ userData }) => {
       await axiosInstanceBackEnd()
         .post("/api/orders", {
           user: userData._id,
-          products: productCart.map((item) => ({
+          products: productCart.products.map((item) => ({
             count: item.quantity,
-            product: item.product._id,
+            product: item.data._id,
           })),
           deliveryDate: data.deliveryDate,
           deliveryStatus: false,
@@ -91,7 +91,7 @@ const FormCheckout: React.FC<{ userData: ISingleUser }> = ({ userData }) => {
       });
     },
   });
-  
+
   const onSubmit = async (data: checkoutFormSchemaType) => {
     submitOrder.mutate(data);
   };

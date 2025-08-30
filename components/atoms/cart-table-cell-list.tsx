@@ -1,7 +1,6 @@
 import { SRC_BACK_END } from "@/helpers/local-paths";
 import { useCart } from "@/hooks/use-cart";
 import { separateNumbers } from "@/lib/seperator-numbers";
-import { CartItem } from "@/redux-slices/cart-slice";
 import { Button, ButtonGroup } from "@heroui/button";
 import { Tooltip } from "@heroui/react";
 import Image from "next/image";
@@ -9,7 +8,11 @@ import Link from "next/link";
 import { useCallback } from "react";
 import { FaMinus, FaPlus, FaRegTrashCan } from "react-icons/fa6";
 import RatingStars from "./rating-star-product";
-
+export type cartItem = {
+  quantity: number;
+  data: ISingleProduct;
+  _id: string;
+};
 export const useGenerateCartProductTable = ({
   onOpenDelete,
   setCurrentDeleteProduct,
@@ -17,16 +20,16 @@ export const useGenerateCartProductTable = ({
   onOpenDelete: () => void;
   setCurrentDeleteProduct: (value: string | null) => void;
 }) => {
-  const { updateCart } = useCart();
+  const { addToCart} = useCart();
 
   return useCallback(
-    (cart: CartItem, columnKey: React.Key) => {
-      const cellValue = cart[columnKey as keyof CartItem];
+    (cart: cartItem, columnKey: React.Key) => {
+      const cellValue = cart[columnKey as keyof cartItem];
 
       switch (columnKey) {
         case "subtotal":
           return (
-            <div>{separateNumbers(cart.product.price * cart.quantity)}</div>
+            <div>{separateNumbers(cart.data.price * cart.quantity)}</div>
           );
         case "action":
           return (
@@ -37,7 +40,7 @@ export const useGenerateCartProductTable = ({
                   variant="light"
                   onPress={() => {
                     onOpenDelete();
-                    setCurrentDeleteProduct(cart.product._id);
+                    setCurrentDeleteProduct(cart.data._id);
                   }}
                   className="text-lg  cursor-pointer active:opacity-50"
                 >
@@ -59,7 +62,7 @@ export const useGenerateCartProductTable = ({
                 <Button
                   className="border-1 border-[#E5E8EB] dark:border-[#2F373F] border-l-0 text-title-text-light dark:text-white"
                   disabled={cart.quantity === 1}
-                  onPress={() => updateCart(cart.product, cart.quantity - 1)}
+                  onPress={() => addToCart(cart.data, cart.quantity - 1)}
                 >
                   <FaMinus />
                 </Button>
@@ -71,9 +74,9 @@ export const useGenerateCartProductTable = ({
                 </Button>
                 <Button
                   isIconOnly
-                  disabled={cart.quantity === cart.product.quantity}
+                  disabled={cart.quantity === cart.data.quantity}
                   className="border-1 border-[#E5E8EB] dark:border-[#2F373F] border-r-0 text-title-text-light dark:text-white"
-                  onPress={() => updateCart(cart.product, cart.quantity + 1)}
+                  onPress={() => addToCart(cart.data, cart.quantity + 1)}
                 >
                   <FaPlus />
                 </Button>
@@ -86,20 +89,19 @@ export const useGenerateCartProductTable = ({
           return (
             <div className="flex gap-3">
               <Image
-                src={`${SRC_BACK_END}/images/products/thumbnails/${cart.product.thumbnail}`}
+                src={`${SRC_BACK_END}/images/products/thumbnails/${cart.data.thumbnail}`}
                 alt="thumbnail cart"
                 width={100}
                 height={100}
-                className="bg-[#F4F6F8] dark:bg-[#28323D] rounded-lg p-4"
+                className="bg-[#F4F6F8] dark:bg-[#28323D] rounded-lg p-4 hidden md:block"
               />
               <div className="py-3 space-y-3 flex flex-col gap-5">
-                
-                <Link href={`/products/${cart.product._id}`}>
-                  {cart.product.name}
+                <Link href={`/products/${cart.data._id}`}>
+                  {cart.data.name}
                 </Link>
                 <RatingStars
-                  totalScore={cart.product.rating.rate}
-                  totalVotes={cart.product.rating.count}
+                  totalScore={cart.data.rating.rate}
+                  totalVotes={cart.data.rating.count}
                 />
               </div>
             </div>
@@ -118,6 +120,6 @@ export const useGenerateCartProductTable = ({
           return <span>{JSON.stringify(cellValue)}</span>;
       }
     },
-    [updateCart ,onOpenDelete ,setCurrentDeleteProduct]
+    [addToCart, onOpenDelete, setCurrentDeleteProduct]
   );
 };

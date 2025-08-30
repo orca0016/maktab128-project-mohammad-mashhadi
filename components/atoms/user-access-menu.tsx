@@ -10,10 +10,10 @@ import {
 } from "@heroui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { HiMiniInformationCircle } from "react-icons/hi2";
 import { LuUserPlus } from "react-icons/lu";
 import { TbLayoutDashboard, TbLogin2, TbLogout2 } from "react-icons/tb";
 import { UserAuthIcon } from "./icons";
-import { HiMiniInformationCircle } from "react-icons/hi2";
 
 const UserAccessMenu = ({ user }: { user?: IUserData }) => {
   const router = useRouter();
@@ -21,8 +21,12 @@ const UserAccessMenu = ({ user }: { user?: IUserData }) => {
     localStorage.removeItem("access-token");
     localStorage.removeItem("refresh-token");
     localStorage.removeItem("user-id");
-    queryClient.invalidateQueries({ queryKey: ["user-information"] });
-
+    queryClient.invalidateQueries({
+      queryKey: ["user-information"],
+    });
+    queryClient.invalidateQueries({
+      queryKey: ["data-carts"],
+    });
     addToast({
       title: "موفق بود .",
       description: "با موفقیت از حساب خود خارج شدید .",
@@ -46,15 +50,15 @@ const UserAccessMenu = ({ user }: { user?: IUserData }) => {
         <DropdownMenu aria-label="Dropdown menu for user auth" variant="faded">
           {!!user ? (
             <>
-                <DropdownItem
-                  key="personal-account"
-                  startContent={<HiMiniInformationCircle  />}
-                  as={Link}
-                  href="/account"
-                  variant="flat"
-                >
-                  پروفایل کاربری
-                </DropdownItem>
+              <DropdownItem
+                key="personal-account"
+                startContent={<HiMiniInformationCircle />}
+                as={Link}
+                href="/account"
+                variant="flat"
+              >
+                پروفایل کاربری
+              </DropdownItem>
               {user.role === "ADMIN" && (
                 <DropdownItem
                   key="dashboard"
