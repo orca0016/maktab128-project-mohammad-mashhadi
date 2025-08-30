@@ -25,8 +25,8 @@ const CardProduct: React.FC<{ product: IProduct; isLargeProduct?: string }> = ({
         <Image
           src={`${SRC_BACK_END}/images/products/thumbnails/${product.thumbnail}`}
           alt={product.name}
-          width={400}
-          height={400}
+          width={600}
+          height={600}
           className={`${
             !isLargeProduct
               ? " dark:bg-[#28323D] bg-[#F4F6F8]"

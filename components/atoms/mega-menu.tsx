@@ -67,7 +67,7 @@ const MegaMenu = () => {
           </Popover>
 
           <div className="space-x-4 text-title-text-light dark:text-white">
-            <Badge
+            {/* <Badge
               placement="top-left"
               color="secondary"
               showOutline={false}
@@ -76,7 +76,7 @@ const MegaMenu = () => {
               <Link href={"/wishlist"}>
                 <LoveIcon />
               </Link>
-            </Badge>
+            </Badge> */}
             <Badge
               placement="top-left"
               color="success"

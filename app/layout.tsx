@@ -3,20 +3,11 @@ import QueryProvider from "@/context/query-provider";
 import ReduxProvider from "@/context/redux-provider";
 import { ThemeProvider } from "@/context/theme-provider";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 import "react-quill/dist/quill.snow.css";
 import "./globals.css";
 
-// const vazirFont = Vazirmatn({
-//   variable: "--font-Vazir",
-//   subsets: ["arabic"],
-// });
 
-const interFont = Inter({
-  variable: "--font-Inter",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "minimal shop ",
@@ -66,7 +57,7 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl" suppressHydrationWarning>
       <body
-        className={`${bonFont.className} ${interFont.variable}   antialiased`}
+        className={`${bonFont.className}  antialiased`}
       >
         <ReduxProvider>
         <QueryProvider>

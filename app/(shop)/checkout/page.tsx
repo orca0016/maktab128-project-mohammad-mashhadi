@@ -25,29 +25,6 @@ const CheckoutPage = () => {
         .then((res) => res.data);
     },
   });
-  useEffect(() => {
-    if (productCart.userId==='') return
-    if (productCart.products.length === 0) {
-
-      router.push("/");
-      addToast({
-        title: "ابتدا چند محصول را در سبد خرید قرار دهید",
-        color: "danger",
-      });
-    }
-  }, [router, productCart]);
-
-  useEffect(() => {
-    const userId = localStorage.getItem("user-id");
-    const accessToken = localStorage.getItem("access-token");
-    if (!userId || !accessToken) {
-      router.push("/login");
-      addToast({
-        title: "ابدا وارد شوید .",
-        color: "danger",
-      });
-    }
-  }, [router]);
 
   useEffect(() => {
     if (isPending) return;
@@ -83,9 +60,7 @@ const CheckoutPage = () => {
     <div>
       <div className="container mx-auto min-h-[50vh] py-10 px-6 md:px-0">
         <h1 className="text-3xl font-semibold text-center md:text-right w-full">
-           تسویه و سفارش
-          ({separateNumbers(productCart.products.length)})
-          محصول
+          تسویه و سفارش ({separateNumbers(productCart.products.length)}) محصول
         </h1>
         <div className="grid grid-cols-4 gap-3 w-full  pt-10 h-full">
           <div className="col-span-4 md:col-span-3">

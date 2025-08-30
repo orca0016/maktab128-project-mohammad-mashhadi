@@ -22,8 +22,8 @@ const LandingCategoriesSection = () => {
             <Image
               src={`${SRC_BACK_END}/images/categories/icons/${item.icon}`}
               alt="category image"
-              width={300}
-              height={300}
+              width={600}
+              height={600}
               className="w-24 h-24  aspect-square"
             />
             <h2 className="text-title-text-light dark:text-white text-center mt-3 font-bold">

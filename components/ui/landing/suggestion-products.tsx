@@ -13,8 +13,8 @@ const CardProduct: React.FC<{ product: IProduct }> = ({ product }) => {
         <Image
           src={`${SRC_BACK_END}/images/products/thumbnails/${product.thumbnail}`}
           alt={product.name}
-          width={100}
-          height={100}
+          width={600}
+          height={600}
           className="w-full aspect-square dark:bg-[#28323D] bg-[#F4F6F8] rounded-lg px-2 mb-3"
         />
         <Link href={`/products/${product._id}`} className="my-3 font-bold">{product.name}</Link>
