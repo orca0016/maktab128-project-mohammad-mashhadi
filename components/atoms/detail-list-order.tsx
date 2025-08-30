@@ -80,9 +80,6 @@ const DetailOrderListModal = ({
                   color="success"
                   isLoading={changeStatusOrder.isPending}
                   onPress={() => {
-                    queryClient.invalidateQueries({
-                      queryKey: ["detail-order"],
-                    });
                     changeStatusOrder.mutate({
                       orderId: data?.data.order._id ?? "",
                       orderStatus: !data?.data.order.deliveryStatus,
@@ -90,6 +87,9 @@ const DetailOrderListModal = ({
                         data?.data.order.deliveryStatus === false
                           ? new Date().toISOString()
                           : data?.data.order.deliveryDate ?? "",
+                    });
+                    queryClient.invalidateQueries({
+                      queryKey: ["detail-order"],
                     });
                   }}
                 >

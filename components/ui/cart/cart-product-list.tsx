@@ -1,4 +1,6 @@
-import { useGenerateCartProductTable } from "@/components/atoms/cart-table-cell-list";
+import {
+  useGenerateCartProductTable,
+} from "@/components/atoms/cart-table-cell-list";
 import { useCart } from "@/hooks/use-cart";
 import { useDisclosure } from "@heroui/react";
 import {
@@ -38,12 +40,13 @@ const CartProductList = () => {
         onClose={onCloseDelete}
       />
       <Table
-      removeWrapper
+        removeWrapper
+        key={JSON.stringify(productCart.products)}
         classNames={{
-          base:'max-w-full overflow-x-auto',
+          base: "max-w-full overflow-x-auto",
           wrapper: "shadow-none",
           td: "border-b border-[#E9ECEE] dark:border-[#2D353C]",
-          th:'dark:bg-[#2D353C]',
+          th: "dark:bg-[#2D353C]",
         }}
         isHeaderSticky
         aria-label="cart product list table"
@@ -60,10 +63,10 @@ const CartProductList = () => {
               هیج محصولی پیدا نشد .
             </h1>
           }
-          items={productCart}
+          items={productCart?.products ? productCart.products : []}
         >
           {(item) => (
-            <TableRow key={item.product._id}>
+            <TableRow key={item.data._id}>
               {(columnKey) => (
                 <TableCell>{renderCell(item, columnKey)}</TableCell>
               )}

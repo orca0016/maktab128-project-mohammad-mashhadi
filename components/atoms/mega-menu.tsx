@@ -1,5 +1,6 @@
 "use client";
 import { useCategories, useSubCategories } from "@/hooks/category-list";
+import { useCart } from "@/hooks/use-cart";
 import { Badge } from "@heroui/badge";
 import { Button } from "@heroui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@heroui/react";
@@ -8,10 +9,9 @@ import { useMemo } from "react";
 import { FiMenu } from "react-icons/fi";
 import { TiArrowBack } from "react-icons/ti";
 import { CartIcon, LoveIcon } from "./icons";
-import { useCart } from "@/hooks/use-cart";
 
 const MegaMenu = () => {
-  const {productCart} =useCart()
+  const { productCart } = useCart();
   const categoryData = useCategories({});
   const subCategoryData = useSubCategories({ limit: 1000 });
 
@@ -81,7 +81,7 @@ const MegaMenu = () => {
               placement="top-left"
               color="success"
               showOutline={false}
-              content={productCart.length}
+              content={productCart?.products ? productCart.products.length : 0}
             >
               <Link href={"/cart"}>
                 <CartIcon />
