@@ -1,9 +1,8 @@
 import type { NextConfig } from "next";
-import { SRC_BACK_END } from "./helpers/local-paths";
 
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [new URL(`${SRC_BACK_END}/images/**`)],
+    remotePatterns: [new URL(`https://minimal-backend-project.onrender.com/images/**`)],
   },
   experimental: {
     authInterrupts: true,

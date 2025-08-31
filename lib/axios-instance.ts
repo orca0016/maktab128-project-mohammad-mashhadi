@@ -2,12 +2,12 @@ import axios from "axios";
 
 export const axiosInstance = () => {
   return axios.create({
-    baseURL: "https://maktab128-project-mohammad-mashhadi.vercel.app/",
+    baseURL: "https://maktab128-project-mohammad-mashhadi.vercel.app",
   });
 };
 export const axiosInstanceBackEnd = () => {
   const axiosClient = axios.create({
-    baseURL: "http://localhost:8000",
+    baseURL: "https://minimal-backend-project.onrender.com",
   });
   axiosClient.interceptors.request.use((config) => {
     const token = localStorage.getItem("access-token");
