@@ -1,7 +1,7 @@
 "use client";
+import { SRC_FRONTEND } from "@/helpers/local-paths";
 import { MESSAGES_PAYMENT } from "@/helpers/payment-message";
 import { useCart } from "@/hooks/use-cart";
-import { axiosInstance } from "@/lib/axios-instance";
 import { Button } from "@heroui/button";
 import { useQuery } from "@tanstack/react-query";
 
@@ -25,11 +25,11 @@ export default function VerifyPage() {
     queryKey: ["payment-verify", trackId],
     enabled: !!trackId || !!orderId,
     queryFn: async () =>
-      await axiosInstance()
-        .post("/api/verify", JSON.stringify({ trackId, orderId }), {
-          headers: { "Content-Type": "application/json" },
-        })
-        .then((res) => res.data),
+         await fetch(`${SRC_FRONTEND}/api/verify`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body:JSON.stringify({ trackId, orderId })
+              }).then((res) => res.json()),
   });
 
   // await fetch("/api/verify", {
