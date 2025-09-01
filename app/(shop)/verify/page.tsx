@@ -24,22 +24,23 @@ export default function VerifyPage() {
   }>({
     queryKey: ["payment-verify", trackId],
     enabled: !!trackId || !!orderId,
-    queryFn: async () => await axiosInstance().post('/api/verify' , {
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ trackId, orderId }),
-    }).then(res=>res.data)
+    queryFn: async () =>
+      await axiosInstance()
+        .post("/api/verify", JSON.stringify({ trackId, orderId }), {
+          headers: { "Content-Type": "application/json" },
+        })
+        .then((res) => res.data),
   });
 
-      // await fetch("/api/verify", {
-      //   method: "POST",
-      // }).then((res) => res.json()),
+  // await fetch("/api/verify", {
+  //   method: "POST",
+  // }).then((res) => res.json()),
 
   const status = verifyPayment?.result.result ?? 0;
   const clearedRef = useRef(false);
 
   useEffect(() => {
     if (!clearedRef.current && (status === 100 || status === 201)) {
-
       clearCart();
       clearedRef.current = true;
     }
