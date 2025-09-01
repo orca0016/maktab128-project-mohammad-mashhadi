@@ -1,6 +1,7 @@
 "use client";
 import { MESSAGES_PAYMENT } from "@/helpers/payment-message";
 import { useCart } from "@/hooks/use-cart";
+import { axiosInstance } from "@/lib/axios-instance";
 import { Button } from "@heroui/button";
 import { useQuery } from "@tanstack/react-query";
 
@@ -23,13 +24,15 @@ export default function VerifyPage() {
   }>({
     queryKey: ["payment-verify", trackId],
     enabled: !!trackId || !!orderId,
-    queryFn: async () =>
-      await fetch("/api/verify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ trackId, orderId }),
-      }).then((res) => res.json()),
+    queryFn: async () => await axiosInstance().post('/api/verify' , {
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ trackId, orderId }),
+    }).then(res=>res.data)
   });
+
+      // await fetch("/api/verify", {
+      //   method: "POST",
+      // }).then((res) => res.json()),
 
   const status = verifyPayment?.result.result ?? 0;
   const clearedRef = useRef(false);
