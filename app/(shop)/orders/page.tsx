@@ -77,7 +77,8 @@ const OrderPage = () => {
   const userId =
     typeof window !== "undefined" ? localStorage.getItem("user-id") : null;
 
-  const { data: orders } = useQuery<IResponseOrders>({
+  const { data: orders , isLoading } = useQuery<IResponseOrders>({
+
     queryKey: ["orders-list"],
     enabled: !!userId,
     queryFn: async () =>
@@ -99,7 +100,8 @@ const OrderPage = () => {
           ))
         ) : (
           <h1 className="py-30 text-3xl font-semibold text-center">
-            سفارشی پیدا نشد{" "}
+            {isLoading?'درحال بارگذاری...':'سفارش پیدا نشد '}
+
           </h1>
         )}
       </div>
