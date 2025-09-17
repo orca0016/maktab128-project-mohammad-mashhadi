@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 const PersonalAccountPage = () => {
   const userId =
     typeof window !== "undefined" ? localStorage.getItem("user-id") : null;
-  const { data: userData } = useQuery<IResponseSingleUser>({
+  const { data: userData, isLoading } = useQuery<IResponseSingleUser>({
     queryKey: ["personal-user-data"],
     enabled: !!userId,
     queryFn: async () => {
@@ -19,13 +19,15 @@ const PersonalAccountPage = () => {
   if (!user) {
     return (
       <div className="w-full h-full flex justify-center items-center">
-        <h1 className="text-3xl">اطلاعات کاربری پیدا نشد </h1>
+        <h1 className="text-3xl">
+          {!isLoading ? " اطلاعات کاربری پیدا نشد" : "درحال بارگذاری..."}{" "}
+        </h1>
       </div>
     );
   }
 
   return (
-      <>
+    <>
       <div className="min-w-[300px] h-full border border-[#E5E8EB] dark:border-[#323A42]  rounded-2xl shadow-lg p-6">
         <div className="flex items-center justify-center mb-4">
           <div className="w-20 h-20 flex items-center justify-center bg-purple-100 rounded-full text-2xl font-bold text-purple-600">
@@ -33,7 +35,7 @@ const PersonalAccountPage = () => {
           </div>
         </div>
 
-        <h2 className="text-xl font-semibold text-center mb-2 text-title-text-light dark:text-white">
+        <h2 className="text-xl font-semibold text-center mb-2 text-title-text-light dark:text-white mt-auto">
           {user.firstname} {user.lastname}
         </h2>
         <p className="text-title-text-light dark:text-white text-center mb-4">
