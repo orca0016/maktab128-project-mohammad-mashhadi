@@ -7,7 +7,7 @@ export const axiosInstance = () => {
 };
 export const axiosInstanceBackEnd = () => {
   const axiosClient = axios.create({
-    baseURL: "http://localhost:8000",
+    baseURL: "https://minimal-backend.liara.run",
   });
   axiosClient.interceptors.request.use((config) => {
     const token = localStorage.getItem("access-token");
