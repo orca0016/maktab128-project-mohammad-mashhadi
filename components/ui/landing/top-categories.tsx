@@ -32,7 +32,7 @@ const TopCategories = () => {
                 src={`${SRC_BACK_END}/images/categories/icons/${item.icon}`}
                 alt={item.name}
                 width={index===0? 750 : 550}
-                className={`drop-shadow-2xl w-[200px] md:w-[350px]`}
+                className={`drop-shadow-2xl ${index===0 ?' w-[500px] md:w-[650px]':' w-[200px] md:w-[350px]'}`}
                 height={index===0?750 : 550}
               />
             </div>
