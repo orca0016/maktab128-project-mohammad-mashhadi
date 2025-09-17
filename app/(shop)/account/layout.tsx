@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { BsBoxSeam } from "react-icons/bs";
 import { TbLayoutDashboard, TbLogout2 } from "react-icons/tb";
 
 const AccountLayout = ({ children }: { children: React.ReactNode }) => {
@@ -121,6 +122,15 @@ const AccountLayout = ({ children }: { children: React.ReactNode }) => {
               startContent={<CartIcon />}
             >
               سبد خرید
+            </Button>
+          </Link>
+          <Link href="/orders" className=" flex gap-5 text-lg">
+            <Button
+              className="w-full text-right"
+              variant="light"
+              startContent={<BsBoxSeam size={25} />}
+            >
+              سفارش ها
             </Button>
           </Link>
         </div>
