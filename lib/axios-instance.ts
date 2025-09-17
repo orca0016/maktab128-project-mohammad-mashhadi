@@ -1,13 +1,15 @@
+import { SRC_BACK_END, SRC_FRONTEND } from "@/helpers/local-paths";
 import axios from "axios";
 
 export const axiosInstance = () => {
   return axios.create({
-    baseURL: "http://localhost:3000",
+    baseURL: SRC_FRONTEND,
+    // baseURL: "http://localhost:3000",
   });
 };
 export const axiosInstanceBackEnd = () => {
   const axiosClient = axios.create({
-    baseURL: "https://minimal-backend.liara.run",
+    baseURL: SRC_BACK_END,
   });
   axiosClient.interceptors.request.use((config) => {
     const token = localStorage.getItem("access-token");

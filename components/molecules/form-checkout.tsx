@@ -14,6 +14,7 @@ import persian_fa from "react-date-object/locales/persian_fa";
 import { Controller, useForm } from "react-hook-form";
 import DatePicker from "react-multi-date-picker";
 import { calculatePercentage } from "../ui/cart/sidebar-cart-page";
+import { SRC_FRONTEND } from "@/helpers/local-paths";
 
 const FormCheckout: React.FC<{ userData: ISingleUser }> = ({ userData }) => {
   const { productCart } = useCart();
@@ -39,12 +40,12 @@ const FormCheckout: React.FC<{ userData: ISingleUser }> = ({ userData }) => {
 
   const redirectToPayment = useMutation({
     mutationFn: async (orderId: string) =>
-      await fetch("http://localhost:3000/api/peyment", {
+      await fetch(`${SRC_FRONTEND}/api/peyment`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           amount: finalPrice * 10,
-          callbackUrl: "http://localhost:3000/verify",
+          callbackUrl: `${SRC_FRONTEND}/verify`,
           orderId,
         }),
       }).then((res) => res.json()),

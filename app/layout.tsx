@@ -27,7 +27,7 @@ const bonFont = localFont({
       style: "normal",
     },
     {
-      path: "./assets/fonts/Woff/bon-light.woff",
+      path: "./assets/fonts/Woff/bon-Light.woff",
       weight: "300",
       style: "normal",
     },
