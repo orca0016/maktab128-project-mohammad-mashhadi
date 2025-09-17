@@ -1,4 +1,5 @@
 "use client";
+import { SRC_FRONTEND } from "@/helpers/local-paths";
 import { MESSAGES_PAYMENT } from "@/helpers/payment-message";
 import { useCart } from "@/hooks/use-cart";
 import { Button } from "@heroui/button";
@@ -24,19 +25,22 @@ export default function VerifyPage() {
     queryKey: ["payment-verify", trackId],
     enabled: !!trackId || !!orderId,
     queryFn: async () =>
-      await fetch("/api/verify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ trackId, orderId }),
-      }).then((res) => res.json()),
+         await fetch(`${SRC_FRONTEND}/api/verify`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body:JSON.stringify({ trackId, orderId })
+              }).then((res) => res.json()),
   });
+
+  // await fetch("/api/verify", {
+  //   method: "POST",
+  // }).then((res) => res.json()),
 
   const status = verifyPayment?.result.result ?? 0;
   const clearedRef = useRef(false);
 
   useEffect(() => {
     if (!clearedRef.current && (status === 100 || status === 201)) {
-
       clearCart();
       clearedRef.current = true;
     }
